@@ -24,7 +24,7 @@ class Configuration {
                     return $feature;
                 }
             }
-            return [];
+            return array();
         }
     }
 }
