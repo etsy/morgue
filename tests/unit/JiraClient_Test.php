@@ -1,6 +1,8 @@
 <?php
 
 require_once(__DIR__."/../../features/jira/lib.php");
+require_once(__DIR__."/../../phplib/CurlClient.php");
+require_once(__DIR__."/../../phplib/Configuration.php");
 
 class JiraClientTest extends PHPUnit_Framework_TestCase {
 
@@ -19,7 +21,7 @@ class JiraClientTest extends PHPUnit_Framework_TestCase {
             ->with($this->equalTo('https://jira.foo.com/rest/api/2/issue/MAYHEM-1148'))
             ->will($this->returnValue(file_get_contents(__DIR__."/../fixtures/response1772.json")));
 
-        $jira = new JiraClient($curl, ["baseurl" => "https://jira.foo.com", "username" => "foo", "password" => "bar"]);
+        $jira = new JiraClient($curl, array("baseurl" => "https://jira.foo.com", "username" => "foo", "password" => "bar"));
         $jira_responses = $jira->getJiraApiResponse(array('MAYHEM-1148'));
         $this->assertTrue(is_array($jira_responses));
         $this->assertEquals(1, count($jira_responses));
