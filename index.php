@@ -77,6 +77,10 @@ $app->add(new AssetVersionMiddleware);
 // set admin info on the environment array
 // so it's available to our request handlers
 $env = $app->environment();
+$env['auth_user'] = 'default_user';
+if (!empty($_SERVER['PHP_AUTH_USER'])) {
+    $env['auth_user'] = $_SERVER['PHP_AUTH_USER'];
+}
 
 $app->get('/', function() use ($app) {
     $content = 'frontpage';
