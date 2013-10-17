@@ -3,7 +3,6 @@ require_once __DIR__.'/phplib/CurlClient.php';
 require_once __DIR__.'/phplib/Postmortem.php';
 require_once __DIR__.'/phplib/Configuration.php';
 require_once __DIR__.'/vendor/autoload.php';
-require_once 'EtsyInternalAuth/etsy_auth.php';
 
 @include __DIR__.'/phplib/deploy_version.php';
 
@@ -78,7 +77,10 @@ $app->add(new AssetVersionMiddleware);
 // set admin info on the environment array
 // so it's available to our request handlers
 $env = $app->environment();
-$env['admin'] = EtsyInternalAuth::get_auth_data($_COOKIE);
+$env['auth_user'] = 'default_user';
+if (!empty($_SERVER['PHP_AUTH_USER'])) {
+    $env['auth_user'] = $_SERVER['PHP_AUTH_USER'];
+}
 
 $app->get('/', function() use ($app) {
     $content = 'frontpage';
