@@ -37,6 +37,27 @@ Then add the schema to the database:
 mysql -p -u morgue -h localhost morgue < schemas/morgue.sql
 ```
 
+## Authentication
+
+At the moment, morgue uses `Basic Authentication` to handle authenticating the user. The default username is `default_user`.
+
+You can set a user in `$_SERVER['PHP_AUTH_USER']` from nginx in the location block:
+
+    location ~ \.php {
+        // unrelated configuration
+        fastcgi_param  PHP_AUTH_USER  derp;
+    }
+
+Apache has provisions for specificying variables within the `VirtualHost` directive:
+
+    <VirtualHost>
+    SetEnv PHP_AUTH_USER derp
+    </VirtualHost>
+
+Note that you can always use Basic Authentication instead of manually specifying a user.
+
+> If you are comfortable with Lua+Nginx, [this gist](https://gist.github.com/lusis/6005442) may be useful for setting up single-sign-on.
+
 ## Tests
 You can run the unit test suite with:
 ```
