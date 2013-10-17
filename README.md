@@ -5,7 +5,16 @@ This is a PHP based web application to help manage your postmortems.
 
 
 ## Setup
+
+### Requirements
+- PHP 5.3 or higher
+- MySQL 5.5 or higher
+- Apache
+- mod_rewrite
+
 ### Apache
+This is a basic example for an Apache vhost. The `MORGUE_ENVIRONMENT` variable
+is used to determine which config file to use.
 
 ```
     <VirtualHost *:80>
@@ -16,6 +25,8 @@ This is a PHP based web application to help manage your postmortems.
       <Directory /var/www/morgue>
         AllowOverride All
       </Directory>
+
+      SetEnv MORGUE_ENVIRONMENT development
 
       php_value include_path ".:/usr/share/pear:./features"
     </VirtualHost>
