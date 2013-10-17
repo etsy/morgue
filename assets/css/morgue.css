@@ -1,0 +1,65 @@
+.bigModal{
+  width:940px;
+  margin-left:-470px;
+}
+
+input.input-headline {
+  width: 98%;
+  font-size: 34px;
+  height: 40px;
+}
+
+#saved_feedback {
+    margin-bottom: 0;
+    height: 9px;
+    line-height: 9px;
+}
+
+#titleinfo {
+  color: red;
+  text-align: left;
+  display: block;
+}
+
+a.jira_in_progress:link, a.jira_in_progress:visited {
+	color: green;
+}
+
+a.jira_closed:link, a.jira_closed:visited {
+	text-decoration: line-through;
+	color: gray;
+}
+
+a.jira_default {}
+
+.tag {
+  margin: 5px;
+  padding: 5px;
+  display: inline-block;
+}
+
+#tag_paragraph {
+  width: 80%;
+}
+
+#tag_well {
+  margin-top:10px;
+}
+
+#event-severity {
+  cursor:help;
+}
+
+#jira-link {
+  float: right;
+  font-size: 16px;
+}
+
+#markdown-link {
+  float: right;
+  font-size: 11px;
+}
+
+#summary {
+  width: 100%;
+}

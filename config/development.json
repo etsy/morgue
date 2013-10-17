@@ -1,0 +1,59 @@
+{
+    "environment": "development",
+
+    "database":
+    {  "mysqlhost": "localhost",
+        "mysqlport": 3306,
+        "database": "morgue",
+        "username": "morgue_user",
+        "password": "morgue_password"
+    },
+
+    "feature": [
+
+    {   "name": "status_time",
+        "enabled": "on"
+    },
+
+    {   "name": "contact",
+        "enabled": "on"
+    },
+
+    {   "name": "calendar",
+        "enabled": "on"
+    },
+
+    {   "name": "summary",
+        "enabled": "on"
+    },
+
+    {   "name": "images",
+        "enabled": "on"
+    },
+
+    {   "name": "irc",
+        "enabled": "on",
+        "channels": ["#ops"]
+    },
+
+    {   "name": "jira",
+        "enabled": "on",
+        "baseurl": "https://jira.foo.com",
+        "username": "jira_morgue",
+        "password": "jira_morgue_password"
+    },
+
+    {   "name": "links",
+        "enabled": "on"
+    },
+
+    {   "name": "tags",
+        "enabled": "on"
+    },
+
+    {   "name": "history",
+        "enabled": "on"
+    }
+
+    ]
+}

@@ -1,0 +1,14 @@
+.image-sizing {
+    position: relative;
+    width : 435px;
+    height :  auto;
+}
+
+.image-close {
+    position: absolute;
+    width: 28px;
+    height: auto;
+    top: 30;
+    left: 10;
+}
+
