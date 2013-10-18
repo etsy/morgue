@@ -4,7 +4,7 @@
  if ($channels['status'] == Irc::OK) {
      $channels = $channels['values'];
  } else {
-     $channels = [];
+     $channels = array();
  }
  $irc_config = Configuration::get_configuration("irc");
  $irc_channels = $irc_config["channels"];
