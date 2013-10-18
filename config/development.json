@@ -11,6 +11,10 @@
 
     "feature": [
 
+    {   "name": "tags",
+        "enabled": "on"
+    },
+
     {   "name": "status_time",
         "enabled": "on"
     },
@@ -44,10 +48,6 @@
     },
 
     {   "name": "links",
-        "enabled": "on"
-    },
-
-    {   "name": "tags",
         "enabled": "on"
     },
 
