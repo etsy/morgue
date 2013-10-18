@@ -4,7 +4,7 @@
     if ($ticket_ids['status'] == Jira::OK) {
         $ticket_ids = $ticket_ids['values'];
     } else {
-        $ticket_ids = [];
+        $ticket_ids = array();
     }
     $jira_client = new JiraClient($curl_client);
     $jira_tickets = Jira::merge_jira_tickets($ticket_ids);

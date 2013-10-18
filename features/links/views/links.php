@@ -4,7 +4,7 @@ $forum_links = Links::get_forum_links_for_event($id);
 if ($forum_links["status"] == Links::OK) {
     $forum_links = $forum_links["values"];
 } else {
-    $forum_links = [];
+    $forum_links = array();
 }
 
 ?>

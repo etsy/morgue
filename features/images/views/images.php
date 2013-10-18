@@ -4,7 +4,7 @@ $images = Images::get_images_for_event($id);
 if ($images['status'] == Images::OK) {
     $images = $images['values'];
 } else {
-    $images = [];
+    $images = array();
 }
 ?>
 <div class="row-fluid">
