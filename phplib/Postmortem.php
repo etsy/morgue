@@ -45,7 +45,8 @@ class Postmortem {
         }
         // store history
         $app = Slim::getInstance();
-        $admin = $app->environment()['admin']['username'];
+        $env = $app->environment();
+        $admin = $env['admin']['username'];
         self::add_history($event["id"], $admin, $action);
 
         // close connection and return

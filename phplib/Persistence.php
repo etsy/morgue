@@ -253,7 +253,7 @@ class Persistence {
                         ' VALUES (:postmortem_id,:value)';
                     $stmt = $conn->prepare($insert_sql);
                     $stmt->execute(array('postmortem_id' => $postmortem_id, 'value' => $value));
-                } elseif ($row_exists && self::get_postmortem($postmortem_id)['deleted'] == '1') {
+                } elseif ($row_exists && $postmortem = self::get_postmortem($postmortem_id) && $postmortem['deleted'] == '1') {
                     $update_sql = 'UPDATE ' . $table_name . ' SET deleted=1 WHERE id=:row_id';
                     $stmt = $conn->prepare($update_sql);
                     $stmt->execute(array('row_id' => $row_exists['id'], 'value' => $value));

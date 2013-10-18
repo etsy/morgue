@@ -134,7 +134,7 @@ foreach ($config['feature'] as $feature) {
   <?php if ($event['deleted']): ?>
     <legend>Restore</legend>
     <div id="undelete_button_container">
-    <a class="btn btn-danger" href="/events/<?= $event['id'] ?>/undelete">Undelete this Postmortem</a>
+    <a class="btn btn-danger" href="/events/<?php echo $event['id'] ?>/undelete">Undelete this Postmortem</a>
     </div>
   <?php else: ?>
     <legend>Delete</legend>
