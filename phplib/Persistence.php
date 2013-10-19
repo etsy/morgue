@@ -175,7 +175,7 @@ class Persistence {
                             WHERE postmortem_id=:postmortem_id
                                 AND pmt.deleted=:deleted';
             } else {
-                $get_sql = 'SELECT id, title FROM tags WHERE deleted = :deleted';
+                $get_sql = 'SELECT id, title FROM tags';
             }
         } elseif ($table_name == 'tags') {
             if (!isset($where['tag_ids'])) {
