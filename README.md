@@ -1,4 +1,6 @@
-# morgue - a safe place for all your postmortem data
+# morgue [![Build Status](https://travis-ci.org/etsy/morgue.png?branch=master)](https://travis-ci.org/etsy/morgue)
+## a safe place for all your postmortem data
+
 
 ## Overview
 This is a PHP based web application to help manage your postmortems.
