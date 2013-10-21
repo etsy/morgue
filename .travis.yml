@@ -1,0 +1,8 @@
+language: php
+node_js:
+  - "5.3"
+  - "5.4"
+script: make unittests
+notifications:
+  email: false
+  irc: false
