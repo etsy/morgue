@@ -1,7 +1,8 @@
 language: php
-node_js:
+php:
   - "5.3"
   - "5.4"
+  - "5.5"
 script: make unittests
 notifications:
   email: false
