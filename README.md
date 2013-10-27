@@ -50,6 +50,16 @@ Then add the schema to the database:
 mysql -p -u morgue -h localhost morgue < schemas/morgue.sql
 ```
 
+### Start a development server
+
+Using PHP built-in webserver it is possible to start quickly view what morgue does with the following command
+
+```
+MORGUE_ENVIRONMENT=development php -d include_path=".:./features" -S localhost:8000
+```
+
+Open http://localhost:8000 to view Morgue
+
 ## Tests
 You can run the unit test suite with:
 ```
