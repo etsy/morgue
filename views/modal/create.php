@@ -33,7 +33,7 @@
         </div>
       </div>
       <div class="control-group">
-        <label class="control-label" for="status_date">Etsystatus Time</label>
+        <label class="control-label" for="status_date">Status Time</label>
         <div class="controls controls-row">
           <div class=""><a href="#" id="add-status" role="button" class="btn">Add</a></div>
           <div class="hidden" id="event-status-container">

@@ -25,7 +25,7 @@ class Postmortem {
      *                 - summary => the summary of the post mortem
      *                 - starttime => start time as unix timestamp
      *                 - endtime   => end time as unix timestamp
-     *                 - etsystatustime => etsystatus time as unix timestamp
+     *                 - statustime => status time as unix timestamp
      *                 - detecttime  => detect time as unix timestamp
      * @param $conn - PDO connection object, will be newly instantiated when
      *                null (default: null)
