@@ -9,7 +9,7 @@ This is a PHP based web application to help manage your postmortems.
 ## Setup
 
 ### Requirements
-- PHP 5.3 or higher
+- PHP 5.4 or higher
 - MySQL 5.5 or higher
 - Apache
 - mod_rewrite
