@@ -38,7 +38,7 @@ Restart apache and hit the servername you defined above.
 
 ### MySQL
 Create a database named morgue and give access to the morgue user with the
-morgue password for the dev environment:
+morgue password for the dev environment (defined in config/development.json):
 ```
 CREATE DATABASE morgue;
 CREATE USER 'morgue'@'localhost' IDENTIFIED BY 'morgue';
@@ -48,6 +48,14 @@ GRANT ALL ON morgue.* TO 'morgue'@'localhost';
 Then add the schema to the database:
 ```
 mysql -p -u morgue -h localhost morgue < schemas/morgue.sql
+```
+
+Note : add any additional schemas you may use:
+```
+mysql -p -u morgue -h localhost morgue < schemas/images.sql
+mysql -p -u morgue -h localhost morgue < schemas/jira.sql
+mysql -p -u morgue -h localhost morgue < schemas/links.sql
+mysql -p -u morgue -h localhost morgue < schemas/irc.sql
 ```
 
 ### Start a development server
