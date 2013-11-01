@@ -45,9 +45,13 @@ CREATE USER 'morgue'@'localhost' IDENTIFIED BY 'morgue';
 GRANT ALL ON morgue.* TO 'morgue'@'localhost';
 ```
 
-Then add the schema to the database:
+Then add the schema's to the database:
 ```
 mysql -p -u morgue -h localhost morgue < schemas/morgue.sql
+mysql -p -u morgue -h localhost morgue < schemas/irc.sql
+mysql -p -u morgue -h localhost morgue < schemas/jira.sql
+mysql -p -u morgue -h localhost morgue < schemas/images.sql
+mysql -p -u morgue -h localhost morgue < schemas/links.sql
 ```
 
 ### Start a development server
