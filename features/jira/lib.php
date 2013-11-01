@@ -218,7 +218,11 @@ class JiraClient {
                 $ticket_attributes['summary'] = $jira_ticket['fields']['summary'];
                 $ticket_attributes['assignee'] = $jira_ticket['fields']['assignee']['name'];
                 $ticket_attributes['status'] = $jira_ticket['fields']['status']['name'];
-                $ticket_attributes['due_date'] = $jira_ticket['fields']['customfield_10090'];
+                if(isset($jira_ticket['fields']['due_date'])) {
+                  $ticket_attributes['due_date'] = $jira_ticket['fields']['due_date'];
+                }else{
+                  $ticket_attributes['due_date'] = "none";
+                }
                 $jira_tickets[$ticket_key] = $ticket_attributes;
             }
         }
