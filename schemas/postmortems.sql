@@ -11,7 +11,7 @@ CREATE TABLE `postmortems` (
   `summary` text NOT NULL,
   `starttime` int(11) UNSIGNED NOT NULL,
   `endtime` int(11) UNSIGNED NOT NULL,
-  `etsystatustime` int(11) UNSIGNED NOT NULL,
+  `statustime` int(11) UNSIGNED NOT NULL,
   `detecttime` int(11) UNSIGNED NOT NULL,
   `severity` int(1) UNSIGNED NOT NULL,
   `gcal` text CHARACTER SET utf8mb4 COLLATE utf8mb4_bin,
