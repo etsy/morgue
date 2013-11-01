@@ -3,7 +3,7 @@
   <form class="form-horizontal">
   <div class="span6">
     <div class="control-group">
-     <label class="control-label" id="event-status-time">Etsystatus time: </label>
+     <label class="control-label" id="event-status-time">Status time: </label>
      <div class="controls controls-row">
      <?php if ($status_datetime) { ?>
       <div class="hidden"><a href="#" id="add-status" role="button" class="btn">Add</a></div>

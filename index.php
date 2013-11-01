@@ -51,9 +51,9 @@ function getTimeString($diff) {
 }
 
 /**
- * Helper function for default etsystatustime.
+ * Helper function for default statustime.
  */
-function default_etsy_status_time() {
+function default_status_time() {
     return new DateTime('1970-01-01', new DateTimeZone('UTC'));
 }
 
@@ -139,7 +139,7 @@ $app->post('/events', function () use ($app) {
     $enddate = new DateTime($end_date." ".$end_time, new DateTimeZone($timezone));
     $detectdate = new DateTime($detect_date." ".$detect_time, new DateTimeZone($timezone));
     if (!$status_date || !$status_time) {
-        $statusdate = default_etsy_status_time();
+        $statusdate = default_status_time();
     } else {
         $statusdate = new DateTime("$status_date $status_time", new DateTimeZone($timezone));
     }
@@ -151,7 +151,7 @@ $app->post('/events', function () use ($app) {
         "starttime" => $startdate->getTimeStamp(),
         "endtime" => $enddate->getTimeStamp(),
         "detecttime" => $detectdate->getTimeStamp(),
-        "etsystatustime" => $statusdate->getTimeStamp(),
+        "statustime" => $statusdate->getTimeStamp(),
         "severity" => $severity,
         "contact" => $contact,
         "gcal" => $gcal,
@@ -175,7 +175,7 @@ $app->get('/events/:id', function($id) use ($app) {
     $starttime = $event["starttime"];
     $endtime = $event["endtime"];
     $detect_time = $event["detecttime"];
-    $etsy_status_time = $event["etsystatustime"];
+    $status_time = $event["statustime"];
     $timezone = getUserTimezone();
     $severity = $event["severity"];
     $gcal = $event["gcal"];
@@ -187,8 +187,8 @@ $app->get('/events/:id', function($id) use ($app) {
     $start_datetime->setTimezone($tz);
     $end_datetime = new DateTime("@$endtime");
     $end_datetime->setTimezone($tz);
-    if ($etsy_status_time) {
-        $status_datetime = new DateTime("@$etsy_status_time");
+    if ($status_time) {
+        $status_datetime = new DateTime("@$status_time");
         $status_datetime->setTimezone($tz);
     } else {
         $status_datetime = false;
@@ -313,7 +313,7 @@ $app->put('/events/:id', function ($id) use ($app) {
             break;
         case "status_datetime":
             if (!$value) {
-                $event["etsystatustime"] = 0;
+                $event["statustime"] = 0;
                 break;
             }
 
@@ -322,13 +322,13 @@ $app->put('/events/:id', function ($id) use ($app) {
                 return;
             }
             $timezone = new DateTimeZone($params["timezone"]);
-            $statustime = $event["etsystatustime"];
+            $statustime = $event["statustime"];
             $edate = new DateTime("@$statustime");
             $edate->setTimezone($timezone);
             $new_date = date_parse($value);
             $edate->setTime($new_date["hour"], $new_date["minute"]);
             $edate->setDate($new_date["year"], $new_date["month"], $new_date["day"]);
-            $event["etsystatustime"] = $edate->getTimeStamp();
+            $event["statustime"] = $edate->getTimeStamp();
             break;
         case "severity":
             $event["severity"] = $value;
