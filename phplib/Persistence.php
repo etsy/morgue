@@ -54,8 +54,8 @@ class Persistence {
                     $sql.= ",contact=:contact";
                     array_push($values,"contact");
                 }
-                if ( isset( $postmortem['etsystatustime"'] ) ){
-                    $sql.= ",etsystatustime=:=etsystatustime";
+                if ( isset( $postmortem['etsystatustime'] ) ){
+                    $sql.= ",etsystatustime=:etsystatustime";
                     array_push($values,"etsystatustime");
                 }
                 $sql.=" WHERE id=:id LIMIT 1";
