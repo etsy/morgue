@@ -22,6 +22,7 @@
         <th>Summary</th>
         <th>Assignee</th>
         <th>Due Date</th>
+        <th>Status</th>
         <th></th>
       </tr>
     </thead>
@@ -34,6 +35,7 @@
         echo "<td>$ticket_attributes[summary]</td>";
         echo "<td>$ticket_attributes[assignee]</td>";
         echo "<td>$ticket_attributes[due_date]</td>";
+        echo "<td>$ticket_attributes[status]</td>";
         echo "<td><span id=\"jira-$ticket_attributes[id]\" class='close'>&times;</span></td>";
         echo "</tr>";
       }

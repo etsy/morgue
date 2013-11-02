@@ -12,7 +12,7 @@ as well as storing relevant links and graphs. This [talk][1] from DevOpsDays NYC
 ## Setup
 
 ### Requirements
-- PHP 5.3 or higher
+- PHP 5.4 or higher
 - MySQL 5.5 or higher
 - Apache
 - mod_rewrite
@@ -48,7 +48,7 @@ CREATE USER 'morgue'@'localhost' IDENTIFIED BY 'morgue';
 GRANT ALL ON morgue.* TO 'morgue'@'localhost';
 ```
 
-Then add the schema to the database:
+Then add the schema to the database
 ```
 mysql -p -u morgue -h localhost morgue < schemas/morgue.sql
 ```
