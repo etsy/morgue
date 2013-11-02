@@ -3,7 +3,10 @@
 
 
 ## Overview
-This is a PHP based web application to help manage your postmortems.
+This is a PHP based web application to help manage your postmortems. It has a
+pluggable feature system and can pull in related information from IRC and JIRA
+as well as storing relevant links and graphs. This [talk][1] from DevOpsDays NYC
+2013 gives an introduction and shows some of its features.
 
 
 ## Setup
@@ -81,4 +84,9 @@ make unittests
 3. Add tests so we don't accidentally break something in the future
 4. Push the branch up to GitHub (bonus points for topic branches)
 5. Send a pull request to the etsy/morgue project.
+
+
+
+
+[1]: http://vimeo.com/77206751
 
