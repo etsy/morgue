@@ -503,12 +503,13 @@ class Postmortem {
     static function humanize_history($history) {
         $dt = DateTime::createFromFormat('U', (string)$history['create_date']);
         $who = $history['auth_username'];
+        $who_html = Contact::get_html_for_user($who);
         $when = $dt->format('H:i:s T, m/d/Y');
         switch ($history['action']) {
             case self::ACTION_ADD:
-                return 'Created by <a href="https://atlas.etsycorp.com/staff/' . $who . '">' . $who . '</a> @ ' . $when;
+                return 'Created by ' . $who_html . ' @ ' . $when;
             case self::ACTION_EDIT:
-                return 'Edited by <a href="https://atlas.etsycorp.com/staff/' . $who . '">' . $who . '</a> @ ' . $when;
+                return 'Edited by ' . $who_html . ' @ ' . $when;
         }
     }
 

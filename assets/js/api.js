@@ -266,20 +266,32 @@ function update_contact_for_event() {
             data: { contact: contact },
             type: "PUT",
             success: function () { 
-                $("#contact_anchor").remove();
                 show_save_status("Contact", true);
-  //              var contact = $("#contact").val();
-                var node = $("<a>"+contact+"</a>");
-                var href = "https://atlas.etsycorp.com/staff/" + contact;
-                node.attr("href", href);
-                node.attr("id", "contact_anchor");
-                node.attr("target","_new");
-                $("#the_contact").append(node);
-                $("#contact").val('');
+                update_contact_div(contact);
             },
             error: function () { show_save_status("Contact", false);}
     });
   }
+}
+
+function update_contact_div(contact) {
+  $("#contact_anchor").remove();
+
+  var node = $("<span></span>");
+  node.attr("id", "contact_anchor");
+
+  var lookup_url = $('input[name="contact_lookup_url"').val();
+  if (lookup_url) {
+    var href = lookup_url.replace("%s", contact);
+    var link = $("<a>"+contact+"</a>");
+    link.attr("href", href);
+    link.attr("target","_new");
+    node.append(link);
+  } else {
+    node.text = contact;
+  }
+  $("#the_contact").append(node);
+  $("#contact").val('');
 }
 
 function update_summary_for_event() {
