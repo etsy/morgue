@@ -16,7 +16,8 @@
     },
 
     {   "name": "contact",
-        "enabled": "on"
+        "enabled": "on",
+        "lookup_url" : null
     },
 
     {   "name": "calendar",
