@@ -71,6 +71,28 @@ MORGUE_ENVIRONMENT=development php -d include_path=".:./features" -S localhost:8
 
 Open http://localhost:8000 to view Morgue
 
+## Configuration
+
+### JIRA feature
+
+**baseurl** the base URL to your jira installation (**use https** if you are using a secured JIRA installation)  
+**username** username for a user with viewing credentials  
+**password** password for a user with viewing credentials  
+**additional_fields** mapping of fields to display in morgue (other than key, summay, assignee, status)  
+
+```
+    {   "name": "jira",
+        "enabled": "on",
+        "baseurl": "https://jira.foo.com",
+        "username": "jira_morgue",
+        "password": "jira_morgue",
+        "additional_fields" : {
+            "Due Date" : "duedate",
+            "Some Custom Field" : "customfield_1234"
+        }
+    },
+```
+
 ## Tests
 You can run the unit test suite with:
 ```

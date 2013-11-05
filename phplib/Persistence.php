@@ -240,23 +240,22 @@ class Persistence {
     static function store_array($table_name, $assoc_column, $values, $postmortem_id, $conn) {
         try {
             foreach ($values as $value) {
-                $select_sql = 'SELECT postmortem_id, id ' .
+                $select_sql = 'SELECT postmortem_id, id, deleted ' .
                               ' FROM ' . $table_name .
                               ' WHERE postmortem_id = :postmortem_id AND ' . $assoc_column . ' = :value LIMIT 1';
                 $stmt = $conn->prepare($select_sql);
                 $stmt->execute(array('postmortem_id' => $postmortem_id, 'value' => $value));
-                $row_exists = $stmt->fetch(PDO::FETCH_ASSOC);
-
-                if ($row_exists === false) {
+                $target_row = $stmt->fetch(PDO::FETCH_ASSOC);
+                if (empty($target_row)) {
                     $insert_sql = 'INSERT INTO ' . $table_name .
                         ' (postmortem_id, ' . $assoc_column . ')' .
                         ' VALUES (:postmortem_id,:value)';
                     $stmt = $conn->prepare($insert_sql);
                     $stmt->execute(array('postmortem_id' => $postmortem_id, 'value' => $value));
-                } elseif ($row_exists && $postmortem = self::get_postmortem($postmortem_id) && $postmortem['deleted'] == '1') {
-                    $update_sql = 'UPDATE ' . $table_name . ' SET deleted=1 WHERE id=:row_id';
-                    $stmt = $conn->prepare($update_sql);
-                    $stmt->execute(array('row_id' => $row_exists['id'], 'value' => $value));
+                } else {
+                    if ($target_row['deleted'] == '1') {
+                        self::flag_as_undeleted($table_name, "id", $target_row['id'], $conn);
+                    }
                 }
             }
         } catch(PDOException $e) {
