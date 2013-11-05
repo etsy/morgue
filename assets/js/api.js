@@ -530,7 +530,8 @@ function confirm_delete(message, insert, context, onConfirm, onDisappear) {
   alert.hide().insertAfter(insert);
   alert.fadeIn(200);
 
-  alert.on("click", "#alert_yes_button", function() {
+  alert.on("click", "#alert_yes_button", function(ev) {
+    ev.preventDefault();
     onConfirm.call(context);
     alert.fadeOut(200, function() {
       alert.remove();
@@ -538,7 +539,8 @@ function confirm_delete(message, insert, context, onConfirm, onDisappear) {
     });
   });
 
-  alert.on("click", "#alert_no_button", function() {
+  alert.on("click", "#alert_no_button", function(ev) {
+    ev.preventDefault();
     alert.fadeOut(200, function() {
       alert.remove();
       onDisappear.call(context);

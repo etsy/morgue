@@ -40,7 +40,9 @@
         "enabled": "on",
         "baseurl": "https://jira.foo.com",
         "username": "jira_morgue",
-        "password": "jira_morgue_password"
+        "password": "jira_morgue_password",
+        "additional_fields" : {
+        }
     },
 
     {   "name": "links",
