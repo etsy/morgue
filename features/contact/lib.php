@@ -12,9 +12,9 @@ class Contact {
      *
      * @returns null or lookup_url with %s substituted by username
      */
-    static function get_url_for_user($username) {
+    static function get_url_for_user($username, $config = null) {
         $url = null;
-        $config = Configuration::get_configuration("contact");
+        $config = is_null($config) ? Configuration::get_configuration("contact") : $config;
         if (isset($config['lookup_url'])) {
             $url = sprintf($config['lookup_url'], $username);
         }
@@ -31,9 +31,9 @@ class Contact {
      *
      * @returns $username or <a href="lookup_url" target="_new">$username</a>
      */
-    static function get_html_for_user($username) {
+    static function get_html_for_user($username, $config = null) {
         $html = "";
-        $url = self::get_url_for_user($username);
+        $url = self::get_url_for_user($username, $config);
         if (is_null($url)) {
             $html = $username;
         } else {
