@@ -22,7 +22,7 @@ class Persistence {
      *                    - summary => the summary of the post mortem
      *                    - starttime => start time as unix timestamp
      *                    - endtime   => end time as unix timestamp
-     *                    - etsystatustime => etsystatus time as unix timestamp
+     *                    - statustime => etsystatus time as unix timestamp
      *                    - detecttime  => detect time as unix timestamp
      *                    - severity  => severity level
      *                    - channels => array of ircchannel names
@@ -54,19 +54,19 @@ class Persistence {
                     $sql.= ",contact=:contact";
                     array_push($values,"contact");
                 }
-                if ( isset( $postmortem['etsystatustime"'] ) ){
-                    $sql.= ",etsystatustime=:=etsystatustime";
-                    array_push($values,"etsystatustime");
+                if ( isset( $postmortem['statustime'] ) ){
+                    $sql.= ",statustime=:statustime";
+                    array_push($values,"statustime");
                 }
                 $sql.=" WHERE id=:id LIMIT 1";
 
 
             } else {
-                array_push($values,"etsystatustime");
+                array_push($values,"statustime");
 
                 $sql = "INSERT INTO postmortems (title,summary,starttime,endtime,
-                    etsystatustime,detecttime,severity) VALUES (:title, :summary,:starttime,
-                    :endtime,:etsystatustime,:detecttime,:severity)";
+                    statustime,detecttime,severity) VALUES (:title, :summary,:starttime,
+                    :endtime,:statustime,:detecttime,:severity)";
             }
             $stmt = $conn->prepare($sql);
             $stmt->execute(array_intersect_key($postmortem, array_flip($values)));
@@ -94,7 +94,7 @@ class Persistence {
         $conn = $conn ?: Persistence::get_database_object();
 
         try {
-            $sql = "SELECT id,title,summary,starttime,endtime,etsystatustime,
+            $sql = "SELECT id,title,summary,starttime,endtime,statustime,
                 detecttime,severity, contact, gcal, deleted FROM postmortems WHERE id = :id LIMIT 1";
             $stmt = $conn->prepare($sql);
             $stmt->execute(array('id' => $postmortem_id));

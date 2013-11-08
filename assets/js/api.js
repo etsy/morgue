@@ -399,8 +399,8 @@ function update_statusdatetime_for_event() {
                timezone: 'America/New_York'
                }, 
         type: "PUT",
-        success: function () { show_save_status("Etsystatus time", true);},
-        error: function () { show_save_status("Etsystatus time", false);}
+        success: function () { show_save_status("Status time", true);},
+        error: function () { show_save_status("Status time", false);}
   });
 }
 
@@ -588,8 +588,8 @@ function remove_status_fields() {
             status_datetime: ''
         },
         type: "PUT",
-        success: function () { show_save_status("Etsystatus date", true);},
-        error: function () { show_save_status("Etsystatus date", false);}
+        success: function () { show_save_status("Status date", true);},
+        error: function () { show_save_status("Status date", false);}
     });
 
     return false;
