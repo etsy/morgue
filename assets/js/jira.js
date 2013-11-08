@@ -14,7 +14,10 @@ function addTicket() {
                     entry += "<td><a href=\""+data[i].ticket_url+"\" class=\""+ style + "\">"+i+"</a></td>";
                     entry += "<td>"+data[i].summary+"</td>";
                     entry += "<td>"+data[i].assignee+"</td>";
-                    entry += "<td>"+(data[i].due_date || "" )+"</td>";
+                    $('th.jira_addition_field').each(function(index, value){
+                        field = $(value).text();
+                        entry += "<td>"+(data[i][field] || "" )+"</td>";
+                    });
                     entry += "<td><span id=\"jira-"+data[i].id+"\" class='close'>&times;</span></td>";
                     entry += "</tr>";
                 

@@ -139,25 +139,37 @@ class Jira {
     * @returns array of merged JIRA tickets
     */
     static function merge_jira_tickets($tickets, $curl = null) {
+        if (empty($tickets)) {
+            return array();
+        }
+
         $jira_tickets = array();
+
         if (is_null($curl)) {
             $curl = new CurlClient();
         }
+
+        $tickets_ids = array();
+        foreach($tickets as $k => $v) {
+            array_push($tickets_ids, $v['ticket']);
+        }
+
         $jira_client = new JiraClient($curl);
+        $jira_info = $jira_client->getJiraTickets(array_values($tickets_ids));
 
         foreach ($tickets as $ticket) {
-            $jira_info = $jira_client->getJiraTickets( array($ticket["ticket"]) );
-            $ticket_keys = array_keys($jira_info);
-            $new_ticket_id = $ticket_keys[0];
-            $the_ticket = $jira_info[$new_ticket_id];
-            $the_ticket["id"] = $ticket["id"];
-            $jira_tickets[$new_ticket_id] = $the_ticket;
+            $key = $ticket['ticket'];
+            $id = $ticket['id'];
+            if (isset($jira_info[$key])) {
+                $ticket_info = $jira_info[$key];
+                $ticket_info['id'] = $id;
+                $jira_tickets[$key] = $ticket_info;
+            }
         }
 
         return $jira_tickets;
 
     }
-
 
 }
 
@@ -170,35 +182,55 @@ class JiraClient {
         $this->jira_base_url = $config['baseurl'];
         $this->username = $config['username'];
         $this->password = $config['password'];
+        $this->additional_fields = array();
+        if (isset($config['additional_fields'])) {
+            $this->additional_fields = $config['additional_fields'];
+        }
     }
 
     public function getJiraBaseUrl() {
         return $this->jira_base_url;
     }
 
-    /**
-     * iterates through array of jira keys and requests the JIRA API response for each one, adding each response to the array $jira__api_responses
-     *
-     * @param $jira_key_input ->  an array of trimmed JIRA ticket keys (i.e. 'CORE-1204')
-     *
-     * @return $jira__api_responses, an indexed array of json-decoded JIRA response
-     */
-
-    function getJiraApiResponse($jira_key_input) {
-        $jira_api_responses = array();
-        foreach ($jira_key_input as $i => $jira_ticket) {
-            $jira_response = json_decode($this->curl_client->get($this->jira_base_url.'/rest/api/2/issue/'.$jira_ticket, array(), $this->username.':'.$this->password), true);
-            if (!empty($jira_response)) {
-                array_push($jira_api_responses, $jira_response);
-            }
-        }
-        return $jira_api_responses;
+    public function getAdditionalIssueFields() {
+        return $this->additional_fields;
     }
 
     /**
-     * creates an empty array called $jira_tickets
-     * iterates through the array given as the parameter, creating an empty array called $jira_ticket_attributes
-     * iterates through the values of array given as the parameter, checking that keys match table column values in view, and adding the values to $jira_tickets
+     * Make a JQL query for all the issue keys passed as input and return the
+     * JSON representation sent by the JIRA server
+     *
+     * @param $jira_key_input ->  an array of trimmed JIRA ticket keys (i.e. 'CORE-1204')
+     * @param $field ->  an array of fields to retrieve for each issue
+     *
+     * @return $jira_api_response, an array of json-decoded issues as returned by JIRA
+     */
+
+    function getJiraApiResponse($jira_key_input, $fields) {
+        $jira_api_responses = array();
+
+        $tickets_count = count($jira_key_input);
+        if ($tickets_count === 0) {
+            return $jira_api_responses;
+        }
+
+        $params = array(
+            'jql' => 'issuekey in ("' .  implode($jira_key_input, '","') . '")',
+            'maxResults' => $tickets_count,
+            'fields' => implode($fields, ',')
+        );
+
+        $response = $this->curl_client->get($this->getJiraBaseUrl() . '/rest/api/2/search' , $params, $this->username . ':' . $this->password);
+        $jira_api_response = json_decode($response, true);
+
+        return $jira_api_response;
+
+    }
+
+    /**
+     * given an array of JIRA issues keys, query JIRA for a set of
+     * base field + addtional field, flatten each issue field and index
+     * the return array by issue key
      *
      * @param $jira_key_input -> same parameter given for getJiraApiResponse, $api_response -> defaults to null
      *
@@ -206,25 +238,65 @@ class JiraClient {
      */
 
     function getJiraTickets($jira_key_input, $api_response = null) {
-        if (is_null($api_response)) {
-            $api_response = $this->getJiraApiResponse($jira_key_input);
-        }
+        $raw_issues = array();
         $jira_tickets = array();
-        foreach ($api_response as $i => $jira_ticket) {
-            $ticket_attributes = array();
-            if (isset($jira_ticket['key'])) {
-                $ticket_key = $jira_ticket['key'];
-                $ticket_attributes['ticket_url'] = $this->jira_base_url.'/browse/'.$ticket_key;
-                $ticket_attributes['summary'] = $jira_ticket['fields']['summary'];
-                $ticket_attributes['assignee'] = $jira_ticket['fields']['assignee']['name'];
-                $ticket_attributes['status'] = $jira_ticket['fields']['status']['name'];
-                $ticket_attributes['due_date'] = $jira_ticket['fields']['customfield_10090'];
-                $jira_tickets[$ticket_key] = $ticket_attributes;
+
+        $fields = array(
+            'key'      => 'key',
+            'summary'  => 'summary',
+            'assignee' => 'assignee',
+            'status'   => 'status'
+        );
+
+        $fields = $fields + $this->getAdditionalIssueFields();
+
+        if (is_null($api_response)) {
+            $api_response = $this->getJiraApiResponse($jira_key_input, $fields);
+        }
+
+        if (isset($api_response['issues'])) {
+            $raw_issues = $api_response['issues'];
+        }
+
+        foreach ($raw_issues as $issue) {
+            if (isset($issue['key'])) {
+                $key = $issue['key'];
+                $jira_tickets[$key] = $this->unpackTicketInfo($issue, $fields);
             }
         }
+
         return $jira_tickets;
+    }
+
+    /**
+     * Givent a json JIRA representation of an issue and a set of fields,
+     * extract each field from the issue object and return the extracted
+     * value as an associative array, along with the ticket_url
+     *
+     * @param $ticket_info ->  json JIRA representation of an issue
+     * @param $field ->  an array of fields to retrieve for each issue
+     *
+     * @returns array of field->value for the issue
+     */
+    public function unpackTicketInfo($ticket_info, $fields) {
+        $ticket = array();
+        foreach($fields as $k => $v) {
+            # set a default value
+            $ticket[$k] = "";
+            if (isset($ticket_info['fields'][$v])) {
+                $val = $ticket_info['fields'][$v];
+                if (is_string($val)) {
+                    $ticket[$k] = $val;
+                } elseif (is_array($val) && isset($val['name'])) {
+                    $ticket[$k] = $val['name'];
+                }
+            }
+        }
+        if (isset($ticket_info['key'])) {
+            $ticket['ticket_url'] = $this->getJiraBaseUrl() . '/browse/' . $ticket_info['key'];
+        }
+
+        return $ticket;
     }
 }
 ?>
-
-

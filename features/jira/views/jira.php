@@ -21,7 +21,11 @@
         <th>Key</th>
         <th>Summary</th>
         <th>Assignee</th>
-        <th>Due Date</th>
+        <?php
+        foreach ($jira_client->getAdditionalIssueFields() as $k => $v) {
+            echo "<th class='jira_addition_field'>$k</th>";
+        }
+        ?>
         <th></th>
       </tr>
     </thead>
@@ -33,7 +37,9 @@
         echo "<td><a href=$ticket_attributes[ticket_url] class=\"$style\">$ticket_key</a></td>";
         echo "<td>$ticket_attributes[summary]</td>";
         echo "<td>$ticket_attributes[assignee]</td>";
-        echo "<td>$ticket_attributes[due_date]</td>";
+        foreach ($jira_client->getAdditionalIssueFields() as $k => $v) {
+            echo "<td>$ticket_attributes[$k]</td>";
+        }
         echo "<td><span id=\"jira-$ticket_attributes[id]\" class='close'>&times;</span></td>";
         echo "</tr>";
       }
