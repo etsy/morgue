@@ -28,12 +28,14 @@ $('.timeentry')
     spinnerImage: ''
   });
 
-$('#delete-initial').click(function() {
+$('#delete-initial').click(function(ev) {
+  ev.preventDefault();
   $(this).hide();
   $("#delete_button_confirmation_container").show();
 });
 
-$("#delete-yes").click(function() {
+$("#delete-yes").click(function(ev) {
+  ev.preventDefault();
   delete_event(function(data, textStatus, jqXHR) {
     if (jqXHR.status == 204) {
       window.location = '/';
@@ -41,7 +43,8 @@ $("#delete-yes").click(function() {
   })
 });
 
-$("#delete-no").click(function() {
+$("#delete-no").click(function(ev) {
+  ev.preventDefault();
   $('#delete-initial').show();
   $("#delete_button_confirmation_container").hide();
 })
