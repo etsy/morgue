@@ -234,7 +234,7 @@ class JiraClient {
      *
      * @param $jira_key_input -> same parameter given for getJiraApiResponse, $api_response -> defaults to null
      *
-     * @return $jira_tickets an array where key is an jira ticket key (i.e. 'CORE-1204') and val is an array of jira ticket attributes, such as 'ticket_url' => 'https://jira.etsycorp.com/CORE-1204'
+     * @return $jira_tickets an array where key is an jira ticket key (i.e. 'CORE-1204') and val is an array of jira ticket attributes, such as 'ticket_url' => 'https://jira.foo.com/CORE-1204'
      */
 
     function getJiraTickets($jira_key_input, $api_response = null) {

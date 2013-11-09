@@ -9,6 +9,18 @@
         "password": "morgue_password"
     },
 
+
+    "severity" :
+    { "tooltip_title" : "Severity Levels",
+      "levels" : [
+            "Complete outage or degradation so severe that core functionality is unusable",
+            "Functional degradation for a subset of members or loss of some core functionality for all members",
+            "Noticeable degradation or loss of minor functionality",
+            "No member-visible impact; loss of redundancy or capacity",
+            "Anything worth mentioning not in the above levels"
+        ]
+    },
+
     "feature": [
 
     {   "name": "status_time",
