@@ -58,13 +58,12 @@
       <label id="severity_levels" class="control-label severity_levels" for="severity">Severity</label><p>
       <div class="controls">
           <select id="severity" name="severity" class="input-small">
-            <option>1</option>
-            <option>2</option>
-            <option>3</option>
-            <option>4</option>
-            <option>5</option>
+          <?php
+          $severity_levels = Postmortem::get_severity_levels();
+          foreach (range(1, count($severity_levels)) as $a_severity) {
+            echo '<option>' . $a_severity . '</option>';
+          } ?>
           </select>
-      </select>
       </div>
       </div>
 
