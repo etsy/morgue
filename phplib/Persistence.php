@@ -22,7 +22,7 @@ class Persistence {
      *                    - summary => the summary of the post mortem
      *                    - starttime => start time as unix timestamp
      *                    - endtime   => end time as unix timestamp
-     *                    - statustime => etsystatus time as unix timestamp
+     *                    - statustime => status time as unix timestamp
      *                    - detecttime  => detect time as unix timestamp
      *                    - severity  => severity level
      *                    - channels => array of ircchannel names
