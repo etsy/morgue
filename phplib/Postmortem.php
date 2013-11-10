@@ -513,4 +513,17 @@ class Postmortem {
         }
     }
 
+    /**
+      * Provide the different severity levels for a post mortem event
+      *
+      * @returns array of severity levels
+      */
+    static function get_severity_levels() {
+        $config = Configuration::get_configuration();
+        if (isset($config['severity']) && isset($config['severity']['levels'])) {
+            return $config['severity']['levels'];
+        } else {
+            return array('default');
+        }
+    }
 }
