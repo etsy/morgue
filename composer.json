@@ -1,5 +1,11 @@
 {
     "require": {
-        "slim/slim": "1.6.*"
+        "slim/slim": "1.6.*",
+        "ext-curl": "*",
+        "ext-pdo": "*",
+        "ext-pdo_mysql": "*"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "3.7.*"
     }
 }
