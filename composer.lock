@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "8e472bfd1c5f403ec68e8ae4a95963f1",
+    "hash": "6301785b1dad8a8b4e2a90900c695e8c",
     "packages": [
         {
             "name": "slim/slim",
@@ -473,6 +473,7 @@
 
     ],
     "platform": {
+        "php": ">=5.3.0",
         "ext-curl": "*",
         "ext-pdo": "*",
         "ext-pdo_mysql": "*"
