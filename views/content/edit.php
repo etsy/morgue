@@ -136,10 +136,14 @@ Filler, to keep the same size
 $config = Configuration::get_configuration();
 foreach ($config['feature'] as $feature) {
     if ($feature['enabled'] == "on") {
-        include $feature['name'] . '/views/' . $feature['name'] . '.php';
+        $view_file = $feature['name'] . '/views/' . $feature['name'] . '.php';
+        if (file_exists('features/' . $view_file)) {
+            include $view_file;
+        } else {
+            error_log('No views found for ' . $feature['name'] . ' feature');
+        }
     }
-
-    }
+}
 ?>
 
 <div class="row-fluid"><br/></div>
