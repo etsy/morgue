@@ -8,6 +8,23 @@ pluggable feature system and can pull in related information from IRC and JIRA
 as well as storing relevant links and graphs. This [talk][1] from DevOpsDays NYC
 2013 gives an introduction and shows some of its features.
 
+## Morgue tour
+
+### Index page
+![Morgue index page](assets/img/screenshots/morgue_index.png)
+
+### Creating a new post mortem
+![Creating a new Post Mortem](assets/img/screenshots/morgue_create.png)
+
+### Live edit page
+![Editing a Post Mortem](assets/img/screenshots/morgue_edit.png)
+
+![Timeline of events](assets/img/screenshots/morgue_timeline.png)
+
+![Remediations items](assets/img/screenshots/morgue_remediation.png)
+
+![History tracking](assets/img/screenshots/morgue_history.png)
+
 
 ## Setup
 
@@ -75,10 +92,10 @@ Open http://localhost:8000 to view Morgue
 
 ### JIRA feature
 
-**baseurl** the base URL to your jira installation (**use https** if you are using a secured JIRA installation)  
-**username** username for a user with viewing credentials  
-**password** password for a user with viewing credentials  
-**additional_fields** mapping of fields to display in morgue (other than key, summay, assignee, status)  
+**baseurl** the base URL to your jira installation (**use https** if you are using a secured JIRA installation)
+**username** username for a user with viewing credentials
+**password** password for a user with viewing credentials
+**additional_fields** mapping of fields to display in morgue (other than key, summay, assignee, status)
 
 ```
     {   "name": "jira",
@@ -107,8 +124,16 @@ make unittests
 4. Push the branch up to GitHub (bonus points for topic branches)
 5. Send a pull request to the etsy/morgue project.
 
+## FAQ
 
+### When I visit a detail event page, I just see a "loooool"
 
+You may have created your schemas before the [pull request 19](https://github.com/etsy/morgue/pull/19) which introduced breaking schema changes.
+Simply run the migration command to update your schemas:
+
+```
+    alter table postmortems change etsystatustime statustime int(11) UNSIGNED NOT NULL;
+```
 
 [1]: http://vimeo.com/77206751
 

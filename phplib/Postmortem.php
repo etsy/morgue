@@ -25,7 +25,7 @@ class Postmortem {
      *                 - summary => the summary of the post mortem
      *                 - starttime => start time as unix timestamp
      *                 - endtime   => end time as unix timestamp
-     *                 - etsystatustime => etsystatus time as unix timestamp
+     *                 - statustime => status time as unix timestamp
      *                 - detecttime  => detect time as unix timestamp
      * @param $conn - PDO connection object, will be newly instantiated when
      *                null (default: null)
@@ -513,4 +513,17 @@ class Postmortem {
         }
     }
 
+    /**
+      * Provide the different severity levels for a post mortem event
+      *
+      * @returns array of severity levels
+      */
+    static function get_severity_levels() {
+        $config = Configuration::get_configuration();
+        if (isset($config['severity']) && isset($config['severity']['levels'])) {
+            return $config['severity']['levels'];
+        } else {
+            return array('default');
+        }
+    }
 }

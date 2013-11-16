@@ -72,13 +72,28 @@ Filler, to keep the same size
    <div class="control-group">
      <label class="control-label severity_levels" id="event-severity">Severity: </label>
        <div class="controls controls-row">
-        <select id="severity-select" name="severity" class="input-small">
-        <?php foreach (range(0, 5) as $a_severity) : ?>
-          <option value="<?php echo $a_severity ?>"
-            <?php if ($a_severity == $severity) { echo "selected=\"true\"";}?>>
-            <?php echo $a_severity ?>
-          </option>
-        <?php endforeach ?>
+        <select id="severity-select" name="severity" class="input-small" title="
+        <?php
+           $config = Configuration::get_configuration();
+           if (isset($config['severity']) && isset($config['severity']['tooltip_title'])) {
+               echo $config['severity']['tooltip_title'];
+            } else {
+                echo "Severity Levels";
+            }
+        ?>
+        ">
+
+        <?php
+        $severity_levels = Postmortem::get_severity_levels();
+        foreach ($severity_levels as $level => $desc) {
+            $sev_level = $level + 1;
+            echo '<option value="' . $sev_level . '" description="' . $desc . '"';
+            if ($sev_level == $severity) {
+                echo 'selected="true"';
+            }
+            echo '>' . $sev_level . '</option>';
+        }
+        ?>
         </select>
       </div>
     </div>
