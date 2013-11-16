@@ -34,13 +34,27 @@
       <?php
         foreach ($channels as $channel) {
             echo "<tr class=\"channel-row\">";
-            echo "<td><a role=\"button\" class=\"btn\" >$channel[channel]</a></td>";
+            echo "<td><a role=\"button\" class=\"btn ircshow\" >$channel[channel]</a></td>";
             echo "<td><span id=\"channel-$channel[id]\" class=\"close\">&times;</span></td>";
             echo "</tr>";
         }
       ?>
     </tbody>
   </table>
+</div>
+
+ <div id="ircmodal" class="modal hide fade bigModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="irc-modal-headline"></h3>
+        <img src="/assets/img/ajax-loader.gif" id="irc-loader"></img>
+    </div>
+    <div id="irc-modal-body" class="modal-body"></div>
+    <div class="modal-footer">
+      <button class="btn irc_paste" data-dismiss="modal" aria-hidden="true">Paste to What Happened</button>
+      <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+    </div>
+  </div>
 </div>
 
 <div class="row-fluid"><br/></div>
