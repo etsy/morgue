@@ -110,6 +110,12 @@ Open http://localhost:8000 to view Morgue
     },
 ```
 
+### IRC Feature
+
+When enabled, the irc features allow the reporting of the IRC channels discussions were happening during the event. The postmortem tools tries to retrieve the list of channels in 2 ways:
+ - calling the **'morgue_get_irc_channels_list'** if it exits (this function is expected to return an array of strings)
+ - retrieving the "channels" array from the 'irc' feature config stanza
+
 ## Tests
 You can run the unit test suite with:
 ```
