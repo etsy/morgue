@@ -55,8 +55,8 @@
         </div>
       </div>
       <div class="control-group">
-      <label id="severity_levels" class="control-label severity_levels" for="severity">Severity</label><p>
-      <div class="controls">
+      <label id="severity_levels" class="control-label severity_levels" for="severity">Severity</label>
+        <div class="controls">
           <select id="severity" name="severity" class="input-small">
           <?php
           $severity_levels = Postmortem::get_severity_levels();
@@ -64,7 +64,7 @@
             echo '<option>' . $a_severity . '</option>';
           } ?>
           </select>
-      </div>
+        </div>
       </div>
 
     <span id="titleinfo"> Title has to contain at least 3 characters </span>
