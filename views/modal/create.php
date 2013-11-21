@@ -55,13 +55,25 @@
         </div>
       </div>
       <div class="control-group">
-      <label id="severity_levels" class="control-label severity_levels" for="severity">Severity</label>
+      <label id="event-severity" class="control-label severity_levels" for="severity">Severity</label>
         <div class="controls">
-          <select id="severity" name="severity" class="input-small">
+          <select id="severity-select" name="severity" class="input-small" title="
+          <?php
+          $config = Configuration::get_configuration();
+          if (isset($config['severity']) && isset($config['severity']['tooltip_title'])) {
+            echo $config['severity']['tooltip_title'];
+          } else {
+            echo "Severity Levels";
+          }
+          ?>
+          ">
+
           <?php
           $severity_levels = Postmortem::get_severity_levels();
-          foreach (range(1, count($severity_levels)) as $a_severity) {
-            echo '<option>' . $a_severity . '</option>';
+          foreach ($severity_levels as $key => $severity_description) {
+              $level = $key + 1;
+              $severity_option = "<option value='{$level}' description='{$severity_description}'>{$level}</option>";
+              echo $severity_option;
           } ?>
           </select>
         </div>
