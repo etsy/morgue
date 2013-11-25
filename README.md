@@ -34,9 +34,18 @@ as well as storing relevant links and graphs. This [talk][1] from DevOpsDays NYC
 - Apache
 - mod_rewrite
 
+### Create a morgue configuration file
+
+In the cloned repo, use the **example.json** file as a template to create your 
+own configuration file.
+
+```
+cp config/example.json config/development.json
+``` 
+
 ### Apache
 This is a basic example for an Apache vhost. The `MORGUE_ENVIRONMENT` variable
-is used to determine which config file to use.
+is used to determine which config file to use (see above step).
 
 ```
     <VirtualHost *:80>
@@ -58,7 +67,7 @@ Restart apache and hit the servername you defined above.
 
 ### MySQL
 Create a database named morgue and give access to the morgue user with the
-morgue password for the dev environment (defined in config/development.json):
+morgue password defined in the config file you created at step 1
 ```
 CREATE DATABASE morgue;
 CREATE USER 'morgue'@'localhost' IDENTIFIED BY 'morgue';
