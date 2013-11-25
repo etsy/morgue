@@ -113,7 +113,10 @@ Open http://localhost:8000 to view Morgue
 
 ### IRC Log feature
 
-When the IRC feature is enabled, the channels listed for a given postmortem will be clickable buttons that attempt to retrieve the IRC log history. In order to view that history in Morgue, you need to implement the irclogs endpoint. You can do so by:
+When the IRC feature is enabled, the channels listed for a given postmortem will
+ be clickable buttons that attempt to retrieve the IRC log history. In order to
+ view that history in Morgue, you need to implement the irclogs endpoint.
+You can do so by:
 
 1. Create a new feature
 
@@ -135,15 +138,27 @@ touch features/irclogs/routes.php
 
 3. Implement the irclogs route
 
-The irclogs route receives parameters in a get request. Morgue will query the irclogs endpoint with an increasing offset of 20 until it receives no data. Regardless of how you implement that endpoint, you need to return an empty response when you no longer have data to feed.
+The irclogs route receives parameters in a get request. Morgue will query the 
+irclogs endpoint with an increasing offset of **20** until it receives no data.
+Regardless of how you implement that endpoint, you need to return an empty 
+response when you no longer have data to feed.
 
-The expected response from the *irclogs* endpoint is a JSon array with the 3 elements: nick, time and message.
+The expected response from the *irclogs* endpoint is a JSon array with the 3 
+elements: nick, time and message.
+```
+[
+  {'nick':'foo','time':'10:30:03 PM', 'message':'I see foo'},
+  {'nick':'bar','time':'10:35:00 PM', 'message':'Oh, I see bar'},
+  {'nick':'foo','time':'10:37:34 PM', 'message':'turned out it was baz'}
+]
+```
 
  A dummy implementation could look like (content of features/irclogs/routes.php)
 
 ```
 <?php
 
+/** irclog enpoint - return IRC logs paginated by 20 entries */
 $app->get('/irclogs', function () use ($app) {
     header("Content-Type: application/json");
     $start_date = $app->request()->get('start_date');
