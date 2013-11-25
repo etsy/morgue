@@ -119,6 +119,75 @@ retrieve the list of channels in 2 ways:
  expected to return an array of strings)
  - retrieving the "channels" array from the 'irc' feature config stanza
 
+### IRC Log feature
+
+When the IRC feature is enabled, the channels listed for a given postmortem will
+ be clickable buttons that attempt to retrieve the IRC log history. In order to
+ view that history in Morgue, you need to implement the irclogs endpoint.
+You can do so by:
+
+1. Create a new feature
+
+mkdir features/irclogs
+touch features/irclogs/lib.php
+touch features/irclogs/routes.php
+
+**Note** : morgue expects both a lib.php and routes.php file in your feature.
+
+2. Add the new feature to your config file (in the features array)
+
+
+```
+    {   "name": "irclogs",
+        "enabled": "on",
+        "endpoint": "https://path.to.irseach.endpoint"
+    }
+```
+
+3. Implement the irclogs route
+
+The irclogs route receives parameters in a get request. Morgue will query the 
+irclogs endpoint with an increasing offset of **20** until it receives no data.
+Regardless of how you implement that endpoint, you need to return an empty 
+response when you no longer have data to feed.
+
+The expected response from the *irclogs* endpoint is a JSon array with the 3 
+elements: nick, time and message.
+```
+[
+  {'nick':'foo','time':'10:30:03 PM', 'message':'I see foo'},
+  {'nick':'bar','time':'10:35:00 PM', 'message':'Oh, I see bar'},
+  {'nick':'foo','time':'10:37:34 PM', 'message':'turned out it was baz'}
+]
+```
+
+ A dummy implementation could look like (content of features/irclogs/routes.php)
+
+```
+<?php
+
+/** irclog enpoint - return IRC logs paginated by 20 entries */
+$app->get('/irclogs', function () use ($app) {
+    header("Content-Type: application/json");
+    $start_date = $app->request()->get('start_date');
+    $start_time = $app->request()->get('start_time');
+    $end_date = $app->request()->get('end_date');
+    $end_time = $app->request()->get('end_time');
+    $timezone = $app->request()->get('timezone');
+    $channel = $app->request()->get('channel');
+    $offset = $app->request()->get('offset');
+
+    if ($offset == 0) {
+        $results = array(
+            array('nick' => 'foo','time' => '10:55 PM', 'message' => 'bar'),
+        );
+    } else {
+        $results = array();
+    }
+    echo json_encode($results);
+});
+```
+
 ## Tests
 You can run the unit test suite with:
 ```
