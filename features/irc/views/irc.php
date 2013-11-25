@@ -6,8 +6,7 @@
  } else {
      $channels = array();
  }
- $irc_config = Configuration::get_configuration("irc");
- $irc_channels = $irc_config["channels"];
+ $irc_channels = Irc::get_irc_channels_list();
 ?>
 <div class="row-fluid">
   <legend for="timeline">IRC Channel(s)</legend>

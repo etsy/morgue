@@ -7,6 +7,23 @@ class Irc {
     const ERROR = Persistence::ERROR;
 
     /**
+     * get a list of the IRC channels that can be selected for a given postmortem
+     * if the 'morgue_get_irc_channels_list' exists, call it and return
+     * its results - otherwise, lookup the config file for ['irc']['channels']
+     *
+     * @returns array of IRC channels strings
+     */
+    static function get_irc_channels_list(){
+        if (function_exists("morgue_get_irc_channels_list")) {
+            return morgue_get_irc_channels_list();
+        } else {
+            $irc_config = Configuration::get_configuration("irc");
+            $channels = isset($irc_config["channels"]) ? $irc_config["channels"] : array();
+            return $channels;
+        }
+    }
+
+    /**
      * get all IRC channels associated with an event. The single channel
      * maps have the keys "id" and "channel".
      *
@@ -128,8 +145,6 @@ class Irc {
         }
         return Persistence::flag_as_undeleted($table_name, 'postmortem_id', $theid, $conn);
     }
-
-
 
 }
 
