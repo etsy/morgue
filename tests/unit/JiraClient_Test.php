@@ -21,12 +21,6 @@ class JiraClientTest extends PHPUnit_Framework_TestCase {
         );
     }
 
-    public function testObjectCreation() {
-        $curl_client = new CurlClient();
-        $jira = new JiraClient($curl_client);
-        $this->assertEquals('JiraClient', get_class($jira));
-    }
-
     public function test_getJiraApiResponse_withTickets() {
 
         // set up expectations and return value
