@@ -17,11 +17,21 @@ $app = new Slim();
 // must be require_once'd after the Slim autoloader is registered
 require_once __DIR__.'/phplib/AssetVersionMiddleware.php';
 
-// helper method for returning the users current timezone
-// if set, otherwise defaulting to 'America/New_York'
+// helper method for returning the selected timezone.
+// If set, get the user timezone else get it from the global config
+// otherwise default to 'America/New_York'
 // returns: string
 function getUserTimezone() {
-    return isset($_SESSION['timezone']) ? $_SESSION['timezone'] : 'America/New_York';
+    $config = Configuration::get_configuration();
+    $tz = 'America/New_York';
+
+    if ( isset($_SESSION['timezone']) ) {
+      $tz = $_SESSION['timezone'];
+    } else if ( isset($config['timezone']) ) {
+      $tz = $config['timezone'];
+    }
+
+    return $tz;
 }
 
 // helper method to sort events reverse by starttime

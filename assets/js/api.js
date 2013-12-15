@@ -365,7 +365,7 @@ function update_detectdate_for_event() {
         url: url, 
         data: {
                detect_date: $("input#event-detect-input-date").val(),
-               timezone: 'America/New_York'
+               timezone: $('#current_tz').text()
                }, 
         type: "PUT",
         success: function () { show_save_status("Detect date", true);},
@@ -380,7 +380,7 @@ function update_detecttime_for_event() {
         url: url, 
         data: {
                detect_time: $("input#event-detect-input-time").val(),
-               timezone: 'America/New_York'
+               timezone: $('#current_tz').text()
                }, 
         type: "PUT",
         success: function () { show_save_status("Detect time", true);},
@@ -396,7 +396,7 @@ function update_statusdatetime_for_event() {
         url: url, 
         data: {
                status_datetime: $("input#event-status-input-date").val() + ' ' + $("input#event-status-input-time").val(),
-               timezone: 'America/New_York'
+               timezone: $('#current_tz').text()
                }, 
         type: "PUT",
         success: function () { show_save_status("Status time", true);},
@@ -410,7 +410,7 @@ function update_enddate_for_event() {
         url: url, 
         data: {
                end_date: $("input#event-end-input-date").val(),
-               timezone: 'America/New_York'
+               timezone: $('#current_tz').text()
                }, 
         type: "PUT",
         success: function () { show_save_status("End date", true);},
@@ -425,7 +425,7 @@ function update_endtime_for_event() {
         url: url, 
         data: {
                end_time: $("input#event-end-input-time").val(),
-               timezone: 'America/New_York'
+               timezone: $('#current_tz').text()
                }, 
         type: "PUT",
         success: function () { show_save_status("End time", true);},
@@ -441,7 +441,7 @@ function update_startdate_for_event() {
         url: url, 
         data: {
                start_date: $("input#event-start-input-date").val(),
-               timezone: 'America/New_York'
+               timezone: $('#current_tz').text()
                }, 
         type: "PUT",
         success: function () { show_save_status("Start date", true);},
@@ -456,7 +456,7 @@ function update_starttime_for_event() {
         url: url, 
         data: {
                start_time: $("input#event-start-input-time").val(),
-               timezone: 'America/New_York'
+               timezone: $('#current_tz').text()
                }, 
         type: "PUT",
         success: function () { show_save_status("Start time", true);},

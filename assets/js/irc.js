@@ -72,7 +72,7 @@ $('#ircchannels').on('click', 'a.ircshow', function() {
     end_date: enddate,
     end_time: endtime,
     channel: channel.replace("#",""),
-    timezone: "America/New_York",
+    timezone: $('#current_tz').text(),
     offset: 0
   };
   $('#irc-modal-headline').html(topic);
