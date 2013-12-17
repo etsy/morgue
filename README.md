@@ -8,6 +8,8 @@ pluggable feature system and can pull in related information from IRC and JIRA
 as well as storing relevant links and graphs. This [talk][1] from DevOpsDays NYC
 2013 gives an introduction and shows some of its features.
 
+You can also join `#morgue` on Freenode IRC if you have questions.
+
 ## Morgue tour
 
 ### Index page
