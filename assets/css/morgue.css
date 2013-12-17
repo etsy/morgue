@@ -38,6 +38,10 @@ a.jira_default {}
   display: inline-block;
 }
 
+#tag_well>span.tag, #tag_paragraph>span.tag>a {
+  cursor: pointer;
+}
+
 #tag_paragraph {
   width: 80%;
 }
