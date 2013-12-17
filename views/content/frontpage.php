@@ -10,8 +10,8 @@
           </tr>
         </thead>
       <?php
-      $timezone = isset($_SESSION['timezone']) ? $_SESSION['timezone'] : 'America/New_York';
-      $tz = new DateTimeZone($timezone);
+
+      $tz = new DateTimeZone( getUserTimezone() );
       foreach ($events as $event) {
         $start = new DateTime("@".$event["starttime"]);
         $start->setTimezone($tz);
