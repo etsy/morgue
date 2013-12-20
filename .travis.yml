@@ -6,4 +6,5 @@ php:
 script: make unittests
 notifications:
   email: false
-  irc: false
+  irc:
+  - irc.freenode.org#morgue
