@@ -58,7 +58,14 @@
         "additional_fields" : {
         }
     },
-
+	
+    {   "name": "zabbix",
+        "enabled": "on",
+		"baseurl": "http://zabbix.foo.com/api_jsonrpc.php",
+        "username": "zabbix_user",
+        "password": "zabbix_password"
+    },
+	
     {   "name": "links",
         "enabled": "on"
     },
