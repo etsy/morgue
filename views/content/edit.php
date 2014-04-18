@@ -180,7 +180,6 @@ foreach ($config['feature'] as $feature) {
 <script type="text/javascript" src="/assets/js/api.js"></script>
 <script type="text/javascript" src="/assets/js/images.js"></script>
 <script type="text/javascript" src="/assets/js/jira.js"></script>
-<script type="text/javascript" src="/assets/js/zabbix.js"></script>
 <script type="text/javascript" src="/assets/js/tags.js"></script>
 <script type="text/javascript" src="/assets/js/irc.js"></script>
 <script type="text/javascript" src="/assets/js/markdown.js"></script>
