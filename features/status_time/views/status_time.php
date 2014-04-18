@@ -25,9 +25,10 @@
              class="input-mini timeentry" type="text" value="" >
           <a href="#" id="clear-status" role="button" class="btn">Clear</a>
       </div>
-      </div>
-      </div>
+
      <?php } ?>
+	       </div>
+      </div>
     </div>
   </form>
 </div>
