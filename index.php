@@ -67,6 +67,7 @@ function default_status_time() {
     return new DateTime('1970-01-01', new DateTimeZone('UTC'));
 }
 
+
 $app->add(
     new Slim_Middleware_SessionCookie(
         array(
@@ -91,7 +92,7 @@ $env = $app->environment();
 $env['admin'] = MorgueAuth::get_auth_data();
 
 $app->get('/', function() use ($app) {
-    $content = 'frontpage';
+    $content = 'content/frontpage';
     $show_sidebar = true;
 
     $selected_tags = trim($app->request()->get('tags'));
@@ -209,7 +210,7 @@ $app->get('/events/:id', function($id) use ($app) {
     $resolvetime = getTimeString($endtime - $detect_time);
     $undetecttime = getTimeString($detect_time - $starttime);
 
-    $content = 'edit';
+    $content = 'content/edit';
 
     $curl_client = new CurlClient();
 
@@ -398,6 +399,7 @@ $app->get('/ping', function () use ($app) {
     header("Content-Type: application/json");
     echo json_encode(array('status' => 'ok'));
 });
+
 
 /*
  * Now include all routes and libraries for features before actually running the app
