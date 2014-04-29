@@ -47,6 +47,13 @@ class Configuration {
         return false;
     }
 
+    /**
+     * get_navbar_features
+     *
+     * @static
+     * @access public
+     * @return an array of feature data with all enabled nagbar features
+     */
     static function get_navbar_features() {
         $navbar_features = array();
         $c = self::get_configuration();
