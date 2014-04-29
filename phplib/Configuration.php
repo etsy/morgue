@@ -46,4 +46,18 @@ class Configuration {
         }
         return false;
     }
+
+    static function get_navbar_features() {
+        $navbar_features = array();
+        $c = self::get_configuration();
+        foreach ($c['feature'] as $feature) {
+
+            if (array_key_exists('navbar', $feature) &&
+                $feature['navbar'] === 'on' &&
+                $feature['enabled'] === 'on') {
+                $navbar_features[] = $feature;
+            }
+        }
+        return $navbar_features;
+    }
 }
