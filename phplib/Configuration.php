@@ -27,4 +27,23 @@ class Configuration {
             return array();
         }
     }
+
+    /**
+     * feature_enabled
+     *
+     * @param mixed $name
+     * @static
+     * @access public
+     * @return boolean if the named feature is marked as 'enabled' => 'on'
+     */
+    static function feature_enabled($name = null) {
+        if (!$name) {
+            return false;
+        }
+        $c = self::get_configuration($name);
+        if ($c['enabled'] === 'on') {
+            return true;
+        }
+        return false;
+    }
 }
