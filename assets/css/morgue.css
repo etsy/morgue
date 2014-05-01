@@ -67,3 +67,13 @@ a.jira_default {}
 #summary {
   width: 100%;
 }
+
+.modal.fade {
+  /* this is needed because the hidden modal dom
+   * elements block access to the navbar links */
+  top: -125%;
+}
+
+
+
+

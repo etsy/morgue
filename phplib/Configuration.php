@@ -27,4 +27,44 @@ class Configuration {
             return array();
         }
     }
+
+    /**
+     * feature_enabled
+     *
+     * @param mixed $name
+     * @static
+     * @access public
+     * @return boolean if the named feature is marked as 'enabled' => 'on'
+     */
+    static function feature_enabled($name = null) {
+        if (!$name) {
+            return false;
+        }
+        $c = self::get_configuration($name);
+        if ($c['enabled'] === 'on') {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * get_navbar_features
+     *
+     * @static
+     * @access public
+     * @return an array of feature data with all enabled nagbar features
+     */
+    static function get_navbar_features() {
+        $navbar_features = array();
+        $c = self::get_configuration();
+        foreach ($c['feature'] as $feature) {
+
+            if (array_key_exists('navbar', $feature) &&
+                $feature['navbar'] === 'on' &&
+                $feature['enabled'] === 'on') {
+                $navbar_features[] = $feature;
+            }
+        }
+        return $navbar_features;
+    }
 }

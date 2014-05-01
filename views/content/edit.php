@@ -132,18 +132,20 @@ Filler, to keep the same size
 </div>
 
 <?php
+        $config = Configuration::get_configuration();
+        $edit_page_features = $config['edit_page_features'];
 
-$config = Configuration::get_configuration();
-foreach ($config['feature'] as $feature) {
-    if ($feature['enabled'] == "on") {
-        $view_file = $feature['name'] . '/views/' . $feature['name'] . '.php';
-        if (file_exists('features/' . $view_file)) {
-            include $view_file;
-        } else {
-            error_log('No views found for ' . $feature['name'] . ' feature');
+        foreach ($edit_page_features as $feature_name) {
+            $feature = Configuration::get_configuration($feature_name);
+            if ($feature['enabled'] == "on") {
+                $view_file = $feature['name'] . '/views/' . $feature['name'] . '.php';
+                if (file_exists('features/' . $view_file)) {
+                    include $view_file;
+                } else {
+                    error_log('No views found for ' . $feature['name'] . ' feature');
+                }
+            }
         }
-    }
-}
 ?>
 
 <div class="row-fluid"><br/></div>

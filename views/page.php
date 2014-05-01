@@ -22,7 +22,15 @@
     <div class="container-fluid">
       <div class="row-fluid">
         <div class="span9">
-          <?php include __DIR__.'/content/'.$content.'.php' ?>
+<?php
+    // include our $content view if we can find it
+    $incpath = stream_resolve_include_path($content .".php");
+    if ($incpath !== false) {
+        include $incpath;
+    } else {
+        echo "Could not find $content";
+    }
+?>
         </div>
         <div class="span3">
           <?php if($show_sidebar == true) {
