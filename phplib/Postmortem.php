@@ -195,6 +195,43 @@ class Postmortem {
     }
 
     /**
+     * get_events_by_date
+     *
+     * @param mixed $start_date
+     * @param mixed $end_date
+     * @param mixed $conn
+     * @static
+     * @access public
+     * @return void
+     */
+    static function get_events_by_date($start_date = null, $end_date = null, $conn = null) {
+        $conn = $conn ?: Persistence::get_database_object();
+        $columns = array('id', 'title', 'starttime', 'endtime', 'severity', 'summary');
+
+        // set some default date ranges - 1 month in this case
+        if (!$start_date) {
+            $start_date = time() - (30 * 86400);
+        }
+        if (!$end_date) {
+            $end_date = time();
+        }
+
+        $tween = new StdClass();
+        $tween->operator = "BETWEEN";
+        $tween->min_value = $start_date;
+        $tween->max_value =  $end_date;
+
+        $deleted = new StdClass();
+        $deleted->operator = "=";
+        $deleted->value = '0';
+
+        $where = array('starttime' => $tween, 'deleted' => $deleted);
+
+        $data = Persistence::range_query($columns, "postmortems", $where, $conn);
+        return $data;
+    }
+
+    /**
      * Get all tags. The tags have the keys "id" and "title"
      *
      * @param $conn - a PDO connection object

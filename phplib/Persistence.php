@@ -151,6 +151,9 @@ class Persistence {
      * params. If the $multiple flag is set, rows are returned as an
      * associative array instead of only with a single value.
      *
+     * This is only good if your WHERE clause is checking for equlity. If you
+     * want to do a range query then user get_range_array instead.
+     *
      * @param $columns    - array of the columns you want data from
      * @param $table_name - name of table to get data from
      * @param $conn       - PDO connection object
@@ -206,10 +209,75 @@ class Persistence {
                 $get_sql .= ' WHERE ' . implode(' AND ', $placeholders);
             }
         }
+
+
         try {
             $ret = array();
             $stmt = $conn->prepare($get_sql);
             $stmt->execute($where);
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                array_push($ret, $row);
+            }
+            return array("status" => self::OK, "error" => "", "values" => $ret);
+        } catch(PDOException $e) {
+            return array("status" => self::ERROR, "error" => $e->getMessage(),
+                         "values" => array());
+        }
+    }
+
+    /**
+     * range_query
+     *
+     * Allowing queries with BETWEEN and other inequalities in the WHERE clause
+     *
+     * @param mixed $columns
+     * @param mixed $table_name
+     * @param array $where
+     * @param mixed $conn
+     * @static
+     * @access public
+     * @return database results array
+     */
+    static function range_query($columns, $table_name, $where = array(), $conn = null) {
+        $get_sql = 'SELECT ' . implode(',', $columns) . ' FROM ' . $table_name;
+
+        $placeholders = array();
+        $placeholder_values = array();
+
+        array_walk($where, function($value, $col) use (&$placeholders, &$placeholder_values) {
+            if (is_object($value)) {
+                $operator = $value->operator;
+                switch ($operator) {
+                case "=":  // not actually a range query
+                case "!=": // not actually a range query but not supported by get_array
+                case ">":
+                case "<":
+                case ">=":
+                case "<=":
+                    $placeholder_values[$col] = $value->value;
+                    $placeholders[] = sprintf('%s = :%s', $col, $col);
+                    break;
+
+                case "BETWEEN":
+                    $min_ph = 'min_' . $col;
+                    $max_ph = 'max_' . $col;
+                    $placeholder_values[$min_ph] = $value->min_value;
+                    $placeholder_values[$max_ph] = $value->max_value;
+                    $placeholders[] = sprintf('%s BETWEEN :%s AND :%s', $col, $min_ph, $max_ph);
+                    break;
+
+                default:
+                    break;
+                }
+            }
+        });
+
+        $get_sql .= " WHERE " . implode(' AND ', $placeholders);
+
+        try {
+            $ret = array();
+            $stmt = $conn->prepare($get_sql);
+            $stmt->execute($placeholder_values);
             while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                 array_push($ret, $row);
             }
