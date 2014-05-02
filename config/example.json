@@ -21,6 +21,18 @@
             "Anything worth mentioning not in the above levels"
         ]
     },
+    "edit_page_features" : [
+      "status_time",
+      "contact",
+      "calendar",
+      "summary",
+      "images",
+      "irc",
+      "jira",
+      "links",
+      "tags",
+      "history"
+    ],
 
     "feature": [
 
