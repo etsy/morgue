@@ -3,6 +3,7 @@ require_once __DIR__.'/phplib/CurlClient.php';
 require_once __DIR__.'/phplib/Postmortem.php';
 require_once __DIR__.'/phplib/Configuration.php';
 require_once __DIR__.'/phplib/Auth.php';
+
 require_once __DIR__.'/vendor/autoload.php';
 
 @include __DIR__.'/phplib/deploy_version.php';
@@ -85,6 +86,21 @@ $app->add(
 );
 
 $app->add(new AssetVersionMiddleware);
+
+
+
+/*
+ * Now include all routes and libraries for features before actually running the app
+ */
+foreach ($config['feature'] as $feature) {
+    if ($feature['enabled'] == "on") {
+        error_log("Including Feature {$feature['name']}");
+        include $feature['name'] . '/lib.php';
+        include $feature['name'] . '/routes.php';
+    }
+}
+
+
 
 // set admin info on the environment array
 // so it's available to our request handlers
@@ -401,14 +417,5 @@ $app->get('/ping', function () use ($app) {
 });
 
 
-/*
- * Now include all routes and libraries for features before actually running the app
- */
-foreach ($config['feature'] as $feature) {
-    if ($feature['enabled'] == "on") {
-        include $feature['name'] . '/lib.php';
-        include $feature['name'] . '/routes.php';
-    }
-}
 
 $app->run();
