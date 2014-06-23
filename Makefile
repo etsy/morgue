@@ -2,7 +2,7 @@
 # make it so
 #
 
-PHPUNIT:=phpunit --include-path=phplib --log-junit results.xml
+PHPUNIT:=./vendor/bin/phpunit --include-path=phplib --log-junit results.xml
 VERSION := $(shell git rev-parse --short HEAD)
 
 # targets
