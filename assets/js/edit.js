@@ -18,10 +18,9 @@ $.get("/events/"+get_current_event_id()+"/summary", function(data) {
     $("#summary").html(markdown.toHTML(summary));
 });
 
-$('.datepicker')
-  .datepicker({
-    format: 'mm/dd/yyyy'
-  });
+$('.datepicker').datepicker({
+    format: MORGUE.date_format
+});
 
 $('.timeentry')
   .timeEntry({

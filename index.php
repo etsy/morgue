@@ -35,6 +35,42 @@ function getUserTimezone() {
     return $tz;
 }
 
+function getDateformat() {
+    $config = Configuration::get_configuration();
+    $dateformat = "m/d/Y";
+
+    if ( isset($config['date_format']) ) {
+        $dateformat = $config['date_format'];
+    }
+
+    return $dateformat;
+}
+
+function getTimeformat() {
+    if ( show24hours() ) {
+        $time_format = "H:i";
+    } else {
+        $time_format = "g:iA";
+    }
+    return $time_format;
+}
+
+function show24hours($as_string = false) {
+    $config = Configuration::get_configuration();
+    $value = false;
+
+    if ( isset($config['show24hours']) 
+        && $config['show24hours']) {
+        $value = true;
+    }
+
+    if ( $as_string ) {
+        return var_export($value, true);
+    }
+
+    return $value;
+}
+
 // helper method to sort events reverse by starttime
 function cmp($first, $second) {
     if ($first['starttime'] == $second['starttime'] ) {
@@ -139,7 +175,6 @@ $app->get('/', function() use ($app) {
         $tags = array();
     }
 
-
     include __DIR__.'/views/page.php';
 });
 
@@ -149,6 +184,10 @@ $app->post('/timezone', function () use ($app) {
 });
 
 $app->post('/events', function () use ($app) {
+    $date_format = getDateformat();
+    $time_format = getTimeformat();
+    $datetime_format = $date_format . ' ' . $time_format;
+
     $title = $app->request()->post('title');
     $start_date = $app->request()->post('start_date');
     $start_time = $app->request()->post('start_time');
@@ -162,15 +201,15 @@ $app->post('/events', function () use ($app) {
     $severity = $app->request()->post('severity');
     $contact = $app->request()->post('contact');
     $gcal = $app->request()->post('gcal');
-    $startdate = new DateTime($start_date." ".$start_time, new DateTimeZone($timezone));
-    $enddate = new DateTime($end_date." ".$end_time, new DateTimeZone($timezone));
-    $detectdate = new DateTime($detect_date." ".$detect_time, new DateTimeZone($timezone));
+    $tz = new DateTimeZone($timezone);
+    $startdate = Datetime::createFromFormat($datetime_format, $start_date . " " . $start_time, $tz);
+    $enddate = Datetime::createFromFormat($datetime_format, $end_date . " " . $end_time, $tz);
+    $detectdate = Datetime::createFromFormat($datetime_format, $detect_date . " " . $detect_time, $tz);
     if (!$status_date || !$status_time) {
         $statusdate = default_status_time();
     } else {
-        $statusdate = new DateTime("$status_date $status_time", new DateTimeZone($timezone));
+        $statusdate = new DateTime("$status_date $status_time", $tz);
     }
-
 
     $event = array(
         "title" => $title,
@@ -208,6 +247,9 @@ $app->get('/events/:id', function($id) use ($app) {
     $gcal = $event["gcal"];
     $contact = $event["contact"];
     $summary = $event["summary"];
+    $date_format = getDateformat();
+    $time_format = getTimeformat();
+    $show24hours = show24hours(true);
 
     $tz = new DateTimeZone($timezone);
     $start_datetime = new DateTime("@$starttime");
@@ -275,6 +317,9 @@ $app->put('/events/:id', function ($id) use ($app) {
         return;
     }
 
+    $date_format = getDateformat();
+    $time_format = getTimeFormat();
+
     $params = $app->request()->params();
     foreach ($params as $key => $value) {
         switch($key) {
@@ -294,11 +339,12 @@ $app->put('/events/:id', function ($id) use ($app) {
             $starttime = $event["starttime"];
             $edate = new DateTime("@$starttime");
             $edate->setTimezone($timezone);
-            $new_date = date_parse($value);
             if ($key == "start_time") {
-                $edate->setTime($new_date["hour"], $new_date["minute"]);
+                $new_date = date_create_from_format($time_format, $value, $timezone);
+                $edate->setTime($new_date->format("H"), $new_date->format("i"));
             } elseif ($key == "start_date") {
-                $edate->setDate($new_date["year"], $new_date["month"], $new_date["day"]);
+                $new_date = date_create_from_format($date_format, $value, $timezone);
+                $edate->setDate($new_date->format("Y"), $new_date->format("m"), $new_date->format("d"));
             }
             $event["starttime"] = $edate->getTimeStamp();
             break;
@@ -312,11 +358,12 @@ $app->put('/events/:id', function ($id) use ($app) {
             $endtime = $event["endtime"];
             $edate = new DateTime("@$endtime");
             $edate->setTimezone($timezone);
-            $new_date = date_parse($value);
             if ($key == "end_time") {
-                $edate->setTime($new_date["hour"], $new_date["minute"]);
+                $new_date = date_create_from_format($time_format, $value, $timezone);
+                $edate->setTime($new_date->format("H"), $new_date->format("i"));
             } elseif ($key == "end_date") {
-                $edate->setDate($new_date["year"], $new_date["month"], $new_date["day"]);
+                $new_date = date_create_from_format($date_format, $value, $timezone);
+                $edate->setDate($new_date->format("Y"), $new_date->format("m"), $new_date->format("d"));
             }
             $event["endtime"] = $edate->getTimeStamp();
             break;
@@ -332,9 +379,11 @@ $app->put('/events/:id', function ($id) use ($app) {
             $edate->setTimezone($timezone);
             $new_date = date_parse($value);
             if ($key == "detect_time") {
-                $edate->setTime($new_date["hour"], $new_date["minute"]);
+                $new_date = date_create_from_format($time_format, $value, $timezone);
+                $edate->setTime($new_date->format("H"), $new_date->format("i"));
             } elseif ($key == "detect_date") {
-                $edate->setDate($new_date["year"], $new_date["month"], $new_date["day"]);
+                $new_date = date_create_from_format($date_format, $value, $timezone);
+                $edate->setDate($new_date->format("Y"), $new_date->format("m"), $new_date->format("d"));
             }
             $event["detecttime"] = $edate->getTimeStamp();
             break;

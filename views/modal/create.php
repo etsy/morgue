@@ -87,7 +87,17 @@
   </div>
   </form>
 </div>
+<script type="text/javascript" src="/assets/js/jquery.plugin.min.js"></script>
 <script type="text/javascript" src="/assets/js/jquery.timeentry.min.js"></script>
+
+<?php 
+$config = Configuration::get_configuration();
+if (isset($config['locale'])
+      && file_exists(__DIR__ . '/../../assets/js/jquery.timeentry-' . $config['locale'] . '.js')) {
+          echo '<script type="text/javascript" src="/assets/js/jquery.timeentry-' . $config['locale']. '.js"></script>';
+}
+?>
+
 <script type="text/javascript" src="/assets/js/bootstrap-datepicker.js"></script>
 <script type="text/javascript" src="/assets/js/bootstrap-modal.js"></script>
 <script type="text/javascript" src="/assets/js/timehelpers.js"></script>
@@ -97,11 +107,11 @@
 <script type="text/javascript">
 $(document).ready(function () {
 
-    $('.datepicker')
-      .val($.datepicker.formatDate('mm/dd/yy', new Date()))
+    $('.input-small.datepicker')
       .datepicker({
-        format: 'mm/dd/yyyy'
-      });
+          format: MORGUE.date_format,
+          weekStart: MORGUE.weekstart
+      }).datepicker('setValue', new Date());
 
     $('.timeentry')
       .val(timeStringFromDate(new Date()))
@@ -112,7 +122,7 @@ $(document).ready(function () {
     $('#timezone').val('<?php echo getUserTimezone() ?>');
     $("#eventcreatebtn").attr("disabled", "true");
     $("#title").blur(function() {
-        if ($("#title").attr("value").length > 2) {
+        if ($("#title").prop("value").length > 2) {
             $("#eventcreatebtn").removeAttr("disabled");
         } else {
             $("#eventcreatebtn").attr("disabled", "true");

@@ -1,6 +1,7 @@
 {
     "environment": "development",
     "timezone": "Europe/Paris",
+    "locale": "fr",
 
     "database":
     {  "mysqlhost": "localhost",

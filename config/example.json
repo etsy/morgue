@@ -1,6 +1,8 @@
 {
     "environment": "development",
     "timezone": "Europe/Zurich",
+    "date_format": "d/m/Y",
+    "show24hours": true,
 
     "database":
     {  "mysqlhost": "localhost",
