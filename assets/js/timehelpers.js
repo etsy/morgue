@@ -20,10 +20,8 @@ function timeToDate(dateString) {
 
   var date = new Date();
   date.setHours(timeComponents[0]);
-  if (MORGUE.show_24_hours == false) {
-      if ((isPM && (date.getHours() != 12) || (!isPM && (date.getHours() == 12)))) {
-        date.setHours(date.getHours() + 12);
-      }
+  if ((isPM && (date.getHours() != 12) || (!isPM && (date.getHours() == 12)))) {
+    date.setHours(date.getHours() + 12);
   }
   date.setMinutes(timeComponents[1]);
 
@@ -33,17 +31,6 @@ function timeToDate(dateString) {
 function timeStringFromDate(date) {
   var hours = date.getHours();
   var minutes = date.getMinutes();
-  if (hours < 10) {
-    hours = '0' + hours;
-  }
-  if (minutes < 10) {
-    minutes = '0' + minutes;
-  }
-
-  if (MORGUE.show_24_hours) {
-      return hours + ':' + minutes;
-  }
-
   var apam = 'AM';
   if (hours >= 12) {
     hours = hours - 12;
@@ -51,6 +38,12 @@ function timeStringFromDate(date) {
   }
   if (hours == 0) {
     hours = 12;
+  }
+  if (hours < 10) {
+    hours = '0' + hours;
+  }
+  if (minutes < 10) {
+    minutes = '0' + minutes;
   }
   return hours + ':' + minutes + apam;
 }

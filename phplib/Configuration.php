@@ -16,12 +16,6 @@ class Configuration {
         $enviroment = getenv('MORGUE_ENVIRONMENT') ?: 'development';
         $configfile = dirname(__FILE__).'/../config/'.$enviroment.'.json';
         $config = json_decode(file_get_contents($configfile), true);
-        $locale_filename = __DIR__ . '/../config/locale_' . $config['locale'] . '.json';
-        if (isset($config['locale'])
-            && file_exists($locale_filename)) {
-                $locale_data = json_decode(file_get_contents($locale_filename), true);
-                $config = array_merge_recursive($config, $locale_data);
-        }
         if (is_null($name)) {
             return $config;
         } else {
