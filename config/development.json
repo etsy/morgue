@@ -64,8 +64,8 @@
     },
 
     {   "name": "jira",
-        "enabled": "on",
-        "baseurl": "https://jira.priv.blablacar.net",
+        "enabled": "off",
+        "baseurl": "https://example.com",
         "username": "morgue",
         "password": "jira_morgue_password",
         "additional_fields" : {
