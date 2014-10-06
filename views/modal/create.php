@@ -90,11 +90,14 @@
 <script type="text/javascript" src="/assets/js/jquery.plugin.min.js"></script>
 <script type="text/javascript" src="/assets/js/jquery.timeentry.min.js"></script>
 
-<?php 
+<?php
 $config = Configuration::get_configuration();
-if (isset($config['locale'])
-      && file_exists(__DIR__ . '/../../assets/js/jquery.timeentry-' . $config['locale'] . '.js')) {
-          echo '<script type="text/javascript" src="/assets/js/jquery.timeentry-' . $config['locale']. '.js"></script>';
+if ( isset($config['locale']) ) {
+
+    $filename = '/assets/js/jquery.timeentry-' . $config['locale'] . '.js';
+    if ( file_exists(__DIR__ . '/../..' . $filename) ) {
+      echo '<script type="text/javascript" src="', $filename, '"></script>';
+    }
 }
 ?>
 
