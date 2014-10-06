@@ -1,7 +1,12 @@
 {
     "environment": "development",
     "timezone": "Europe/Paris",
+
     "locale": "fr",
+    "date_format": "d/m/Y",
+    "date_format_front": "dd/mm/yyyy",
+    "show24hours": true,
+    "weekstart": 1,
 
     "database":
     {  "mysqlhost": "localhost",
