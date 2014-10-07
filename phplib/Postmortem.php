@@ -541,7 +541,7 @@ class Postmortem {
         $dt = DateTime::createFromFormat('U', (string)$history['create_date']);
         $who = $history['auth_username'];
         $who_html = Contact::get_html_for_user($who);
-        $when = $dt->format('H:i:s T, m/d/Y');
+        $when = $dt->format('H:i:s T, ' . getDateformat());
         switch ($history['action']) {
             case self::ACTION_ADD:
                 return 'Created by ' . $who_html . ' @ ' . $when;

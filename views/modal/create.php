@@ -87,7 +87,22 @@
   </div>
   </form>
 </div>
+<script type="text/javascript" src="/assets/js/jquery.plugin.min.js"></script>
 <script type="text/javascript" src="/assets/js/jquery.timeentry.min.js"></script>
+
+<?php
+$config = Configuration::get_configuration();
+if ( isset($config['locale']) ) {
+
+    $filename = '/assets/js/jquery.timeentry-' . $config['locale'] . '.js';
+    if ( file_exists(__DIR__ . '/../..' . $filename) ) {
+      echo '<script type="text/javascript" src="', $filename, '"></script>';
+    } else {
+        error_log('You configured a locale but there is no associated javascript file');
+    }
+}
+?>
+
 <script type="text/javascript" src="/assets/js/bootstrap-datepicker.js"></script>
 <script type="text/javascript" src="/assets/js/bootstrap-modal.js"></script>
 <script type="text/javascript" src="/assets/js/timehelpers.js"></script>
@@ -97,22 +112,24 @@
 <script type="text/javascript">
 $(document).ready(function () {
 
-    $('.datepicker')
-      .val($.datepicker.formatDate('mm/dd/yy', new Date()))
+    $('.input-small.datepicker')
       .datepicker({
-        format: 'mm/dd/yyyy'
-      });
+          format: MORGUE.date_format,
+          weekStart: MORGUE.weekstart
+      }).datepicker('setValue', new Date());
 
+    console.log(timeStringFromDate(new Date()));
     $('.timeentry')
       .val(timeStringFromDate(new Date()))
       .timeEntry({
         spinnerImage: ''
       });
+    console.log("did i go through ?");
 
     $('#timezone').val('<?php echo getUserTimezone() ?>');
     $("#eventcreatebtn").attr("disabled", "true");
     $("#title").blur(function() {
-        if ($("#title").attr("value").length > 2) {
+        if ($("#title").prop("value").length > 2) {
             $("#eventcreatebtn").removeAttr("disabled");
         } else {
             $("#eventcreatebtn").attr("disabled", "true");

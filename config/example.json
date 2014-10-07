@@ -2,6 +2,12 @@
     "environment": "development",
     "timezone": "Europe/Zurich",
 
+    "locale": "fr",
+    "date_format": "d/m/Y",
+    "date_format_front": "dd/mm/yyyy",
+    "show24hours": true,
+    "weekstart": 1,
+
     "database":
     {  "mysqlhost": "localhost",
         "mysqlport": 3306,

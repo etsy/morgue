@@ -11,14 +11,18 @@
         </thead>
       <?php
 
+      $date_format = getDateformat();
+      $time_format = getTimeformat();
+      $datetime_format = $date_format . ' ' . $time_format;
+
       $tz = new DateTimeZone( getUserTimezone() );
       foreach ($events as $event) {
         $start = new DateTime("@".$event["starttime"]);
         $start->setTimezone($tz);
-        $start = $start->format('m/d/Y G:ia');
+        $start = $start->format($datetime_format);
         $end = new DateTime("@".$event["endtime"]);
         $end->setTimezone($tz);
-        $end = $end->format('m/d/Y G:ia');
+        $end = $end->format($datetime_format);
         echo "<tr>";
         echo "<td><a href=/events/$event[id]>$event[title]</a></td>";
         echo "<td>$start</td>";

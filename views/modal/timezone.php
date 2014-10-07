@@ -7,7 +7,6 @@
     <form class="form-horizontal" method="post" action="/timezone">
       <div class="control-group">
         <label class="control-label" for="timezone">Timezone</label>
-    </form>
         <div class="controls">
           <select id="change_timezone" name="timezone" class="input-large">
             <?php $timezones = DateTimeZone::listIdentifiers(); ?>
@@ -22,6 +21,7 @@
     <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
     <button class="btn btn-primary" type="submit" id="tzupdatebtn" >Update</button>
   </div>
+  </form>
 </div>
 <script type="text/javascript">
 $(document).ready(function () {

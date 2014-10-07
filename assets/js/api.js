@@ -565,9 +565,10 @@ function show_status_fields() {
     if($fields.is(':hidden')) {
         $fields.prev().addClass('hidden');
         $fields.removeClass('hidden');
-        $('#event-status-input-date').val(
-            $.datepicker.formatDate('mm/dd/yy', new Date()))
-             .datepicker({format: 'mm/dd/yyyy'});
+        $('#event-status-input-date').datepicker({
+              format: MORGUE.date_format,
+              weekStart: MORGUE.weekstart
+      }).datepicker('setValue', new Date());
         $('#event-status-input-time').val(
             timeStringFromDate(new Date()))
             .timeEntry({spinnerImage: ''}).focus();
