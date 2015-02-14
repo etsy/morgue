@@ -57,6 +57,9 @@ class Configuration {
     static function get_navbar_features() {
         $navbar_features = array();
         $c = self::get_configuration();
+        if (!$c) {
+            return $navbar_features;
+        }
         foreach ($c['feature'] as $feature) {
 
             if (array_key_exists('navbar', $feature) &&
