@@ -133,16 +133,36 @@ Filler, to keep the same size
 
 <?php
         $config = Configuration::get_configuration();
+        // Set these in a more global scope. Methinks Configuration::get_configuration
+        // overwrites '$config' in places...
+        $custom_features = $config['custom_features'];
+        $custom_feature_path = $config['custom_feature_path'];
         $edit_page_features = $config['edit_page_features'];
 
         foreach ($edit_page_features as $feature_name) {
             $feature = Configuration::get_configuration($feature_name);
             if ($feature['enabled'] == "on") {
                 $view_file = $feature['name'] . '/views/' . $feature['name'] . '.php';
-                if (file_exists('features/' . $view_file)) {
-                    include $view_file;
+                // Check if we have custom features enabled and load the view.
+                if (isset($custom_features) && $custom_features == "on") {
+                    $custom_feature_view_file = $custom_feature_path . '/' . $view_file;
+                    if (file_exists($custom_feature_view_file)) {
+                        include $custom_feature_view_file;
+                    } else {
+                        // Try finding the feature in the core project.
+                        if (file_exists('features/' . $view_file)) {
+                            include $view_file;
+                        } else {
+                            error_log('No views found for ' . $feature['name'] . ' feature');
+                        }
+                    }
                 } else {
-                    error_log('No views found for ' . $feature['name'] . ' feature');
+                    // Look for the feature in the core project.
+                    if (file_exists('features/' . $view_file)) {
+                        include $view_file;
+                    } else {
+                        error_log('No views found for ' . $feature['name'] . ' feature');
+                    }
                 }
             }
         }
