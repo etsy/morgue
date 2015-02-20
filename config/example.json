@@ -33,8 +33,6 @@
       "tags",
       "history"
     ],
-    "custom_features": "on",
-    "custom_feature_path": "/usr/local/morgue_features",
     "feature": [
 
     {   "name": "status_time",
