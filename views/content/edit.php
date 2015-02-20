@@ -193,3 +193,22 @@ Filler, to keep the same size
 <script type="text/javascript" src="/assets/js/severity_tooltip.js"></script>
 <script type="text/javascript" src="/assets/js/forums.js"></script>
 <script type="text/javascript" src="/assets/js/edit.js"></script>
+<?php
+    // Enumerate any custom javascript and make them accessible externally.
+    // Requires that Morgue's config includes a custom asset alias and path
+    // that match a defined Alias directive in the Apache vhost config.
+    $config = Configuration::get_configuration();
+    if (isset($config['custom_assets']['alias']) and isset($config['custom_assets']['path'])) {
+        $custom_asset_alias = $config['custom_assets']['alias'];
+        $custom_asset_path = $config['custom_assets']['path'];
+        // Find dem scripts...
+        $custom_js = glob("$custom_asset_path/assets/js/*.js");
+        if ($custom_js) {
+            foreach ($custom_js as $js) {
+                // Replace the system path with the alias.
+                $aliased_js = str_replace($custom_asset_path, $custom_asset_alias, $js);
+                echo "<script type=\"text/javascript\" src=\"$aliased_js\"></script>";
+            }
+        }
+    }
+?>

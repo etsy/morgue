@@ -33,6 +33,11 @@
       "tags",
       "history"
     ],
+    "custom_assets": {
+        "note": "This alias must match an Alias directive in the Apache vhost config.",
+        "alias": "/morgue_custom_features",
+        "path": "/usr/local/morgue_features"
+    },
     "feature": [
 
     {   "name": "status_time",
