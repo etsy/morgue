@@ -194,21 +194,18 @@ Filler, to keep the same size
 <script type="text/javascript" src="/assets/js/forums.js"></script>
 <script type="text/javascript" src="/assets/js/edit.js"></script>
 <?php
-    // Enumerate any custom javascript and make them accessible externally.
-    // Requires that Morgue's config includes a custom asset alias and path
-    // that match a defined Alias directive in the Apache vhost config.
+    // Enumerate any custom javascript assets and make them accessible externally.
     $config = Configuration::get_configuration();
-    if (isset($config['custom_assets']['alias']) and isset($config['custom_assets']['path'])) {
-        $custom_asset_alias = $config['custom_assets']['alias'];
-        $custom_asset_path = $config['custom_assets']['path'];
-        // Find dem scripts...
-        $custom_js = glob("$custom_asset_path/assets/js/*.js");
-        if ($custom_js) {
-            foreach ($custom_js as $js) {
-                // Replace the system path with the alias.
-                $aliased_js = str_replace($custom_asset_path, $custom_asset_alias, $js);
-                echo "<script type=\"text/javascript\" src=\"$aliased_js\"></script>";
-            }
+    $edit_page_features = $config['edit_page_features'];
+    foreach ($edit_page_features as $feature_name) {
+        $feature = Configuration::get_configuration($feature_name);
+        if (isset($feature['custom_js_assets']) and $feature['custom_js_assets'] == "on") {
+            // Build up the path to the appropriate route for this asset.
+            // The feature's routes.php should include a route that locates and serves the static asset.
+            // The directory containing custom Morgue features should follow the same structure as the
+            //core project, including an 'assets/js/' directory. Doing this, the route declaration can
+            // call stream_resolve_include_path() to locate the asset via the include_path.
+            echo "<script type=\"text/javascript\" src=\"/$feature_name/assets/js/$feature_name.js\"></script>";
         }
     }
 ?>
