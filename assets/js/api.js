@@ -201,7 +201,7 @@ function make_summary_editable(text) {
 
   // if not a textarea already, create one and replace the original div with it
   } else {
-    $.get(
+    $.getJSON(
       "/events/"+get_current_event_id()+"/summary",
       function(data) {
         var textarea = $("<textarea></textarea>")
@@ -330,14 +330,13 @@ function summary_edit_save_button() {
  * just abort editing and display the stored data as rendered HTML
  */
 function summary_cancel_button() {
-  $.get("/events/"+get_current_event_id()+"/summary", function(data) {
-    var summary = (JSON.parse(data)).summary;
+  $.getJSON("/events/"+get_current_event_id()+"/summary", function(data) {
     var html = $("<div></div>");
     html.attr("id", "summary");
     html.attr("name", "summary");
     html.attr("class", "input-xxlarge");
     html.attr("rows", "10");
-    html.html(markdown.toHTML(summary));
+    html.html(markdown.toHTML(data.summary));
     $("#summary").remove();
     $("#summarywrapper").append(html);
     $("#summaryeditbutton").html("Edit");

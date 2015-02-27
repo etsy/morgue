@@ -20,8 +20,7 @@ $('#ircchannels').on('click', 'span.close', function () {
 });
 
 function get_channel_data(url, params, channels, success_callback, error_callback) {
-  $.get(url, params, function(data) {
-    data = JSON.parse(data);
+  $.getJSON(url, params, function(data) {
     if (data.length === 0) {
       success_callback(channels);
     } else {
