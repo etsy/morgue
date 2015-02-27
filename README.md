@@ -65,6 +65,9 @@ is used to determine which config file to use (see above step).
     </VirtualHost>
 ```
 
+**NOTE**: If you maintain a custom Morgue features outside the document root, be
+sure to include that directory in the ``php_value include_path`` directive.
+
 Restart apache and hit the servername you defined above.
 
 ### MySQL

@@ -139,7 +139,9 @@ Filler, to keep the same size
             $feature = Configuration::get_configuration($feature_name);
             if ($feature['enabled'] == "on") {
                 $view_file = $feature['name'] . '/views/' . $feature['name'] . '.php';
-                if (file_exists('features/' . $view_file)) {
+                // Walk the include path looking for our view file.
+                $view_path_exists = stream_resolve_include_path($view_file);
+                if ($view_path_exists) {
                     include $view_file;
                 } else {
                     error_log('No views found for ' . $feature['name'] . ' feature');
@@ -191,3 +193,19 @@ Filler, to keep the same size
 <script type="text/javascript" src="/assets/js/severity_tooltip.js"></script>
 <script type="text/javascript" src="/assets/js/forums.js"></script>
 <script type="text/javascript" src="/assets/js/edit.js"></script>
+<?php
+    // Enumerate any custom javascript assets and make them accessible externally.
+    $config = Configuration::get_configuration();
+    $edit_page_features = $config['edit_page_features'];
+    foreach ($edit_page_features as $feature_name) {
+        $feature = Configuration::get_configuration($feature_name);
+        if (isset($feature['custom_js_assets']) and $feature['custom_js_assets'] == "on") {
+            // Build up the path to the appropriate route for this asset.
+            // The feature's routes.php should include a route that locates and serves the static asset.
+            // The directory containing custom Morgue features should follow the same structure as the
+            //core project, including an 'assets/js/' directory. Doing this, the route declaration can
+            // call stream_resolve_include_path() to locate the asset via the include_path.
+            echo "<script type=\"text/javascript\" src=\"/$feature_name/assets/js/$feature_name.js\"></script>";
+        }
+    }
+?>

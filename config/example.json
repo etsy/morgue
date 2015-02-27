@@ -31,9 +31,9 @@
       "jira",
       "links",
       "tags",
-      "history"
+      "history",
+      "custom_feature"
     ],
-
     "feature": [
 
     {   "name": "status_time",
@@ -81,6 +81,11 @@
 
     {   "name": "history",
         "enabled": "on"
+    },
+
+    {   "name": "custom_feature",
+        "enabled": "on",
+        "custom_js_assets": "on"
     }
 
     ]
