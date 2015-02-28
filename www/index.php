@@ -1,12 +1,12 @@
 <?php
-require_once __DIR__.'/phplib/CurlClient.php';
-require_once __DIR__.'/phplib/Postmortem.php';
-require_once __DIR__.'/phplib/Configuration.php';
-require_once __DIR__.'/phplib/Auth.php';
+require_once 'phplib/CurlClient.php';
+require_once 'phplib/Postmortem.php';
+require_once 'phplib/Configuration.php';
+require_once 'phplib/Auth.php';
 
-require_once __DIR__.'/vendor/autoload.php';
+require_once 'vendor/autoload.php';
 
-@include __DIR__.'/phplib/deploy_version.php';
+@include 'phplib/deploy_version.php';
 
 if (!defined('MORGUE_VERSION')) {
     define('MORGUE_VERSION', '');
@@ -14,9 +14,14 @@ if (!defined('MORGUE_VERSION')) {
 
 $config = Configuration::get_configuration();
 $app = new Slim();
+$app->config('debug', true);
+
+$log = $app->getLog();
+$log->setEnabled(true);
+
 
 // must be require_once'd after the Slim autoloader is registered
-require_once __DIR__.'/phplib/AssetVersionMiddleware.php';
+require_once 'phplib/AssetVersionMiddleware.php';
 
 // helper method for returning the selected timezone.
 // If set, get the user timezone else get it from the global config
@@ -94,9 +99,9 @@ $app->add(new AssetVersionMiddleware);
  */
 foreach ($config['feature'] as $feature) {
     if ($feature['enabled'] == "on") {
-        error_log("Including Feature {$feature['name']}");
-        include $feature['name'] . '/lib.php';
-        include $feature['name'] . '/routes.php';
+        $log->debug("Including Feature {$feature['name']}");
+        include  $feature['name'] . '/lib.php';
+        include  $feature['name'] . '/routes.php';
     }
 }
 
@@ -140,7 +145,7 @@ $app->get('/', function() use ($app) {
     }
 
 
-    include __DIR__.'/views/page.php';
+    include 'views/page.php';
 });
 
 $app->post('/timezone', function () use ($app) {
@@ -231,7 +236,7 @@ $app->get('/events/:id', function($id) use ($app) {
     $curl_client = new CurlClient();
 
     $show_sidebar = false;
-    include __DIR__.'/views/page.php';
+    include 'views/page.php';
 });
 
 $app->delete('/events/:id', function($id) use ($app) {

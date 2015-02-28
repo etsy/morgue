@@ -134,15 +134,19 @@ Filler, to keep the same size
 <?php
         $config = Configuration::get_configuration();
         $edit_page_features = $config['edit_page_features'];
+        $log = $app->getLog();
 
         foreach ($edit_page_features as $feature_name) {
             $feature = Configuration::get_configuration($feature_name);
+
             if ($feature['enabled'] == "on") {
-                $view_file = $feature['name'] . '/views/' . $feature['name'] . '.php';
-                if (file_exists('features/' . $view_file)) {
-                    include $view_file;
+                $view_file_name = $feature['name'] . '/views/' . $feature['name'] . '.php';
+                $view_file = stream_resolve_include_path($view_file_name);
+
+                if ( $view_file) {
+                    include  $view_file;
                 } else {
-                    error_log('No views found for ' . $feature['name'] . ' feature');
+                    $log->error('No views found for ' . $feature['name'] . ' feature');
                 }
             }
         }

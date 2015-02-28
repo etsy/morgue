@@ -1,8 +1,8 @@
 <?php
 
-require_once(__DIR__."/../../features/jira/lib.php");
-require_once(__DIR__."/../../phplib/CurlClient.php");
-require_once(__DIR__."/../../phplib/Configuration.php");
+require_once("features/jira/lib.php");
+require_once("phplib/CurlClient.php");
+require_once("phplib/Configuration.php");
 
 class JiraClientTest extends PHPUnit_Framework_TestCase {
     const JIRA_BASE_URL = "https://jira.foo.com";
