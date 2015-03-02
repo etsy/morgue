@@ -134,7 +134,6 @@ Filler, to keep the same size
 <?php
         $config = Configuration::get_configuration();
         $edit_page_features = $config['edit_page_features'];
-        $log = $app->getLog();
 
         foreach ($edit_page_features as $feature_name) {
             $feature = Configuration::get_configuration($feature_name);
@@ -146,7 +145,7 @@ Filler, to keep the same size
                 if ($view_path_exists) {
                     include $view_file;
                 } else {
-                    $log->error('No views found for ' . $feature['name'] . ' feature');
+                    $app->getLog()->error('No views found for ' . $feature['name'] . ' feature');
                 }
             }
         }

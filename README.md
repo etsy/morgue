@@ -53,9 +53,9 @@ is used to determine which config file to use (see above step).
     <VirtualHost *:80>
       ServerName   morgue.hostname.com
 
-      DocumentRoot /var/www/morgue/www
+      DocumentRoot /var/www/morgue/htdocs
 
-      <Directory /var/www/morgue/www>
+      <Directory /var/www/morgue/htdocs>
         AllowOverride All
       </Directory>
 

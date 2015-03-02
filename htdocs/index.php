@@ -14,13 +14,14 @@ if (!defined('MORGUE_VERSION')) {
 
 $config = Configuration::get_configuration();
 $app = new Slim();
+$app->config('debug', true);
 
-$log = $app->getLog();
-$log->setEnabled(true);
-if ($config['environment'] == "developmnent") {
-	$log->setLevel(\Slim\Log::DEBUG);
-} else
-	$log->setLevel(\Slim\Log::ERROR);
+$app->getLog()->setEnabled(true);
+
+if ($config['environment'] == "development") {
+	$app->getLog()->setLevel(4);
+} else {
+	$app->getLog()->setLevel(1);
 }
 
 // must be require_once'd after the Slim autoloader is registered
@@ -102,7 +103,7 @@ $app->add(new AssetVersionMiddleware);
  */
 foreach ($config['feature'] as $feature) {
     if ($feature['enabled'] == "on") {
-        $log->debug("Including Feature {$feature['name']}");
+        $app->getLog()->debug("Including Feature {$feature['name']}");
         include  $feature['name'] . '/lib.php';
         include  $feature['name'] . '/routes.php';
     }
