@@ -14,11 +14,14 @@ if (!defined('MORGUE_VERSION')) {
 
 $config = Configuration::get_configuration();
 $app = new Slim();
-$app->config('debug', true);
 
 $log = $app->getLog();
 $log->setEnabled(true);
-
+if ($config['environment'] == "developmnent") {
+	$log->setLevel(\Slim\Log::DEBUG);
+} else
+	$log->setLevel(\Slim\Log::ERROR);
+}
 
 // must be require_once'd after the Slim autoloader is registered
 require_once 'phplib/AssetVersionMiddleware.php';
