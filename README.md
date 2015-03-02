@@ -91,10 +91,10 @@ mysql -p -u morgue -h localhost morgue < schemas/irc.sql
 
 ### Start a development server
 
-Using PHP built-in webserver it is possible to start quickly view what morgue does with the following command run from the document root (www).
+Using PHP built-in webserver it is possible to start quickly view what morgue does with the following command run from the document root.
 
 ```
-cd www
+cd htdocs
 MORGUE_ENVIRONMENT=development php -d include_path=".:$(dirname `pwd`):$(dirname `pwd`)/features" -S localhost:8000
 ```
 
