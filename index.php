@@ -17,6 +17,7 @@ $config = Configuration::get_configuration();
 if (!$config) {
 	$message = "Could not parse configuration file.";
 	$content = "error";
+	error_log("ERROR: " . $message);
 	include __DIR__.'/views/page.php';
 	die();
 }
