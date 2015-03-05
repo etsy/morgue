@@ -1,6 +1,7 @@
 {
     "require": {
-        "slim/slim": "1.6.*"
+        "slim/slim": "1.6.*",
+         "wikimedia/composer-merge-plugin": "dev-master"
     },
     "extra": {
         "merge-plugin": {
