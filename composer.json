@@ -1,5 +1,12 @@
 {
     "require": {
         "slim/slim": "1.6.*"
+    },
+    "extra": {
+        "merge-plugin": {
+            "include": [
+                "../morgue_features/composer.json"
+                ]
+        }
     }
 }
