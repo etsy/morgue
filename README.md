@@ -53,15 +53,15 @@ is used to determine which config file to use (see above step).
     <VirtualHost *:80>
       ServerName   morgue.hostname.com
 
-      DocumentRoot /var/www/morgue
+      DocumentRoot /var/www/morgue/htdocs
 
-      <Directory /var/www/morgue>
+      <Directory /var/www/morgue/htdocs>
         AllowOverride All
       </Directory>
 
       SetEnv MORGUE_ENVIRONMENT development
 
-      php_value include_path ".:/usr/share/pear:./features"
+      php_value include_path "/var/www/morgue:/var/www/morgue/features"
     </VirtualHost>
 ```
 
@@ -94,10 +94,11 @@ mysql -p -u morgue -h localhost morgue < schemas/irc.sql
 
 ### Start a development server
 
-Using PHP built-in webserver it is possible to start quickly view what morgue does with the following command
+Using PHP built-in webserver it is possible to start quickly view what morgue does with the following command run from the document root.
 
 ```
-MORGUE_ENVIRONMENT=development php -d include_path=".:./features" -S localhost:8000
+cd htdocs
+MORGUE_ENVIRONMENT=development php -d include_path=".:$(dirname `pwd`):$(dirname `pwd`)/features" -S localhost:8000
 ```
 
 Open http://localhost:8000 to view Morgue

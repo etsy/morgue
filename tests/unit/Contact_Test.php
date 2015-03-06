@@ -1,6 +1,6 @@
 <?php
 
-require_once(__DIR__."/../../features/contact/lib.php");
+require_once("features/contact/lib.php");
 
 class ContactTest extends PHPUnit_Framework_TestCase {
 

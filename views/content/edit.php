@@ -137,6 +137,7 @@ Filler, to keep the same size
 
         foreach ($edit_page_features as $feature_name) {
             $feature = Configuration::get_configuration($feature_name);
+
             if ($feature['enabled'] == "on") {
                 $view_file = $feature['name'] . '/views/' . $feature['name'] . '.php';
                 // Walk the include path looking for our view file.
@@ -144,7 +145,7 @@ Filler, to keep the same size
                 if ($view_path_exists) {
                     include $view_file;
                 } else {
-                    error_log('No views found for ' . $feature['name'] . ' feature');
+                    $app->getLog()->error('No views found for ' . $feature['name'] . ' feature');
                 }
             }
         }
