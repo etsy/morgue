@@ -1,4 +1,5 @@
 language: php
+install: composer install --dev
 php:
   - "5.3"
   - "5.4"
