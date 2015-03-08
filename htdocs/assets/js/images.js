@@ -1,3 +1,10 @@
+/* Set up Dropzone file upload */
+
+// $("div#dzupload").dropzone({ url: "/file/post" });
+
+/* End of Dropzone file upload setup */
+
+
 function renderImage() {
     var img = $("#image_url");
     var img_url = img.attr("value");

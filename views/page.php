@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="/assets/css/bootstrap.min.css" />
     <link rel="stylesheet" href="/assets/css/bootstrap-responsive.min.css" />
     <link rel="stylesheet" href="/assets/css/bootstrap-datepicker.css" />
+    <link rel="stylesheet" href="https://rawgit.com/enyo/dropzone/master/dist/dropzone.css">
     <link rel="stylesheet" href="/assets/css/chosen.css" />
     <link rel="stylesheet" href="/assets/css/image_sizing.css" />
     <link rel="stylesheet" href="/assets/css/morgue.css" />
