@@ -214,7 +214,7 @@ Filler, to keep the same size
         if (isset($feature['custom_js_assets'])) {
 			// If we are just configured "on" then default to
 			// include a js file named after the feature			
-			if ($feature['custom_js_assets'] == "on") {
+			if ($feature['custom_js_assets'] === "on") {
 				$feature['custom_js_assets'] = array("{$feature_name}.js") ;
 			// we might otherwise have and array
 			} else if (is_array($feature['custom_js_assets'])) {
@@ -223,5 +223,21 @@ Filler, to keep the same size
 				}
 			}
         }
+        if (isset($feature['custom_css_assets'])) {
+			// If we are just configured "on" then default to
+			// include a js file named after the feature			
+			if ($feature['custom_css_assets'] === "on") {
+				$feature['custom_css_assets'] = array("{$feature_name}.js") ;
+			// we might otherwise have and array
+			} else if (is_array($feature['custom_css_assets'])) {
+				foreach ($feature['custom_css_assets'] as $css_file) {
+                        echo "<link rel=\"stylesheet\" href=\"/{$feature_name}/css/{$css_file}\" />";
+				}
+			}
+        }
+
+
+
+
     }
 ?>
