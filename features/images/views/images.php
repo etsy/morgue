@@ -11,10 +11,6 @@ if ($images['status'] == Images::OK) {
 <legend>Images</legend>
 <input type="text" placeholder="Enter image URL" id="image_url" name="image_url" class="input-xxlarge" value="<?php echo isset($image_url) ? $image_url : '' ?>" onblur="renderImage()" />
 
-<form action="/upload/<?php echo $id ?>"
-      class="dropzone"
-      id="my-awesome-dropzone"></form>
-
 
 <div id="image" class="image-sizing">
 <?php foreach ($images as $image) {

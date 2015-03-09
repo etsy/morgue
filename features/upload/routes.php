@@ -2,7 +2,25 @@
 /**
  * Routes for upload
  */
-$app->get('/upload/', function () use ($app) {
+
+$app->get('/upload/js/:path' , function ($path) use ($app) {
+	die($path);
+	// read the file if it exists. Then serve it back.	
+	$file = stream_resolve_include_path("upload/assets/js/{$path}");
+	if (!$file) {
+		$app->response()->status(404);
+		$app->getLog()->error("couldn't file custom js asset at $path");
+		return;
+	}
+	$thru_file = file_get_contents($file);
+	// $app->response()->headers()->set('Content-Type', 'application/javascript');	
+	print $thru_file;
+	return;
+});
+
+
+
+$app->get('/uploadX/', function () use ($app) {
 
     $content = "views/error";
     $page_title = "upload";
