@@ -14,8 +14,7 @@ $app->get('/upload/js/:path' , function ($path) use ($app) {
 		return;
 	}
     $thru_file = file_get_contents($file);
-    // ???
-	// $app->response()->headers()->set('Content-Type', 'application/javascript');	
+	$app->response()->header("Content-Type", "application/javascript");
 	print $thru_file;
 	return;
 });
@@ -26,9 +25,9 @@ $app->get('/upload/css/:path' , function ($path) use ($app) {
 		$app->response()->status(404);
 		$app->getLog()->error("couldn't file custom css asset at $path");
 		return;
-	}
+	}	
 	$thru_file = file_get_contents($file);
-	// $app->response()->headers()->set('Content-Type', 'text/css');	
+	$app->response()->header("Content-Type", "text/css");
     print $thru_file;
     return;
 });

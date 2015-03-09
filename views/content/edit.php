@@ -210,19 +210,8 @@ Filler, to keep the same size
 		to locate the asset via the include_path.
     */
     foreach ($edit_page_features as $feature_name) {
-        $feature = Configuration::get_configuration($feature_name);
-        if (isset($feature['custom_js_assets'])) {
-			// If we are just configured "on" then default to
-			// include a js file named after the feature			
-			if ($feature['custom_js_assets'] === "on") {
-				$feature['custom_js_assets'] = array("{$feature_name}.js") ;
-			// we might otherwise have and array
-			} else if (is_array($feature['custom_js_assets'])) {
-				foreach ($feature['custom_js_assets'] as $js_file) {
-					echo "<script type=\"text/javascript\" src=\"/{$feature_name}/js/{$js_file}\"></script>";
-				}
-			}
-        }
+		$feature = Configuration::get_configuration($feature_name);
+
         if (isset($feature['custom_css_assets'])) {
 			// If we are just configured "on" then default to
 			// include a js file named after the feature			
@@ -235,9 +224,17 @@ Filler, to keep the same size
 				}
 			}
         }
-
-
-
-
+        if (isset($feature['custom_js_assets'])) {
+			// If we are just configured "on" then default to
+			// include a js file named after the feature			
+			if ($feature['custom_js_assets'] === "on") {
+				$feature['custom_js_assets'] = array("{$feature_name}.js") ;
+			// we might otherwise have and array
+			} else if (is_array($feature['custom_js_assets'])) {
+				foreach ($feature['custom_js_assets'] as $js_file) {
+					echo "<script type=\"text/javascript\" src=\"/{$feature_name}/js/{$js_file}\"></script>";
+				}
+			}
+        }
     }
 ?>
