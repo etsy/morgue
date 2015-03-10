@@ -10,6 +10,8 @@ if ($images['status'] == Images::OK) {
 <div class="row-fluid">
 <legend>Images</legend>
 <input type="text" placeholder="Enter image URL" id="image_url" name="image_url" class="input-xxlarge" value="<?php echo isset($image_url) ? $image_url : '' ?>" onblur="renderImage()" />
+
+
 <div id="image" class="image-sizing">
 <?php foreach ($images as $image) {
     echo "<div class=\"thumbnail\">";

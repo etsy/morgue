@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="/assets/css/bootstrap-responsive.min.css" />
     <link rel="stylesheet" href="/assets/css/bootstrap-datepicker.css" />
     <link rel="stylesheet" href="/assets/css/chosen.css" />
-    <link rel="stylesheet" href="/assets/css/image_sizing.css" />
+	<link rel="stylesheet" href="/assets/css/image_sizing.css" />
     <link rel="stylesheet" href="/assets/css/morgue.css" />
 
     <title><?php echo isset($page_title) ? htmlentities($page_title) : 'Morgue' ?></title>
