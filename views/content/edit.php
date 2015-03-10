@@ -72,7 +72,7 @@ Filler, to keep the same size
    <div class="control-group">
      <label class="control-label severity_levels" id="event-severity">Severity: </label>
        <div class="controls controls-row">
-        <select id="severity-select" name="severity" class="input-small" title="
+        <select id="severity-select" name="severity" class="input" title="
         <?php
            $config = Configuration::get_configuration();
            if (isset($config['severity']) && isset($config['severity']['tooltip_title'])) {
@@ -91,7 +91,7 @@ Filler, to keep the same size
             if ($sev_level == $severity) {
                 echo 'selected="true"';
             }
-            echo '>' . $sev_level . '</option>';
+            echo '>' . $sev_level . '. ' . $desc . '</option>';
         }
         ?>
         </select>
