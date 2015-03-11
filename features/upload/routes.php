@@ -61,7 +61,6 @@ $app->post('/upload/:id', function($id) use ($app) {
 
 		$app->getLog()->error("File Uploaded");
 		$options = Configuration::get_configuration('upload');
-
 		// Step Two: Send the file somewhere and expect a URL back
 		$uploader = new Uploader($targetFile, $options);
 
