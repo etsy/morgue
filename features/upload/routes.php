@@ -62,14 +62,45 @@ $app->post('/upload/:id', function($id) use ($app) {
 		$app->getLog()->error("File Uploaded");
 		$options = Configuration::get_configuration('upload');
 		// Step Two: Send the file somewhere and expect a URL back
-		$uploader = new Uploader($targetFile, $options);
+        $uploader = new Uploader($options);
+        try {
+            $location = $uploader->send_file($targetFile, $id);
+        } catch (Exception $e) {
+            print $e->getMessage();
+            $app->getLog()->error($e->getMessage());
+            return;
+        }
+
+        // we should have the $location of our uploaded file
+        if (empty($location)) {
+            throw new Exception("Upload expected an image location");
+        }
+
 
 		// Step Three: Add the URL of the file as an image for the event
+        print_r($location);
 
+
+        // Even if the user dropped a bunch of images to upload
+        // we will be adding just one at a time here
+        $res = Images::save_images_for_event($id, $location);
+        if ($res["status"] == Images::ERROR) {
+            $app->response()->status(400);
+        } else {
+            $app->response()->status(201);
+            $images = Images::get_images_for_event($id);
+            if ($images["status"] == Images::ERROR) {
+                $app->response()->status(404);
+                return;
+            } else {
+                $output = json_encode($images["values"]);
+                echo str_replace("\\/", "/", $output);
+            }
+        }
 
 
 	} else {
-		$app->getLog()->error("Nothign to upload.");
+		$app->getLog()->error("Nothing to upload.");
 		$app->response()->status(400);
 		return;
 	} 
