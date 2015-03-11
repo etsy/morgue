@@ -30,18 +30,16 @@ Looking at [sabre/dav](http://sabre.io/dav/) as webdav client
 ## Config example
 
 ```
-	{   "name": "upload",
-		"enabled": "on",
-        "custom_js_assets": ["dropzone.js"],
-        "custom_css_assets": ["dropzone.css"],
-		"upload_driver_options": {
-			"url": "http://my.server.home/webdav/",
-			"username": "webdav",
-			"password": "webdav",
-			"proxy": false 
-		},
-		"upload_driver": "webdav"
-	}
-
-
+{   "name": "upload",
+    "enabled": "on",
+    "custom_js_assets": ["dropzone.js"],
+    "custom_css_assets": ["dropzone.css"],
+    "upload_driver_options": {
+        "url": "http://my.server.home/webdav/",
+        "username": "webdav",
+        "password": "webdav",
+        "proxy": false 
+    },
+    "upload_driver": "webdav"
+}
 ```
