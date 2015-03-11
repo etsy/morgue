@@ -1,6 +1,7 @@
 {
     "require": {
         "slim/slim": "1.6.*",
+        "sabre/dav": "~2.1.1",
          "wikimedia/composer-merge-plugin": "dev-master"
     },
     "extra": {
