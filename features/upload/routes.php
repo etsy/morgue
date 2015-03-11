@@ -78,8 +78,6 @@ $app->post('/upload/:id', function($id) use ($app) {
 
 
 		// Step Three: Add the URL of the file as an image for the event
-        print_r($location);
-
 
         // Even if the user dropped a bunch of images to upload
         // we will be adding just one at a time here
@@ -94,6 +92,7 @@ $app->post('/upload/:id', function($id) use ($app) {
                 return;
             } else {
                 $output = json_encode($images["values"]);
+                header("Content-Type: application/json");
                 echo str_replace("\\/", "/", $output);
             }
         }

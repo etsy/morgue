@@ -77,7 +77,6 @@ class Uploader_Webdav {
             // something went wrong
             throw new Exception("Upload failed PUTting the file");
         } else {
-            print_r($response);
             $location = $response['headers']['location'];
         }
         return $location;
