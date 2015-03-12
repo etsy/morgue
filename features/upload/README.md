@@ -39,7 +39,11 @@ which does the work of sending the file.  send is expected to return an array:
 			"status"	=> 204
 		);
 
-As a first and default implementaion of upload, we've got WebDAV.
+As a first and default implementaion of upload, we've got WebDAV.  We're using
+sabre/dav from composer.  It requires php 5.4 and above.  To use it you need to
+add ```"sabre/dav": "~2.1.1",``` in a composer.json that gets included.  For now
+its in THE composer.json.
+
 
 ## The other back end
 
