@@ -1,7 +1,7 @@
 language: php
 install:
   - composer self-update
-  - composer update --prefer-dist
+  - composer install --dev
 php:
   - "5.3"
   - "5.4"
