@@ -1,7 +1,7 @@
 Upload Feature
 ---
 
-## Overview
+### Overview
 
 - We don't want to end up in the business of file management.
 - We do want to smooth out the process of associating files to events.
@@ -13,7 +13,7 @@ What we're aiming for is something that will:
 - Store an accessible URL for the image using Morgue's image feature
 - Update the current page to show the image .. and hide the preview in the Dropzone.
 
-## Front End
+### Front End
 
 There are a number of toolkits and frameworks that could be used here.
 We just picked Dropzone not based on too much.  If you know of a good
@@ -25,19 +25,21 @@ Nicely, Dropzone lets us hook into events.
 We hook inot the "success" event.  Its second argument is the server's 
 response, which is how we'll hand off from php to js.
 
-To update the current page and add in the newly uploaded image ....
 
-## The "Back End"
+### The "Back End"
 
 The back end "driver" gets passed the uploads_driver_options object as
 described in the example config below.
 
 The driver needs to implement a method called ```send($file_path, $event_id)```
 which does the work of sending the file.  send is expected to return an array:
-		return array(
-			"location"	=> "http://where.i.can.see/the/uploaded.image
-			"status"	=> 204
-		);
+
+```
+return array(
+	"location"	=> "http://where.i.can.see/the/uploaded.image
+	"status"	=> 204
+);
+```
 
 As a first and default implementaion of upload, we've got WebDAV.  We're using
 sabre/dav from composer.  It requires php 5.4 and above.  To use it you need to
@@ -45,13 +47,15 @@ add ```"sabre/dav": "~2.1.1",``` in a composer.json that gets included.  For now
 its in THE composer.json.
 
 
-## The other back end
+### The other back end
 
 We also need to save the association of the image url with the event in the database.
-We can use Morgue's Image feature  ```Images::save_images_for_event($id, Array)```
+We can use Morgue's Image feature  ```Images::save_images_for_event($id, Array)```.
 
+Even better, by calling ```renderImage()`` in javascript, we trigger the whole save and
+display behavior we need anyhow!
 
-## Config example
+### Config example
 
 ```
 {   "name": "upload",
