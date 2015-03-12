@@ -26,60 +26,90 @@ class Uploader_Webdav {
 
 	// Please pass in the appropriate stuff
 	public function __construct($options = []) {
-		foreach ($options as $key => $val) {
-			$this->set($key, $val);
+		foreach ($options as $key => $value) {
+			if (property_exists($this, $key)) {
+				$this->$key = $value;
+			}
 		}
+		$this->create_client();
 	}
 
-	public function set($key, $value) {
-		if (property_exists($this, $key)) {
-			$this->$key = $value;
-		}
-	}
-
-	public function setup() {
-		$client = new Client(array(
+	private function create_client() {
+		$this->client = new Client(array(
 			'baseUri' => $this->url,
 			'userName' => $this->username,
 			'password' => $this->password,
 			'proxy' => $this->proxy
 		));
-		$this->client = $client;
 	}
 
-    public function send($filepath, $destination_dir = '') {
-
-        // Read the file in from the filesystem
-        // TODO: Can we optimize this and just use the tmp file
-        // that was uploaded? Probably.
+	private function read_file($filepath) {
 		$fh = fopen($filepath, 'r');
 		$content =  fread($fh, filesize($filepath));
 		fclose($fh);
+		return $content;
+	}
+
+	// Creates the directory into which we will PUT our file
+	private function make_destination($destination_dir) {
+        if (empty($destination_dir)) {
+            $dir_path = "{$this->username}";
+        } else {
+            $dir_path = "{$this->username}/{$destination_dir}";
+        }
+
+		$mkcol_response = $this->client->request('MKCOL', $dir_path);
+
+		if ($mkcol_response['statusCode'] >= 400) {
+			error_log("WebDAV Driver: {$mkcol_response['statusCode']} on MKCOL");
+			// It kinda doesn't like creating a dir that exists
+			// but only kinda.
+		}
+		return $dir_path;
+	}
+
+
+    public function send($filepath, $destination_dir = '') {
+
+        // Can we optimize this and just use the tmp file
+        // that was uploaded? Probably.
+		$content = $this->read_file($filepath);
 
         $file_name = basename($filepath);
 
-        if (empty($destination_dir)) {
-            $dir_path = "/{$this->username}";
-        } else {
-            $dir_path = "/{$this->username}/{$destination_dir}";
-        }
-
-        $mkcol_response = $this->client->request('MKCOL', $dir_path);
-        // TODO: Check response
-
-        if ($mkcol_response['statusCode'] >= 400) {
-//            throw new Exception("Upload failed MKCOL");
-        } 
+		$dir_path = $this->make_destination($destination_dir);
 
 		$response = $this->client->request('PUT', "/{$dir_path}/" . $file_name, $content);
-		// TODO: check response
-        if ($response['statusCode'] >= 400) {
-            // something went wrong
+		$status = $response['statusCode'];
+		error_log("WebDAV Driver: {$status} on PUT");
+
+        if ($status >= 400) {
             throw new Exception("Upload failed PUTting the file");
         } else {
-            $location = $response['headers']['location'];
-        }
-        return $location;
+		}
+
+		// Which response code when a new file is really 
+		/* A status code of 201 means a new file was created.
+		 * In that case there will also be a location value.
+		 *
+		 * A status code of 204 means a file of the same name
+		 * already exists.
+		 */
+		if ($status == 204) {
+			$location = $this->url . "/" .
+				$dir_path . "/" . $file_name;			
+		} else {
+			$location = $response['headers']['location'];
+		}
+
+		return array(
+			"location"	=> $location,
+			"status"	=> $status
+		);
+
+	}
+
+	private function process_response($response) {
 
 	}
 }

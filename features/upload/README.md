@@ -3,16 +3,15 @@ Upload Feature
 
 ## Overview
 
-We don't want to end up in the business of file management.
-
-We do want to help smooth out the process of adding files to an event.
+- We don't want to end up in the business of file management.
+- We do want to smooth out the process of associating files to events.
 
 What we're aiming for is something that will:
 - Accept images (drag + drop)
-- Pass images from the web-browser to the server.
-- Upload image via webDAV to a configured host.  
+- Pass images from the web-browser to the web-server.
+- Upload image via webDAV or other from the web-server to a remote host.  
 - Store an accessible URL for the image using Morgue's image feature
-
+- Update the current page to show the image .. and hide the preview in the Dropzone.
 
 ## Front End
 
@@ -22,9 +21,30 @@ soution to use here, please feel free to contribute.
 
 [Dropzone.js](http://www.dropzonejs.com/)
 
+Nicely, Dropzone lets us hook into events.
+We hook inot the "success" event.  Its second argument is the server's 
+response, which is how we'll hand off from php to js.
+
+To update the current page and add in the newly uploaded image ....
+
 ## The "Back End"
 
-Looking at [sabre/dav](http://sabre.io/dav/) as webdav client
+The back end "driver" gets passed the uploads_driver_options object as
+described in the example config below.
+
+The driver needs to implement a method called ```send($file_path, $event_id)```
+which does the work of sending the file.  send is expected to return an array:
+		return array(
+			"location"	=> "http://where.i.can.see/the/uploaded.image
+			"status"	=> 204
+		);
+
+As a first and default implementaion of upload, we've got WebDAV.
+
+## The other back end
+
+We also need to save the association of the image url with the event in the database.
+We can use Morgue's Image feature  ```Images::save_images_for_event($id, Array)```
 
 
 ## Config example
@@ -32,10 +52,10 @@ Looking at [sabre/dav](http://sabre.io/dav/) as webdav client
 ```
 {   "name": "upload",
     "enabled": "on",
-    "custom_js_assets": ["dropzone.js"],
+    "custom_js_assets": ["dropzone.js", "upload.js"],
     "custom_css_assets": ["dropzone.css"],
     "upload_driver_options": {
-        "url": "http://my.server.home/webdav/",
+        "url": "http://my.server.home",
         "username": "webdav",
         "password": "webdav",
         "proxy": false 

@@ -6,7 +6,8 @@ function renderImage() {
       store_image_for_event(get_current_event_id(), img_url, function(data) {
         var id = "";
         data = JSON.parse(data);
-        for (var i in data) {
+        var i;
+        for (i in data) {
           if (data[i].image_link == img_url) {
             id = data[i].id;
           }

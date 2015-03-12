@@ -61,42 +61,30 @@ $app->post('/upload/:id', function($id) use ($app) {
 
 		$app->getLog()->error("File Uploaded");
 		$options = Configuration::get_configuration('upload');
+
+
 		// Step Two: Send the file somewhere and expect a URL back
         $uploader = new Uploader($options);
         try {
-            $location = $uploader->send_file($targetFile, $id);
+            $response = $uploader->send_file($targetFile, $id);
         } catch (Exception $e) {
             print $e->getMessage();
             $app->getLog()->error($e->getMessage());
             return;
         }
+		$location = $response['location'];
 
         // we should have the $location of our uploaded file
         if (empty($location)) {
             throw new Exception("Upload expected an image location");
         }
 
-
 		// Step Three: Add the URL of the file as an image for the event
 
-        // Even if the user dropped a bunch of images to upload
-        // we will be adding just one at a time here
-        $res = Images::save_images_for_event($id, $location);
-        if ($res["status"] == Images::ERROR) {
-            $app->response()->status(400);
-        } else {
-            $app->response()->status(201);
-            $images = Images::get_images_for_event($id);
-            if ($images["status"] == Images::ERROR) {
-                $app->response()->status(404);
-                return;
-            } else {
-                $output = json_encode($images["values"]);
-                header("Content-Type: application/json");
-                echo str_replace("\\/", "/", $output);
-            }
-        }
-
+		// Lucky us, we just have to call renderImage on the front
+		// end. That will save the image to the the database.
+		header("Content-Type: application/json");
+		echo json_encode(array("location" => $location));
 
 	} else {
 		$app->getLog()->error("Nothing to upload.");

@@ -3,13 +3,20 @@ Dropzone.autoDiscover = false;
  
 $(function() {
   console.log("Loaded upload.js");
-
   var myDropzone = new Dropzone("#my-dropzone");
+
   myDropzone.on("success", function (d, e) {
-    console.log("dropzone success with " + d); 
-    console.log(d);
-    console.log(JSON.parse(e)[0].image_link);
+    var url = JSON.parse(e).location;
+    console.log("dropzone success with " + url); 
+    var img_input = $("#image_url")[0];
+    img_input.value = url
+    renderImage();
+    myDropzone.removeAllFiles(true);
+
   });
 
 
+  myDropzone.on("error", function (e) {
+  console.log("error");
+  });
 });
