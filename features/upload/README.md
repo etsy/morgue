@@ -18,7 +18,6 @@ What we're aiming for is something that will:
 
 
 ### Front End
->>>>>>> split upload composer to its own json; change UI DnD anyhwere now; fix
 
 There are a number of toolkits and frameworks that could be used here.
 We just picked Dropzone not based on too much.  If you know of a good
