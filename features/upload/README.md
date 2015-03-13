@@ -13,7 +13,12 @@ What we're aiming for is something that will:
 - Store an accessible URL for the image using Morgue's image feature
 - Update the current page to show the image .. and hide the preview in the Dropzone.
 
+### Issues
+- Sabre/dav requires PHP 5.4 or higher.  Morgue current supports PHP 5.3.
+
+
 ### Front End
+>>>>>>> split upload composer to its own json; change UI DnD anyhwere now; fix
 
 There are a number of toolkits and frameworks that could be used here.
 We just picked Dropzone not based on too much.  If you know of a good
@@ -57,13 +62,22 @@ display behavior we need anyhow!
 
 ### Config example
 
+Add "upload" to the ```edit_page_features``` array.  Adding it right after the
+```images``` feature works well.
+
+Also Add a ```upload_dir``` key to your config.  That is where this feature will
+upload files to locally before sending them to a new home in a cloud.
+
+TODO: Cron up deleting these uploaded files; or find a way to not save the file and
+just re-upload the tmp file.
+
 ```
 {   "name": "upload",
     "enabled": "on",
-    "custom_js_assets": ["dropzone.js", "upload.js"],
-    "custom_css_assets": ["dropzone.css"],
+    "custom_js_assets": ["dropzone.min.js", "upload.js"],
+    "custom_css_assets": ["dropzone.min.css"],
     "upload_driver_options": {
-        "url": "http://my.server.home",
+        "url": "http://my.server.home/",
         "username": "webdav",
         "password": "webdav",
         "proxy": false 

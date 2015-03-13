@@ -1,13 +1,13 @@
 {
     "require": {
         "slim/slim": "1.6.*",
-        "sabre/dav": "~2.1.1",
          "wikimedia/composer-merge-plugin": "dev-master"
     },
     "extra": {
         "merge-plugin": {
             "include": [
-                "../morgue_features/composer.json"
+                "../morgue_features/composer.json",
+                "./features/upload/composer.json"
                 ]
         }
     }

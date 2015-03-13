@@ -76,6 +76,7 @@ class Uploader_Webdav {
 		$content = $this->read_file($filepath);
 
         $file_name = basename($filepath);
+		$file_name = rawurlencode($file_name);
 
 		$dir_path = $this->make_destination($destination_dir);
 
