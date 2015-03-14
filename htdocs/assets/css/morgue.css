@@ -91,3 +91,12 @@ a.jira_default {}
     height: 60px;
 }
 
+.nactive {
+	color: white;
+	background-color: #daedfe;
+}
+.nav li .badge {
+position: absolute;
+top: 0px;
+right: 0;
+}

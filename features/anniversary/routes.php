@@ -3,6 +3,30 @@
  * Routes for Anniversay Feature
  */
 
+$app->get('/api/anniversary', function () use ($app) {
+	/* 
+	 * JSON boolean if there is an anniversary today or not
+	 */
+    $today = date("Y-m-d", time());
+    $get_date = trim($app->request()->get('date'));
+    if ($get_date) {
+        $get_date = date("Y-m-d", strtotime($get_date));
+        $today = $get_date;
+    }
+
+    $conn = Persistence::get_database_object();
+	$pm_ids = Anniversary::get_ids($today, $conn);
+	if ($pm_ids) {
+		$anivs = true;
+	} else {
+		$anivs = false;
+	}
+	header("Content-Type: application/json");
+	echo json_encode(array("anniversaries_today" => $anivs));
+});
+
+
+
 $app->get('/anniversary', function () use ($app) {
 
     $content = "anniversary/views/anniversary";
@@ -119,3 +143,38 @@ $app->get('/anniversary/mail', function () use ($app) {
     }
 
 });
+
+
+// TODO: Can we add this to all feature routes? At least in the skeleton?
+// Handle custom static assets.
+// Javascript first then CSS.
+$app->get('/anniversary/js/:path' , function ($path) use ($app) {
+	// read the file if it exists. Then serve it back.	
+	$file = stream_resolve_include_path("anniversary/assets/js/{$path}");
+	if (!$file) {
+		$app->response()->status(404);
+		$app->getLog()->error("couldn't file custom js asset at $path");
+		return;
+	}
+    $thru_file = file_get_contents($file);
+	$app->response()->header("Content-Type", "application/javascript");
+	print $thru_file;
+	return;
+});
+$app->get('/anniversary/css/:path' , function ($path) use ($app) {
+	// read the file if it exists. Then serve it back.	
+	$file = stream_resolve_include_path("anniversary/assets/css/{$path}");
+	if (!$file) {
+		$app->response()->status(404);
+		$app->getLog()->error("couldn't file custom css asset at $path");
+		return;
+	}	
+	$thru_file = file_get_contents($file);
+	$app->response()->header("Content-Type", "text/css");
+    print $thru_file;
+    return;
+});
+
+
+
+
