@@ -7,19 +7,19 @@ $app->get('/api/anniversary', function () use ($app) {
 	/* 
 	 * JSON boolean if there is an anniversary today or not
 	 */
-    $today = date("Y-m-d", time());
+    $today = gmdate("Y-m-d", time());
     $get_date = trim($app->request()->get('date'));
     if ($get_date) {
-        $get_date = date("Y-m-d", strtotime($get_date));
+        $get_date = gmdate("Y-m-d", strtotime($get_date));
         $today = $get_date;
     }
 
     $conn = Persistence::get_database_object();
 	$pm_ids = Anniversary::get_ids($today, $conn);
-	if ($pm_ids) {
-		$anivs = true;
+	if ($pm_ids['status'] === Anniversary::OK) {
+		$anivs = count($pm_ids['values']);
 	} else {
-		$anivs = false;
+		$anivs = 0;
 	}
 	header("Content-Type: application/json");
 	echo json_encode(array("anniversaries_today" => $anivs));
