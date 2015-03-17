@@ -18,7 +18,7 @@ if (!$config) {
 	$message = "Could not parse configuration file.";
 	$content = "error";
 	error_log("ERROR: " . $message);
-	include __DIR__.'/views/page.php';
+	include '../views/page.php';
 	die();
 }
 $app = new Slim();

@@ -6,7 +6,8 @@
     "extra": {
         "merge-plugin": {
             "include": [
-                "../morgue_features/composer.json"
+                "../morgue_features/composer.json",
+                "features/upload/composer.json"
                 ]
         }
     }

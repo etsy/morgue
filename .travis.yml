@@ -1,5 +1,7 @@
 language: php
-install: composer install --dev
+install:
+  - composer self-update
+  - composer install --dev
 php:
   - "5.3"
   - "5.4"
@@ -7,5 +9,3 @@ php:
 script: make unittests
 notifications:
   email: false
-  irc:
-  - irc.freenode.org#morgue

@@ -79,3 +79,15 @@ a.jira_default {}
 	padding: 10px;
 }
 
+#my-dropzone {
+    border: 4px dashed gray;
+    background-color: #daedfe;
+    font-size: 1.5em;
+    height: 10px;
+}
+
+#my-dropzone.dropzone {
+    min-height: 60px;
+    height: 60px;
+}
+
