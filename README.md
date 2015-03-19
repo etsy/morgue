@@ -13,19 +13,19 @@ You can also join `#morgue` on Freenode IRC if you have questions.
 ## Morgue tour
 
 ### Index page
-![Morgue index page](assets/img/screenshots/morgue_index.png)
+![Morgue index page](htdocs/assets/img/screenshots/morgue_index.png)
 
 ### Creating a new post mortem
-![Creating a new Post Mortem](assets/img/screenshots/morgue_create.png)
+![Creating a new Post Mortem](htdocs/assets/img/screenshots/morgue_create.png)
 
 ### Live edit page
-![Editing a Post Mortem](assets/img/screenshots/morgue_edit.png)
+![Editing a Post Mortem](htdocs/assets/img/screenshots/morgue_edit.png)
 
-![Timeline of events](assets/img/screenshots/morgue_timeline.png)
+![Timeline of events](htdocs/assets/img/screenshots/morgue_timeline.png)
 
-![Remediations items](assets/img/screenshots/morgue_remediation.png)
+![Remediations items](htdocs/assets/img/screenshots/morgue_remediation.png)
 
-![History tracking](assets/img/screenshots/morgue_history.png)
+![History tracking](htdocs/assets/img/screenshots/morgue_history.png)
 
 
 ## Setup
