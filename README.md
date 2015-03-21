@@ -105,6 +105,54 @@ Open http://localhost:8000 to view Morgue
 
 ## Configuration
 
+
+### Features
+
+The configuration of individual features is maintained in an 
+array of objects -- the 'feature' key on the configuration array.  
+Minimally a featue is the name of the feature and if it is "on" or not.
+
+```
+"features": [
+    {   "name": "my_awesome_feature",
+        "enabled": "on"
+    }
+```
+
+You can add keys and values as needed for your feature. For example:
+
+```
+    {   "name": "my_awesome_feauture",
+        "enabled": "on",
+        "extra_awesome_value": 11,
+        "lost_numbers": [4,8,15,16,23,42]
+    }
+```
+
+You can then access these nearly anywhere in the app.
+
+```
+<?php
+$feauture_options = Configuration::get_configuration('my_awesome_feature');
+$lost_numbers = $feature_options['lost_numbers'];
+```
+
+A few conventions exist for features to do certain things:
+- ```"nabar": "on|off"```  Adds a link to the feature in the main navbar.
+- ```"custom_js_assets": ["my.js", other.js"]``` Try to load javascripts 
+- ```"custom_css_assets": ["my.css", other.css"]``` Try to load stylesheets 
+
+### Edit Page Features
+
+If your feature involves the edit page, you'll need to list it in the 
+```edit_page_features``` array.  The ordering of this array influences
+the ordering of the edit page features from first (top) to last (bottom).
+```
+   "edit_page_features" : [ 
+        "status_time", "contact", "calendar", "summary", "images" 
+   ]
+```
+
 ### JIRA feature
 
 **baseurl** the base URL to your jira installation (**use https** if you are using a secured JIRA installation)
@@ -141,16 +189,12 @@ When the IRC feature is enabled, the channels listed for a given postmortem will
  view that history in Morgue, you need to implement the irclogs endpoint.
 You can do so by:
 
-1. Create a new feature
-
-mkdir features/irclogs
-touch features/irclogs/lib.php
-touch features/irclogs/routes.php
-
-**Note** : morgue expects both a lib.php and routes.php file in your feature.
+1. Create a new feature:  (see below for more detail on creating a new feature)
+```
+make feaure NAME=irclogs
+```
 
 2. Add the new feature to your config file (in the features array)
-
 
 ```
     {   "name": "irclogs",
@@ -158,6 +202,7 @@ touch features/irclogs/routes.php
         "endpoint": "https://path.to.irseach.endpoint"
     }
 ```
+
 
 3. Implement the irclogs route
 
@@ -202,6 +247,24 @@ $app->get('/irclogs', function () use ($app) {
     echo json_encode($results);
 });
 ```
+
+### Creating your own Features
+
+Use **make feature** to generate a skeleton structure for your new feature.
+```
+% make feature NAME=my_new_feature
+making new feature  my_new_feature
+Feature directory for my_new_feature created.
+Remember to add an entry to your feature config.
+% tree features/my_new_feature
+features/my_new_feature
+├── lib.php
+├── routes.php
+└── views
+    └── my_new_feature.php
+```
+
+
 
 ## Tests
 You can run the unit test suite with:
