@@ -131,7 +131,7 @@ You can add keys and values as needed for your feature. For example:
 
 You can then access these nearly anywhere in the app.
 
-```
+```php
 <?php
 $feauture_options = Configuration::get_configuration('my_awesome_feature');
 $lost_numbers = $feature_options['lost_numbers'];
@@ -139,8 +139,8 @@ $lost_numbers = $feature_options['lost_numbers'];
 
 A few conventions exist for features to do certain things:
 - ```"nabar": "on|off"```  Adds a link to the feature in the main navbar.
-- ```"custom_js_assets": ["my.js", other.js"]``` Try to load javascripts 
-- ```"custom_css_assets": ["my.css", other.css"]``` Try to load stylesheets 
+- ```"custom_js_assets": ["my.js", "other.js"]``` Try to load javascripts 
+- ```"custom_css_assets": ["my.css", "other.css"]``` Try to load stylesheets 
 
 ### Edit Page Features
 
@@ -148,7 +148,7 @@ If your feature involves the edit page, you'll need to list it in the
 ```edit_page_features``` array.  The ordering of this array influences
 the ordering of the edit page features from first (top) to last (bottom).
 ```
-   "edit_page_features" : [ 
+   "edit_page_features": [ 
         "status_time", "contact", "calendar", "summary", "images" 
    ]
 ```
@@ -166,9 +166,9 @@ the ordering of the edit page features from first (top) to last (bottom).
         "baseurl": "https://jira.foo.com",
         "username": "jira_morgue",
         "password": "jira_morgue",
-        "additional_fields" : {
-            "Due Date" : "duedate",
-            "Some Custom Field" : "customfield_1234"
+        "additional_fields": {
+            "Due Date": "duedate",
+            "Some Custom Field": "customfield_1234"
         }
     },
 ```
@@ -182,7 +182,7 @@ retrieve the list of channels in 2 ways:
  expected to return an array of strings)
  - retrieving the "channels" array from the 'irc' feature config stanza
 
-### IRC Log feature
+#### IRC Log feature
 
 When the IRC feature is enabled, the channels listed for a given postmortem will
  be clickable buttons that attempt to retrieve the IRC log history. In order to
@@ -223,7 +223,7 @@ elements: nick, time and message.
 
  A dummy implementation could look like (content of features/irclogs/routes.php)
 
-```
+```php
 <?php
 
 /** irclog enpoint - return IRC logs paginated by 20 entries */
@@ -263,7 +263,7 @@ features/my_new_feature
 └── views
     └── my_new_feature.php
 ```
-
+Add it to and enable it in your config.json.
 
 
 ## Tests
