@@ -110,7 +110,7 @@ Open http://localhost:8000 to view Morgue
 
 The configuration of individual features is maintained in an 
 array of objects -- the 'feature' key on the configuration array.  
-Minimally a featue is the name of the feature and if it is "on" or not.
+Minimally a feature is the name of the feature and if it is "on" or not.
 
 ```
 "features": [
