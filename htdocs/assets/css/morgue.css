@@ -95,6 +95,9 @@ a.jira_default {}
 	color: white;
 	background-color: #daedfe;
 }
+.nav li {
+  position: relative;
+}
 .nav li .badge {
 position: absolute;
 top: 0px;
