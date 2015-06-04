@@ -145,7 +145,7 @@ Filler, to keep the same size
                 if ($view_path_exists) {
                     include $view_file;
                 } else {
-                    $app->getLog()->error('No views found for ' . $feature['name'] . ' feature');
+                    $app->log->error('No views found for ' . $feature['name'] . ' feature');
                 }
             }
         }

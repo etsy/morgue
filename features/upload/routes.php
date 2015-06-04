@@ -9,12 +9,12 @@ $app->get('/upload/js/:path' , function ($path) use ($app) {
 	// read the file if it exists. Then serve it back.	
 	$file = stream_resolve_include_path("upload/assets/js/{$path}");
 	if (!$file) {
-		$app->response()->status(404);
-		$app->getLog()->error("couldn't file custom js asset at $path");
+		$app->response->status(404);
+		$app->log->error("couldn't file custom js asset at $path");
 		return;
 	}
     $thru_file = file_get_contents($file);
-	$app->response()->header("Content-Type", "application/javascript");
+	$app->response->header("Content-Type", "application/javascript");
 	print $thru_file;
 	return;
 });
@@ -22,12 +22,12 @@ $app->get('/upload/css/:path' , function ($path) use ($app) {
 	// read the file if it exists. Then serve it back.	
 	$file = stream_resolve_include_path("upload/assets/css/{$path}");
 	if (!$file) {
-		$app->response()->status(404);
-		$app->getLog()->error("couldn't file custom css asset at $path");
+		$app->response->status(404);
+		$app->log->error("couldn't file custom css asset at $path");
 		return;
 	}	
 	$thru_file = file_get_contents($file);
-	$app->response()->header("Content-Type", "text/css");
+	$app->response->header("Content-Type", "text/css");
     print $thru_file;
     return;
 });
@@ -55,11 +55,11 @@ $app->post('/upload/:id', function($id) use ($app) {
 		$targetFile =  $targetPath. $_FILES['file']['name'];
 
 		if ( ! move_uploaded_file($tempFile,$targetFile) ) {
-			$app->getLog()->error("Error saving uploaded file.");
-			$app->response()->status(500);
+			$app->log->error("Error saving uploaded file.");
+			$app->response->status(500);
 		}
 
-		$app->getLog()->error("File Uploaded");
+		$app->log->error("File Uploaded");
 		$options = Configuration::get_configuration('upload');
 
 
@@ -69,7 +69,7 @@ $app->post('/upload/:id', function($id) use ($app) {
             $response = $uploader->send_file($targetFile, $id);
         } catch (Exception $e) {
             print $e->getMessage();
-            $app->getLog()->error($e->getMessage());
+            $app->log->error($e->getMessage());
             return;
         }
 		$location = $response['location'];
@@ -87,8 +87,8 @@ $app->post('/upload/:id', function($id) use ($app) {
 		echo json_encode(array("location" => $location));
 
 	} else {
-		$app->getLog()->error("Nothing to upload.");
-		$app->response()->status(400);
+		$app->log->error("Nothing to upload.");
+		$app->response->status(400);
 		return;
 	} 
 });

@@ -21,15 +21,15 @@ if (!$config) {
 	include '../views/page.php';
 	die();
 }
-$app = new Slim();
+$app = new \Slim\Slim();
 $app->config('debug', true);
 
-$app->getLog()->setEnabled(true);
+$app->log->setEnabled(true);
 
 if ($config['environment'] == "development") {
-	$app->getLog()->setLevel(4);
+	$app->log->setLevel(4);
 } else {
-	$app->getLog()->setLevel(1);
+	$app->log->setLevel(1);
 }
 
 // must be require_once'd after the Slim autoloader is registered
@@ -87,7 +87,7 @@ function default_status_time() {
 
 
 $app->add(
-    new Slim_Middleware_SessionCookie(
+    new \Slim\Middleware\SessionCookie(
         array(
             'expires' => '60 minutes',
             'path' => '/',
@@ -111,7 +111,7 @@ $app->add(new AssetVersionMiddleware);
  */
 foreach ($config['feature'] as $feature) {
     if ($feature['enabled'] == "on") {
-        $app->getLog()->debug("Including Feature {$feature['name']}");
+        $app->log->debug("Including Feature {$feature['name']}");
         include  $feature['name'] . '/lib.php';
         include  $feature['name'] . '/routes.php';
     }
@@ -121,7 +121,7 @@ foreach ($config['feature'] as $feature) {
 
 // set admin info on the environment array
 // so it's available to our request handlers
-$env = $app->environment();
+$env = $app->environment;
 $env['admin'] = MorgueAuth::get_auth_data();
 
 $app->get('/', function() use ($app) {
@@ -141,7 +141,7 @@ $app->get('/', function() use ($app) {
     if ($events["status"] == Postmortem::OK) {
         $events = $events["values"];
     } else {
-        $app->response()->status(500);
+        $app->response->status(500);
         echo json_encode($events["error"]);
         return;
     }
@@ -161,24 +161,24 @@ $app->get('/', function() use ($app) {
 });
 
 $app->post('/timezone', function () use ($app) {
-    $_SESSION['timezone'] = $app->request()->post('timezone');
+    $_SESSION['timezone'] = $app->request->post('timezone');
     $app->redirect($app->request()->getReferrer());
 });
 
 $app->post('/events', function () use ($app) {
-    $title = $app->request()->post('title');
-    $start_date = $app->request()->post('start_date');
-    $start_time = $app->request()->post('start_time');
-    $end_date = $app->request()->post('end_date');
-    $end_time = $app->request()->post('end_time');
-    $detect_date = $app->request()->post('detect_date');
-    $detect_time = $app->request()->post('detect_time');
-    $status_date = $app->request()->post('status_date');
-    $status_time = $app->request()->post('status_time');
-    $timezone = $app->request()->post('timezone');
-    $severity = $app->request()->post('severity');
-    $contact = $app->request()->post('contact');
-    $gcal = $app->request()->post('gcal');
+    $title = $app->request->post('title');
+    $start_date = $app->request->post('start_date');
+    $start_time = $app->request->post('start_time');
+    $end_date = $app->request->post('end_date');
+    $end_time = $app->request->post('end_time');
+    $detect_date = $app->request->post('detect_date');
+    $detect_time = $app->request->post('detect_time');
+    $status_date = $app->request->post('status_date');
+    $status_time = $app->request->post('status_time');
+    $timezone = $app->request->post('timezone');
+    $severity = $app->request->post('severity');
+    $contact = $app->request->post('contact');
+    $gcal = $app->request->post('gcal');
     $startdate = new DateTime($start_date." ".$start_time, new DateTimeZone($timezone));
     $enddate = new DateTime($end_date." ".$end_time, new DateTimeZone($timezone));
     $detectdate = new DateTime($detect_date." ".$detect_time, new DateTimeZone($timezone));
@@ -210,7 +210,7 @@ $app->get('/events/:id', function($id) use ($app) {
     $event = Postmortem::get_event($id);
     if (is_null($event["id"])) {
         echo "loooool";
-        $app->response()->status(404);
+        $app->response->status(404);
         return;
     }
 
@@ -255,18 +255,18 @@ $app->delete('/events/:id', function($id) use ($app) {
     header("Content-Type: application/json");
     $res = Postmortem::delete_event($id);
     if ($res["status"] == Postmortem::ERROR) {
-        $app->response()->status(500);
+        $app->response->status(500);
         echo json_encode($res["error"]);
     } else {
-        $app->response()->status(204);
+        $app->response->status(204);
     }
 });
 
 $app->get('/events/:id/undelete', function($id) use ($app) {
     $res = Postmortem::undelete_event($id);
     if ($res["status"] == Postmortem::ERROR) {
-        $app->response()->status(500);
-        $app->response()->body($res["error"]);
+        $app->response->status(500);
+        $app->response->body($res["error"]);
     } else {
         $app->redirect("/events/$id");
     }
@@ -276,7 +276,7 @@ $app->get('/events/:id/summary', function($id) use ($app) {
     $event = Postmortem::get_event($id);
 
     if (is_null($event["id"])) {
-        $app->response()->status(404);
+        $app->response->status(404);
         return;
     }
     header("Content-Type: application/json");
@@ -288,11 +288,11 @@ $app->put('/events/:id', function ($id) use ($app) {
     // get the base event data
     $event = Postmortem::get_event($id);
     if (is_null($event["id"])) {
-        $app->response()->status(500);
+        $app->response->status(500);
         return;
     }
 
-    $params = $app->request()->params();
+    $params = $app->request->params();
     foreach ($params as $key => $value) {
         switch($key) {
         case "title":
@@ -304,7 +304,7 @@ $app->put('/events/:id', function ($id) use ($app) {
         case "start_date":
         case "start_time":
             if (!isset($params["timezone"])) {
-                $app->response()->status(400);
+                $app->response->status(400);
                 return;
             }
             $timezone = new DateTimeZone($params["timezone"]);
@@ -322,7 +322,7 @@ $app->put('/events/:id', function ($id) use ($app) {
         case "end_date":
         case "end_time":
             if (! isset($params["timezone"])) {
-                $app->response()->status(400);
+                $app->response->status(400);
                 return;
             }
             $timezone = new DateTimeZone($params["timezone"]);
@@ -340,7 +340,7 @@ $app->put('/events/:id', function ($id) use ($app) {
         case "detect_date":
         case "detect_time":
             if (! isset($params["timezone"])) {
-                $app->response()->status(400);
+                $app->response->status(400);
                 return;
             }
             $timezone = new DateTimeZone($params["timezone"]);
@@ -362,7 +362,7 @@ $app->put('/events/:id', function ($id) use ($app) {
             }
 
             if (! isset($params["timezone"])) {
-                $app->response()->status(400);
+                $app->response->status(400);
                 return;
             }
             $timezone = new DateTimeZone($params["timezone"]);
@@ -387,7 +387,7 @@ $app->put('/events/:id', function ($id) use ($app) {
     }
     $event = Postmortem::save_event($event);
     if (is_null($event["id"])) {
-        $app->response()->status(500);
+        $app->response->status(500);
         return;
     }
 
@@ -396,18 +396,18 @@ $app->put('/events/:id', function ($id) use ($app) {
 
 $app->post('/events/:id/tags', function($id) use ($app) {
     header("Content-Type: application/json");
-    $tags = $app->request()->post('tags');
+    $tags = $app->request->post('tags');
     $tags = explode(",", $tags);
     $tags = array_map('trim', $tags);
     $tags = array_map('strtolower', $tags);
     $res = Postmortem::save_tags_for_event($id, $tags);
     if ($res["status"] == Postmortem::ERROR) {
-        $app->response()->status(400);
+        $app->response->status(400);
     } else {
-        $app->response()->status(201);
+        $app->response->status(201);
         $tags = Postmortem::get_tags_for_event($id);
         if ($tags["status"] == Postmortem::ERROR) {
-            $app->response()->status(404);
+            $app->response->status(404);
             return;
         } else {
             $output = json_encode($tags["values"]);
@@ -419,10 +419,10 @@ $app->delete('/events/:event_id/tags/:tag_id', function($event_id, $tag_id) use 
     header("Content-Type: application/json");
     $res = Postmortem::delete_tag($tag_id, $event_id);
     if ($res["status"] == Postmortem::ERROR) {
-        $app->response()->status(500);
+        $app->response->status(500);
         echo json_encode($res["error"]);
     } else {
-        $app->response()->status(204);
+        $app->response->status(204);
     }
 
 });

@@ -229,13 +229,13 @@ elements: nick, time and message.
 /** irclog enpoint - return IRC logs paginated by 20 entries */
 $app->get('/irclogs', function () use ($app) {
     header("Content-Type: application/json");
-    $start_date = $app->request()->get('start_date');
-    $start_time = $app->request()->get('start_time');
-    $end_date = $app->request()->get('end_date');
-    $end_time = $app->request()->get('end_time');
-    $timezone = $app->request()->get('timezone');
-    $channel = $app->request()->get('channel');
-    $offset = $app->request()->get('offset');
+    $start_date = $app->request->get('start_date');
+    $start_time = $app->request->get('start_time');
+    $end_date = $app->request->get('end_date');
+    $end_time = $app->request->get('end_time');
+    $timezone = $app->request->get('timezone');
+    $channel = $app->request->get('channel');
+    $offset = $app->request->get('offset');
 
     if ($offset == 0) {
         $results = array(
