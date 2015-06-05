@@ -32,6 +32,11 @@ function show_save_status(event_type, success) {
 }
 
 function update_title_for_event() {
+  if (!$("#eventtitle").val()) {
+      show_save_status("Title", false);
+      return;
+  }
+
   var url = "/events/" + get_current_event_id();
   $.ajax({
         url: url,
