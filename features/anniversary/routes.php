@@ -8,7 +8,7 @@ $app->get('/api/anniversary', function () use ($app) {
 	 * JSON boolean if there is an anniversary today or not
 	 */
     $today = gmdate("Y-m-d", time());
-    $get_date = trim($app->request()->get('date'));
+    $get_date = trim($app->request->get('date'));
     if ($get_date) {
         $get_date = gmdate("Y-m-d", strtotime($get_date));
         $today = $get_date;
@@ -35,7 +35,7 @@ $app->get('/anniversary', function () use ($app) {
     $page_title = "Today in Post Mortem History";
     $today = date("Y-m-d", time());
 
-    $get_date = trim($app->request()->get('date'));
+    $get_date = trim($app->request->get('date'));
     if ($get_date) {
         $get_date = date("Y-m-d", strtotime($get_date));
         $today = $get_date;
@@ -87,7 +87,7 @@ $app->get('/anniversary/mail', function () use ($app) {
     $page_title = "Today in Post Mortem History";
     $today = date("Y-m-d", time());
 
-    $get_date = trim($app->request()->get('date'));
+    $get_date = trim($app->request->get('date'));
     if ($get_date) {
         $get_date = date("Y-m-d", strtotime($get_date));
         $today = $get_date;
@@ -152,12 +152,12 @@ $app->get('/anniversary/js/:path' , function ($path) use ($app) {
 	// read the file if it exists. Then serve it back.	
 	$file = stream_resolve_include_path("anniversary/assets/js/{$path}");
 	if (!$file) {
-		$app->response()->status(404);
-		$app->getLog()->error("couldn't file custom js asset at $path");
+		$app->response->status(404);
+		$app->log->error("couldn't file custom js asset at $path");
 		return;
 	}
     $thru_file = file_get_contents($file);
-	$app->response()->header("Content-Type", "application/javascript");
+	$app->response->header("Content-Type", "application/javascript");
 	print $thru_file;
 	return;
 });
@@ -165,12 +165,12 @@ $app->get('/anniversary/css/:path' , function ($path) use ($app) {
 	// read the file if it exists. Then serve it back.	
 	$file = stream_resolve_include_path("anniversary/assets/css/{$path}");
 	if (!$file) {
-		$app->response()->status(404);
-		$app->getLog()->error("couldn't file custom css asset at $path");
+		$app->response->status(404);
+		$app->log->error("couldn't file custom css asset at $path");
 		return;
 	}	
 	$thru_file = file_get_contents($file);
-	$app->response()->header("Content-Type", "text/css");
+	$app->response->header("Content-Type", "text/css");
     print $thru_file;
     return;
 });
