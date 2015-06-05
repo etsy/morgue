@@ -12,7 +12,7 @@
 <!-- Title -->
 <div class="row-fluid">
     <input class="input-headline" id="eventtitle" type="text"
-      value="<?php echo $event["title"] ?>">
+      value="<?php echo $event["title"] ?>" required>
 </div>
 
 <!-- Info Saved Notice -->
