@@ -46,4 +46,11 @@ $("#delete-no").click(function(ev) {
   ev.preventDefault();
   $('#delete-initial').show();
   $("#delete_button_confirmation_container").hide();
-})
+});
+
+// Enter key blurs input elements
+$(":input").keyup(function(e) {
+  if (e.keyCode == 13) {
+      e.target.blur();
+  }
+});
