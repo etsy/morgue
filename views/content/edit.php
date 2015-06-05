@@ -210,31 +210,42 @@ Filler, to keep the same size
 		to locate the asset via the include_path.
     */
     foreach ($edit_page_features as $feature_name) {
-		$feature = Configuration::get_configuration($feature_name);
+        $feature = Configuration::get_configuration($feature_name);
 
         if (isset($feature['custom_css_assets'])) {
-			// If we are just configured "on" then default to
-			// include a js file named after the feature			
-			if ($feature['custom_css_assets'] === "on") {
-				$feature['custom_css_assets'] = array("{$feature_name}.js") ;
-			// we might otherwise have and array
-			} else if (is_array($feature['custom_css_assets'])) {
-				foreach ($feature['custom_css_assets'] as $css_file) {
-                        echo "<link rel=\"stylesheet\" href=\"/{$feature_name}/css/{$css_file}\" />";
-				}
-			}
+            // If we are just configured "on" then default to
+            // include a css file named after the feature
+            if ($feature['custom_css_assets'] === "on") {
+                $feature['custom_css_assets'] = array("{$feature_name}.css");
+            }
+
+            if (!is_array($feature['custom_css_assets'])) {
+                $css_assets = array($feature['custom_css_assets']);
+            } else {
+                $css_assets = $feature['custom_css_assets'];
+            }
+
+            foreach ($css_assets as $css_file) {
+                echo "<link rel=\"stylesheet\" href=\"/{$feature_name}/css/{$css_file}\" />";
+            }
         }
+
         if (isset($feature['custom_js_assets'])) {
-			// If we are just configured "on" then default to
-			// include a js file named after the feature			
-			if ($feature['custom_js_assets'] === "on") {
-				$feature['custom_js_assets'] = array("{$feature_name}.js") ;
-			// we might otherwise have and array
-			} else if (is_array($feature['custom_js_assets'])) {
-				foreach ($feature['custom_js_assets'] as $js_file) {
-					echo "<script type=\"text/javascript\" src=\"/{$feature_name}/js/{$js_file}\"></script>";
-				}
-			}
+            // If we are just configured "on" then default to
+            // include a js file named after the feature
+            if ($feature['custom_js_assets'] === "on") {
+                $feature['custom_js_assets'] = array("{$feature_name}.js");
+            }
+
+            if (!is_array($feature['custom_js_assets'])) {
+                $js_assets = array($feature['custom_js_assets']);
+            } else {
+                $js_assets = $feature['custom_js_assets'];
+            }
+
+            foreach ($js_assets as $js_file) {
+                echo "<script type=\"text/javascript\" src=\"/{$feature_name}/js/{$js_file}\"></script>";
+            }
         }
     }
 ?>
