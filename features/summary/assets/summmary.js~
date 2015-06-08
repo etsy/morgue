@@ -1,2 +1,0 @@
-$("#summaryeditbutton").on("click", summary_edit_save_button);
-$("#summarycancelbutton").on("click", summary_cancel_button);
