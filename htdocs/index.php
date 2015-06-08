@@ -438,8 +438,6 @@ $app->get('/ping', function () use ($app) {
 // Javascript first then CSS.
 $app->get('/features/:feature/js/:path' , function ($feature, $path) use ($app) {
         // read the file if it exists. Then serve it back.
-        var_dump($feature, $path);
-
         $file = stream_resolve_include_path("{$feature}/assets/js/{$path}");
         if (!$file) {
             $app->response->status(404);

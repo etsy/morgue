@@ -19,7 +19,7 @@
 					$js_assets = $navbar_feature['custom_js_assets'];
 				}
 				foreach ($js_assets as $js_asset) {
-					?><script type="text/javascript" src="/<?php echo $navbar_feature['name'] ?>/js/<?php echo $js_asset ?>"></script><?php 
+					?><script type="text/javascript" src="/features/<?php echo $navbar_feature['name'] ?>/js/<?php echo $js_asset ?>"></script><?php 
 				}
 			}
 ?></li>

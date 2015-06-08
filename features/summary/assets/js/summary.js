@@ -48,6 +48,7 @@ function update_summary_for_event() {
  * save the markdown summary and render as HTML
  */
 function summary_edit_save_button() {
+    console.log("HERE");
     var button = $("#summaryeditbutton");
     var in_edit = (button.html() == "Save");
     if (in_edit) {
