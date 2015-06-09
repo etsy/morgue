@@ -226,7 +226,7 @@ Filler, to keep the same size
             }
 
             foreach ($css_assets as $css_file) {
-                echo "<link rel=\"stylesheet\" href=\"/{$feature_name}/css/{$css_file}\" />";
+                echo "<link rel=\"stylesheet\" href=\"/features/{$feature_name}/css/{$css_file}\" />";
             }
         }
 
@@ -244,7 +244,7 @@ Filler, to keep the same size
             }
 
             foreach ($js_assets as $js_file) {
-                echo "<script type=\"text/javascript\" src=\"/{$feature_name}/js/{$js_file}\"></script>";
+                echo "<script type=\"text/javascript\" src=\"/features/{$feature_name}/js/{$js_file}\"></script>";
             }
         }
     }

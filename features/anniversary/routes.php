@@ -145,36 +145,3 @@ $app->get('/anniversary/mail', function () use ($app) {
 });
 
 
-// TODO: Can we add this to all feature routes? At least in the skeleton?
-// Handle custom static assets.
-// Javascript first then CSS.
-$app->get('/anniversary/js/:path' , function ($path) use ($app) {
-	// read the file if it exists. Then serve it back.	
-	$file = stream_resolve_include_path("anniversary/assets/js/{$path}");
-	if (!$file) {
-		$app->response->status(404);
-		$app->log->error("couldn't file custom js asset at $path");
-		return;
-	}
-    $thru_file = file_get_contents($file);
-	$app->response->header("Content-Type", "application/javascript");
-	print $thru_file;
-	return;
-});
-$app->get('/anniversary/css/:path' , function ($path) use ($app) {
-	// read the file if it exists. Then serve it back.	
-	$file = stream_resolve_include_path("anniversary/assets/css/{$path}");
-	if (!$file) {
-		$app->response->status(404);
-		$app->log->error("couldn't file custom css asset at $path");
-		return;
-	}	
-	$thru_file = file_get_contents($file);
-	$app->response->header("Content-Type", "text/css");
-    print $thru_file;
-    return;
-});
-
-
-
-

@@ -1,5 +1,3 @@
-$("#summaryeditbutton").on("click", summary_edit_save_button);
-$("#summarycancelbutton").on("click", summary_cancel_button);
 $("#add-status").on("click", show_status_fields);
 $("#clear-status").on("click", remove_status_fields);
 $("#severity-select").change(update_severity_for_event);
