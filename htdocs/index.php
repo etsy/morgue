@@ -112,8 +112,8 @@ $app->add(new AssetVersionMiddleware);
 foreach ($config['feature'] as $feature) {
     if ($feature['enabled'] == "on") {
         $app->log->debug("Including Feature {$feature['name']}");
-        include  $feature['name'] . '/lib.php';
-        include  $feature['name'] . '/routes.php';
+        include  'features/' . $feature['name'] . '/lib.php';
+        include  'features/' . $feature['name'] . '/routes.php';
     }
 }
 
