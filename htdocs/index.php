@@ -438,7 +438,7 @@ $app->get('/ping', function () use ($app) {
 // Javascript first then CSS.
 $app->get('/features/:feature/js/:path' , function ($feature, $path) use ($app) {
         // read the file if it exists. Then serve it back.
-        $file = stream_resolve_include_path("{$feature}/assets/js/{$path}");
+        $file = stream_resolve_include_path("features/{$feature}/assets/js/{$path}");
         if (!$file) {
             $app->response->status(404);
             $app->log->error("couldn't file custom js asset at $path");
@@ -452,7 +452,7 @@ $app->get('/features/:feature/js/:path' , function ($feature, $path) use ($app) 
 
 $app->get('/features/:feature/css/:path' , function ($feature, $path) use ($app) {
         // read the file if it exists. Then serve it back.
-        $file = stream_resolve_include_path("{$feature}/assets/css/{$path}");
+        $file = stream_resolve_include_path("features/{$feature}/assets/css/{$path}");
         if (!$file) {
             $app->response->status(404);
             $app->log->error("couldn't file custom css asset at $path");
