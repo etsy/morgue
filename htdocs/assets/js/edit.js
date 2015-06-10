@@ -12,12 +12,6 @@ $("#eventtitle").blur(update_title_for_event);
 $("#gcal").blur(update_gcal_for_event);
 $("#contact").blur(update_contact_for_event);
 
-$("#summaryeditbutton").on("click", summary_edit_save_button);
-$("#summarycancelbutton").on("click", summary_cancel_button);
-$.getJSON("/events/"+get_current_event_id()+"/summary", function(data) {
-    $("#summary").html(markdown.toHTML(data.summary));
-});
-
 $('.datepicker')
   .datepicker({
     format: 'mm/dd/yyyy'

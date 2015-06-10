@@ -91,3 +91,7 @@ function summary_cancel_button() {
 
 $("#summaryeditbutton").on("click", summary_edit_save_button);
 $("#summarycancelbutton").on("click", summary_cancel_button);
+$.getJSON("/events/"+get_current_event_id()+"/summary", function(data) {
+    $("#summary").html(markdown.toHTML(data.summary));
+});
+
