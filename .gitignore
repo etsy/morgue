@@ -1,3 +1,2 @@
 vendor/*
-^vendor/slim
 config/development.json
