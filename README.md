@@ -139,8 +139,8 @@ $lost_numbers = $feature_options['lost_numbers'];
 
 A few conventions exist for features to do certain things:
 - ```"nabar": "on|off"```  Adds a link to the feature in the main navbar.
-- ```"custom_js_assets": ["my.js", "other.js"]``` Try to load javascripts 
-- ```"custom_css_assets": ["my.css", "other.css"]``` Try to load stylesheets 
+- ```"custom_js_assets": ["my.js", "other.js", "http://cdn.com/external.js"]``` Try to load javascripts 
+- ```"custom_css_assets": ["my.css", "other.css", "http://cdn.com/external.css"]``` Try to load stylesheets 
 
 ### Edit Page Features
 
