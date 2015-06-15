@@ -184,4 +184,3 @@ function calendarLinkHandler()
     }
 }
 
-
