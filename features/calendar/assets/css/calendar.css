@@ -1,0 +1,10 @@
+
+#calendar-link {
+    font-size: 16px;
+}
+
+#calendar-view {
+    width: 800px;
+    height: 600px;
+    border: 0;
+}
