@@ -33,6 +33,8 @@ function showEventLink(event)
 
     if(event) {
         link.text('A Post Mortem has been schedueled!');
+        link.off('click');
+        link.attr('href', cal.event.htmlLink);
     } else {
         link.text('Scheduele a Post Mortem for this event!');
     }
@@ -158,11 +160,9 @@ function createEvent()
         });
         request.execute(function(event) {
                     if (event.hasOwnProperty('error')) {
-                        console.log('P ERROR ');
                         console.log(event);
                     } else {
                         cal.event = event;
-                        console.log('P SUCCESS ');
                         console.log(event);
                         window.open(event.htmlLink);
                         location.reload();
