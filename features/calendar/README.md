@@ -1,6 +1,6 @@
 ## Setup
 
-### Get access to Google Calendar API
+### Get access to the Google Calendar API
 1. Signup for a [Google Developer Account](https://developers.google.com/)
 2. Go to the [developers console](https://console.developers.google.com/project) and create a new project.
 3. Select 'APIs & auth' -> 'Credentials' and create both a new Client ID and API key.
