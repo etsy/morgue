@@ -1,0 +1,17 @@
+
+#calendar-link {
+    font-size: 16px;
+}
+
+.smallCalendar {
+    width: 800px;
+    height: 600px;
+    border: 0;
+}
+
+.bigCalendar {
+    width: 1200px;
+    height: 900px;
+    border: 0;
+}
+

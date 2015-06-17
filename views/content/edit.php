@@ -226,11 +226,11 @@ Filler, to keep the same size
             }
 
             foreach ($css_assets as $css_file) {
-                // check if assets exists on external domain
-                if (strpos($js_file, "https://") != false || strpos($js_file, "http://") != false) {
-                    echo "<link rel=\"stylesheet\" href=\"{$css_file}\" />";
-                } else {
+                // check if asset exists on an external domain
+                if (strpos($css_file, "https://") === false && strpos($css_file, "http://") === false) {
                     echo "<link rel=\"stylesheet\" href=\"/features/{$feature_name}/css/{$css_file}\" />";
+                } else {
+                    echo "<link rel=\"stylesheet\" href=\"{$css_file}\" />";
                 }
             }
         }
@@ -250,10 +250,10 @@ Filler, to keep the same size
 
             foreach ($js_assets as $js_file) {
                 // check if asset exists on an external domain
-                if (strpos($js_file, "https://") != false || strpos($js_file, "http://") != false) {
-                    echo "<script type=\"text/javascript\" src=\"{$js_file}\"></script>";
-                } else {
+                if (strpos($js_file, "https://") === false && strpos($js_file, "http://") === false) {
                     echo "<script type=\"text/javascript\" src=\"/features/{$feature_name}/js/{$js_file}\"></script>";
+                } else {
+                    echo "<script type=\"text/javascript\" src=\"{$js_file}\"></script>";
                 }
             }
         }
