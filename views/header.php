@@ -19,8 +19,12 @@
 					$js_assets = $navbar_feature['custom_js_assets'];
 				}
 				foreach ($js_assets as $js_asset) {
-					?><script type="text/javascript" src="/features/<?php echo $navbar_feature['name'] ?>/js/<?php echo $js_asset ?>"></script><?php 
-				}
+                                    if (strpos($js_asset, "https://") === false && strpos($js_asset, "http://") === false) {
+					echo "<script type=\"text/javascript\" src=\"/features/{$navbar_feature['name']}/js/{$js_asset}\"></script>"; 
+                                    } else {
+					echo "<script type=\"text/javascript\" src=\"{$js_asset}\"></script>";                                         
+                                    }
+                                }
 			}
 ?></li>
 <?php } ?>

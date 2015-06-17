@@ -226,7 +226,12 @@ Filler, to keep the same size
             }
 
             foreach ($css_assets as $css_file) {
-                echo "<link rel=\"stylesheet\" href=\"/features/{$feature_name}/css/{$css_file}\" />";
+                // check if asset exists on an external domain
+                if (strpos($css_file, "https://") === false && strpos($css_file, "http://") === false) {
+                    echo "<link rel=\"stylesheet\" href=\"/features/{$feature_name}/css/{$css_file}\" />";
+                } else {
+                    echo "<link rel=\"stylesheet\" href=\"{$css_file}\" />";
+                }
             }
         }
 

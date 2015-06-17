@@ -3,8 +3,14 @@
     font-size: 16px;
 }
 
-#calendar-view {
+.smallCalendar {
     width: 800px;
     height: 600px;
+    border: 0;
+}
+
+.bigCalendar {
+    width: 1200px;
+    height: 900px;
     border: 0;
 }

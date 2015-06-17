@@ -23,9 +23,8 @@
          cal.scopes = cal.scopes.split(",");
          cal.src = 'https://www.google.com/calendar/embed?src=';
          cal.authorized = false;
-         cal.creating_event = false;
          cal.eventId = padNumber(get_current_event_id());
-         handleClientLoad();
+         handleClientLoad(true);
      }
 
 </script>

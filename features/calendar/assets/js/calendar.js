@@ -55,15 +55,31 @@ function showCalendar(date) {
     calendar.setAttribute('scrolling', 'no');
     calendar.setAttribute('frameborder', '0');
 
+    if (cal.inEvent) {
+        calendar.setAttribute('class', 'smallCalendar');
+    } else {
+        calendar.setAttribute('class', 'bigCalendar');
+    }
+
     $('#calendar-div').append(calendar);
 }
 
 
 /**
  * Check if current user has authorized this application.
+ * 
+ * @param boolean inEvent - true if the calendar is being loaded on an event page. 
  */
-function handleClientLoad()
+function handleClientLoad(inEvent)
 {
+    cal.inEvent = inEvent;
+
+    if (cal.inEvent) {
+        $("#calendar-link").click(function() {
+                calendarLinkHandler();
+        });
+    }
+
     gapi.client.setApiKey(cal.apiKey);
     window.setTimeout(checkAuth, 1);
 }
@@ -88,11 +104,14 @@ function handleAuthResult(authResult)
 {
     console.log('response');
     if (authResult && !authResult.error) {
+        console.log("AUTHORIZED!");
         cal.authorized = true;
-        checkEventExists();
-    } else {
-        // Show auth UI, allowing the user to initiate authorization by
-        // clicking authorize button.
+        if (cal.inEvent) {
+            checkEventExists();
+        }
+        else {
+            showCalendar(null);
+        }
     }
 }
 
@@ -164,9 +183,5 @@ function calendarLinkHandler()
             }, handleAuthResult);
     }
 }
-
-$("#calendar-link").click(function() {
-        calendarLinkHandler();
-});
 
 

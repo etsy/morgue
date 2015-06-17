@@ -46,7 +46,14 @@
     },
 
     {   "name": "calendar",
-        "enabled": "on"
+        "enabled": "on",
+        "navbar" : "on",
+        "custom_css_assets" : ["calendar.css"],
+        "custom_js_assets" : ["calendar.js", "https://apis.google.com/js/client.js?onload=loadCal"],
+        "clientId" : "CLIENTID",
+        "apiKey" : "APIKEY",
+        "scopes" : ["https://www.googleapis.com/auth/calendar"],
+        "id" : "CALENDARID"
     },
 
     {   "name": "summary",
