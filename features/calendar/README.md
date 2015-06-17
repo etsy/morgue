@@ -6,7 +6,7 @@
 3. Select 'APIs & auth' -> 'Credentials' and create both a new Client ID and API key.
 
 ### Create a calendar to scheduele Post Mortems
-1. Go to https://www.google.com/calendar and select the dropdown next 'My calendars' to create a new calendar.
+1. Go to https://www.google.com/calendar and select the dropdown next to 'My calendars' to create a new calendar.
 2. Make sure your Morgue users will have the ability to edit this calendar. 
 3. Go to the settings for this calendar and note the Calendar ID under the Calendar Address section.
 
@@ -18,7 +18,7 @@ Add calendar to the edit page features
     ...
 ```
 
-Add calendar to features array, replacing CLIENTID, APIKEY, and CALENDARID. 
+Add calendar to the features array, replacing CLIENTID, APIKEY, and CALENDARID. 
 ```
 "features" : [
     {   "name": "calendar",
