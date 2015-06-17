@@ -22,6 +22,7 @@
 
 <div id="calendar-div" name="calendar">
      <h3>Post Mortem Calendar</h3>
+     <a href="#calendar" id="calendar-link" name="calendar">Login to your Google Account to view the Post Mortem Calendar!</a>
 </div>
 <br/>
 

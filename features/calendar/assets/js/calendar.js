@@ -20,6 +20,12 @@ function generateEvent() {
 }
 
 
+function hideCalendarLink()
+{
+    $('#calendar-link').hide();
+}
+
+
 function showEventLink(event)
 {
     var link = $('#calendar-link');
@@ -74,11 +80,9 @@ function handleClientLoad(inEvent)
 {
     cal.inEvent = inEvent;
 
-    if (cal.inEvent) {
-        $("#calendar-link").click(function() {
-                calendarLinkHandler();
-        });
-    }
+    $("#calendar-link").click(function() {
+            calendarLinkHandler();
+    });
 
     gapi.client.setApiKey(cal.apiKey);
     window.setTimeout(checkAuth, 1);
@@ -110,6 +114,7 @@ function handleAuthResult(authResult)
             checkEventExists();
         }
         else {
+            hideCalendarLink();
             showCalendar(null);
         }
     }
