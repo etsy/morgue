@@ -172,7 +172,8 @@ Filler, to keep the same size
     </div>
   <?php endif; ?>
 </div>
-
+<br/>
+<br/>
 </div>
 </div>
 
