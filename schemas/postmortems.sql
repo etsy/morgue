@@ -9,6 +9,7 @@ CREATE TABLE `postmortems` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
   `summary` text NOT NULL,
+  `why_surprised` text NOT NULL,
   `starttime` int(11) UNSIGNED NOT NULL,
   `endtime` int(11) UNSIGNED NOT NULL,
   `statustime` int(11) UNSIGNED NOT NULL,

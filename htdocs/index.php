@@ -192,6 +192,7 @@ $app->post('/events', function () use ($app) {
     $event = array(
         "title" => $title,
         "summary" => "",
+        "why_surprised" => "",
         "starttime" => $startdate->getTimeStamp(),
         "endtime" => $enddate->getTimeStamp(),
         "detecttime" => $detectdate->getTimeStamp(),
@@ -225,6 +226,7 @@ $app->get('/events/:id', function($id) use ($app) {
     $gcal = $event["gcal"];
     $contact = $event["contact"];
     $summary = $event["summary"];
+    $why_surprised = $event["why_surprised"];
 
     $tz = new DateTimeZone($timezone);
     $start_datetime = new DateTime("@$starttime");
@@ -300,6 +302,9 @@ $app->put('/events/:id', function ($id) use ($app) {
             break;
         case "summary":
             $event["summary"] = $value;
+            break;
+        case "why_surprised":
+            $event["why_surprised"] = $value;
             break;
         case "start_date":
         case "start_time":

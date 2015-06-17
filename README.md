@@ -284,11 +284,19 @@ make unittests
 
 ### When I visit a detail event page, I just see a "loooool"
 
-You may have created your schemas before the [pull request 19](https://github.com/etsy/morgue/pull/19) which introduced breaking schema changes.
-Simply run the migration command to update your schemas:
+You may have created your schemas before some features that required schema changes were added. 
+Simply run the migration(s) commands to update your schemas:
 
 ```
     alter table postmortems change etsystatustime statustime int(11) UNSIGNED NOT NULL;
+    alter table postmortems add column why_surprised text NOT NULL;
+```
+
+Or simply : 
+
+```
+    mysql -p -u morgue -h localhost morgue < schemas/migrations/rename_statustime_column.sql
+    mysql -p -u morgue -h localhost morgue < schemas/migrations/add_why_surprised_field.sql
 ```
 
 [1]: http://vimeo.com/77206751
