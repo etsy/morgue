@@ -29,7 +29,7 @@ function showEventLink(event)
         link.text('A Post Mortem is scheduled!');
         link.addClass('eventLink');
     } else {
-        link.text('Scheduele a Post Mortem for this event!');
+        link.text('Schedule a Post Mortem for this event!');
     }
 }
 
@@ -178,7 +178,6 @@ function checkEventExists()
 
 function createEvent() 
 {
-    checkEventExists();
     var event = generateEvent();
 
     gapi.client.load('calendar', 'v3', function() {
