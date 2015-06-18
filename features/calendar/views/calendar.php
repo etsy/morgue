@@ -29,12 +29,12 @@
 
 </script>
 
-<div class="row-fluid">
+<div class="row-fluid calendar-view">
      <legend>Post Mortem Calendar</legend>
      <div id="calendar-div">
          <a href="#calendar" id="calendar-link" name="calendar">Login to your Google Account to view/create Post Mortems!</a>
          <div id="event-div" style="display: none;">
-             <br/><br/>
+             <br/>
              <p>
              <span id="event-title"></span><br/><br/>
              <span id="event-time"></span><br/>
