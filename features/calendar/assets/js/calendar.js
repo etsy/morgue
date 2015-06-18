@@ -190,9 +190,6 @@ function createEvent()
                     if (event.hasOwnProperty('error')) {
                         console.log(event);
                     } else {
-                        cal.event = event;
-                        console.log(event);
-                        window.open(event.htmlLink);
                         location.reload();
                     }
             });
