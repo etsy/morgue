@@ -80,8 +80,12 @@ function showEvent()
 
     $('#event-time').text(start +' to '+ end);//+ cal.event.end.dateTime);
 
-    var location = (cal.event.location == '') ? 'No location yet!' : cal.event.location;
-    $('#event-location').text(cal.event.location);
+    var location = cal.event.location;
+
+    if (typeof location === 'undefined') {
+        location = 'No location yet!';
+    }
+    $('#event-location').text(location);
 
     var creator = document.createElement('a');
     creator.setAttribute('href', 'mailto:'+cal.event.creator.email);
@@ -133,9 +137,7 @@ function checkAuth()
  */
 function handleAuthResult(authResult) 
 {
-    console.log('response');
     if (authResult && !authResult.error) {
-        console.log("AUTHORIZED!");
         cal.authorized = true;
         if (cal.inEvent) {
             checkEventExists();
