@@ -143,7 +143,7 @@ function handleAuthResult(authResult)
             checkEventExists();
         }
         else {
-            hideCalendarLink();
+            $('#calendar-link').remove();
             showCalendar(null);
         }
     }
