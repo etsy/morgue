@@ -15,3 +15,35 @@
     border: 0;
 }
 
+.eventLink {
+    margin-top: 50px;
+    margin-right: 50px;
+}
+
+#event-div {
+    float: right;
+    clear: right;
+    margin-top: 20px;
+    margin-right: 20px;
+    width: 250px;
+    background-color: #e3e9ff;
+    border-style: solid;
+    border-width: 0px;
+    border-radius: 10px;
+    padding: 0px 10px 10px 10px;
+}
+
+#event-div p {
+    text-align: center;
+}
+
+#event-div a {
+    color: #20c;
+}
+
+#event-title {
+    font-size: 16px;
+    font-weight: bold;
+    word-wrap: break-word;
+}
+

@@ -20,21 +20,14 @@ function generateEvent() {
 }
 
 
-function hideCalendarLink()
-{
-    $('#calendar-link').hide();
-}
-
-
 function showEventLink(event)
 {
     var link = $('#calendar-link');
     link.css('float', 'right');
 
     if(event) {
-        link.text('A Post Mortem has been schedueled!');
-        link.off('click');
-        link.attr('href', cal.event.htmlLink);
+        link.text('A Post Mortem is scheduled!');
+        link.addClass('eventLink');
     } else {
         link.text('Scheduele a Post Mortem for this event!');
     }
@@ -72,6 +65,38 @@ function showCalendar(date) {
     $('#calendar-div').append(calendar);
 }
 
+
+function showEvent() 
+{
+    $('#event-title').text(cal.event.summary);
+
+    var start = new Date(cal.event.start.dateTime);
+    var end = new Date(cal.event.end.dateTime);
+    
+    $('#event-date').text(start.toLocaleDateString());
+
+    start = start.toLocaleTimeString();
+    end = end.toLocaleTimeString();
+
+    $('#event-time').text(start +' to '+ end);//+ cal.event.end.dateTime);
+
+    var location = (cal.event.location == '') ? 'No location yet!' : cal.event.location;
+    $('#event-location').text(cal.event.location);
+
+    var creator = document.createElement('a');
+    creator.setAttribute('href', 'mailto:'+cal.event.creator.email);
+    creator.innerHTML = cal.event.creator.displayName;
+
+    $('#event-creator').text('Created by ');
+    $('#event-creator').append(creator);
+
+    var link = document.createElement('a');
+    link.setAttribute('href', cal.event.htmlLink);
+    link.innerHTML = 'Edit';
+
+    $('#event-link').append(link);
+    $('#event-div').show();
+}
 
 /**
  * Check if current user has authorized this application.
@@ -142,6 +167,7 @@ function checkEventExists()
                     cal.event = event;
                     showEventLink(true);
                     showCalendar(event.start.dateTime);
+                    showEvent();
                 }
             });
     });

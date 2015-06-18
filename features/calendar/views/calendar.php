@@ -32,8 +32,18 @@
 <div class="row-fluid">
      <legend>Post Mortem Calendar</legend>
      <div id="calendar-div">
-            <a href="#calendar" id="calendar-link" name="calendar">Login to your Google Account to view/create Post Mortems!</a>
-            <br/>
+         <a href="#calendar" id="calendar-link" name="calendar">Login to your Google Account to view/create Post Mortems!</a>
+         <div id="event-div" style="display: none;">
+             <br/><br/>
+             <p>
+             <span id="event-title"></span><br/><br/>
+             <span id="event-time"></span><br/>
+             <span id="event-date"></span><br/><br/>
+             <span id="event-location"></span><br/><br/>
+             <span id="event-creator"></span><br/><br/>
+             <span id="event-link"></span>
+             </p>
+         </div>
      </div>
 </div>
 <div class="row-fluid"><br/></div>
