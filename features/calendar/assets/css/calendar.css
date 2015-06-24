@@ -3,20 +3,19 @@
     font-size: 16px;
 }
 
-.calendar-view {
-    width : 1100px;
-    
+#calendar-div {
+    width : 950px;    
 }
 
 .smallCalendar {
-    width: 800px;
-    height: 600px;
+    width: 650px;
+    height: 450px;
     border: 0;
 }
 
 .bigCalendar {
-    width: 1200px;
-    height: 900px;
+    width: 1000px;
+    height: 750px;
     border: 0;
 }
 
@@ -25,7 +24,7 @@
     margin-right: 30px;
 }
 
-#event-div {
+.eventDiv {
     float: right;
     clear: right;
     margin-top: 20px;
@@ -38,17 +37,18 @@
     padding: 0px 10px 10px 10px;
 }
 
-#event-div p {
-    text-align: center;
-}
-
-#event-div a {
+.eventDiv a {
     color: #20c;
 }
 
-#event-title {
+#calendar-div p {
+    text-align: center;
+}
+
+#calendar-div h6 {
     font-size: 16px;
     font-weight: bold;
     word-wrap: break-word;
+    text-align: center;
 }
 

@@ -36,8 +36,26 @@ class Contact {
         if (is_null($url)) {
             $html = $username;
         } else {
-            $html = "<a href=\"$url\" target=\"_new\">$username</a>";
+            $html = "<a href=\"$url\" target=\"_new\" style=\"text-decoration:none;\">$username</a>";
         }
         return $html;
+    }
+
+    /**
+     * get the email address for a given username. The email address
+     * is the username with the email domain appended to it. If email domain
+     * is not specified in the contact config, then null is returned
+     *
+     * @param $username - the username to subsitutre in the lookup_url
+     *
+     * @returns $email or null 
+     */
+    static function get_email_for_user($username, $config = null) {
+        $config = is_null($config) ? Configuration::get_configuration("contact") : $config;
+        if (isset($config["email_domain"])) {
+            return $username . $config["email_domain"];
+        } else {
+            return null;
+        }
     }
 }

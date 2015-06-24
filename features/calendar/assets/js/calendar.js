@@ -2,7 +2,7 @@ var cal = {};
 
 function generateEvent() {
     var event = {
-        'summary' : '[PM] '+ $('#eventtitle').val(),
+        'summary' : $('#eventtitle').val(),
         'description' : 'PM for ' + window.location.href
     };
     event.start = {};
@@ -25,7 +25,7 @@ function showEventLink(event)
     var link = $('#calendar-link');
     link.css('float', 'right');
 
-    if(event) {
+    if (event) {
         link.text('A Post Mortem is scheduled!');
         link.addClass('eventLink');
     } else {
@@ -33,6 +33,44 @@ function showEventLink(event)
     }
 }
 
+
+function showFacilitator()
+{
+    if(cal.facilitatorFeature) {
+        $('#facilitator-link').on('click', function() {
+                $.get('/calendar/facilitators/request/' + get_current_event_id()).fail(
+                    function(data) {
+                        console.log(data);
+                        alert("An error occured.");
+                    }).done(
+                    function(data) {
+                        console.log(data);
+                        alert("Facilitators are being summoned!");
+                    });
+        });
+
+        $.get("/calendar/facilitators/" + get_current_event_id(), 
+            function(data) {
+                  var d = JSON.parse(data);
+
+                  if (d["facilitator"] === "") {
+                      $('#facilitator').hide();
+                      $('#facilitator-link').show();
+                  } else {
+                      var link = document.createElement('a');
+                      link.setAttribute('href', 'mailto:' + d['facilitator_email']);
+                      link.innerHTML = d["facilitator"];
+                      $('#facilitator').html(link);
+                  }
+                  $('#facilitator-div').show();
+                
+            }).error(function(xhr, status, error) {
+                    console.log(xhr);
+                    console.log(status);
+                    console.log(error);
+            });
+    }
+}
 
 /**
  * Embeds a Google Calendar at the either the current month,
@@ -170,6 +208,7 @@ function checkEventExists()
                     showEventLink(true);
                     showCalendar(event.start.dateTime);
                     showEvent();
+                    showFacilitator();
                 }
             });
     });

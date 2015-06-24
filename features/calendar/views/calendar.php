@@ -17,7 +17,7 @@
          $cal = new Calendar;
          $timeZone = getUserTimezone();
          $cal_scopes = implode(",", $cal->scopes);
-         echo "cal.clientId='{$cal->clientId}'; cal.apiKey='{$cal->apiKey}'; cal.scopes='{$cal_scopes}'; cal.id='{$cal->id}'; cal.timeZone='{$timeZone}';";
+         echo "cal.clientId='{$cal->clientId}'; cal.apiKey='{$cal->apiKey}'; cal.scopes='{$cal_scopes}'; cal.id='{$cal->id}'; cal.timeZone='{$timeZone}'; cal.facilitatorFeature={$cal->facilitator}";
          ?>
         
          cal.scopes = cal.scopes.split(",");
@@ -30,18 +30,25 @@
 </script>
 
 <div class="row-fluid calendar-view">
-     <legend>Post Mortem Calendar</legend>
+     <legend>Post Mortem</legend>
      <div id="calendar-div">
-         <a href="#calendar" id="calendar-link" name="calendar">Login to your Google Account to view/create Post Mortems!</a>
-         <div id="event-div" style="display: none;">
-             <br/>
+         <a name="calendar"></a>
+         <a href="#calendar" id="calendar-link" >Login to your Google Account to view/create Post Mortems!</a>
+         <div id="event-div" class="eventDiv" style="display: none;">
+             <h6 id="event-title"></h6>
              <p>
-             <span id="event-title"></span><br/><br/>
              <span id="event-time"></span><br/>
              <span id="event-date"></span><br/><br/>
              <span id="event-location"></span><br/><br/>
              <span id="event-creator"></span><br/><br/>
              <span id="event-link"></span>
+             </p>
+         </div>
+         <div id="facilitator-div" class="eventDiv" style="display: none;">
+             <h6> Facilitator </h6>
+             <p>
+             <span id="facilitator"></span>
+             <a href="#calendar" id="facilitator-link" style="display: none;">Request one</a>
              </p>
          </div>
      </div>
