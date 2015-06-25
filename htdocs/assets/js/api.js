@@ -379,6 +379,19 @@ function update_starttime_for_event() {
   update_undetected_time();
 }
 
+function update_why_surprised_for_event() {
+  var url = "/events/" + get_current_event_id();
+  $.ajax({
+        url: url,
+        data: {
+               why_surprised: $("textarea#why_surprised").val(),
+               }, 
+        type: "PUT",
+        success: function () { show_save_status("Why were we surprised?", true);},
+        error: function () { show_save_status("Why were we surprised?", false);}
+  });
+}
+
 function update_impact_time() {
   var startdate = new Date($("input#event-start-input-date").val());
   var starttime = timeToDate($("input#event-start-input-time").val());

@@ -11,6 +11,7 @@ $("#event-start-input-time").blur(update_starttime_for_event);
 $("#eventtitle").blur(update_title_for_event);
 $("#gcal").blur(update_gcal_for_event);
 $("#contact").blur(update_contact_for_event);
+$("#why_surprised").blur(update_why_surprised_for_event);
 
 $('.datepicker')
   .datepicker({
