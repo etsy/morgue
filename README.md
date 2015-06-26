@@ -297,6 +297,7 @@ Or simply :
 ```
     mysql -p -u morgue -h localhost morgue < schemas/migrations/rename_statustime_column.sql
     mysql -p -u morgue -h localhost morgue < schemas/migrations/add_why_surprised_field.sql
+    mysql -p -u morgue -h localhost morgue < schemas/migrations/change_text_to_longtext.sql
 ```
 
 [1]: http://vimeo.com/77206751
