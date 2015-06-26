@@ -45,6 +45,10 @@ own configuration file.
 cp config/example.json config/development.json
 ``` 
 
+**NOTES**: You may need to remove references to "custom_feature" from your
+development.json as those only exist as examples to show you how to add
+custom features to your Morgue installation.
+
 ### Apache
 This is a basic example for an Apache vhost. The `MORGUE_ENVIRONMENT` variable
 is used to determine which config file to use (see above step).
@@ -77,6 +81,7 @@ morgue password defined in the config file you created at step 1
 CREATE DATABASE morgue;
 CREATE USER 'morgue'@'localhost' IDENTIFIED BY 'morgue';
 GRANT ALL ON morgue.* TO 'morgue'@'localhost';
+SET PASSWORD FOR 'morgue'@'localhost' = PASSWORD('morgue_password');
 ```
 
 Then add the schema to the database:
@@ -95,6 +100,11 @@ mysql -p -u morgue -h localhost morgue < schemas/irc.sql
 ### Start a development server
 
 Using PHP built-in webserver it is possible to start quickly view what morgue does with the following command run from the document root.
+
+**NOTE**: You may need to do some PHP setup before doing this. Follow the
+installation instructions [here][2] to install composer, then from your
+morgue base directory run `php composer.phar update` to install and update
+the necessary PHP packages.
 
 ```
 cd htdocs
@@ -301,4 +311,4 @@ Or simply :
 ```
 
 [1]: http://vimeo.com/77206751
-
+[2]: http://composer.org
