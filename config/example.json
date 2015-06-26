@@ -6,7 +6,7 @@
     {  "mysqlhost": "localhost",
         "mysqlport": 3306,
         "database": "morgue",
-        "username": "morgue_user",
+        "username": "morgue",
         "password": "morgue_password"
     },
 
