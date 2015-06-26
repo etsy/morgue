@@ -20,6 +20,7 @@ class Persistence {
      * @param $postmortem - map of a postmortem with the following keys
      *                    - title => the title of the event
      *                    - summary => the summary of the post mortem
+     *                    - why_surprised => why were we surprised
      *                    - starttime => start time as unix timestamp
      *                    - endtime   => end time as unix timestamp
      *                    - statustime => status time as unix timestamp
@@ -36,13 +37,13 @@ class Persistence {
      * form ( "id" => null, "error" => "an error message" ) on failure
      */
     static function save_event($postmortem, $conn = null) {
-        $values = array("title", "summary", "starttime", "endtime",
+        $values = array("title", "summary", "why_surprised", "starttime", "endtime",
                         "detecttime","severity");
 
         try {
             if (isset($postmortem["id"])) {
                 array_push($values, "id");
-                $sql = "UPDATE postmortems SET title=:title,summary=:summary,
+                $sql = "UPDATE postmortems SET title=:title,summary=:summary,why_surprised=:why_surprised,
                     starttime=:starttime,endtime=:endtime,
                     detecttime=:detecttime, severity=:severity";
 
@@ -64,8 +65,8 @@ class Persistence {
             } else {
                 array_push($values,"statustime");
 
-                $sql = "INSERT INTO postmortems (title,summary,starttime,endtime,
-                    statustime,detecttime,severity) VALUES (:title, :summary,:starttime,
+                $sql = "INSERT INTO postmortems (title,summary,why_surprised,starttime,endtime,
+                    statustime,detecttime,severity) VALUES (:title, :summary,:why_surprised,:starttime,
                     :endtime,:statustime,:detecttime,:severity)";
             }
             $stmt = $conn->prepare($sql);
@@ -94,7 +95,7 @@ class Persistence {
         $conn = $conn ?: Persistence::get_database_object();
 
         try {
-            $sql = "SELECT id,title,summary,starttime,endtime,statustime,
+            $sql = "SELECT id,title,summary,why_surprised,starttime,endtime,statustime,
                 detecttime,severity, contact, gcal, deleted FROM postmortems WHERE id = :id LIMIT 1";
             $stmt = $conn->prepare($sql);
             $stmt->execute(array('id' => $postmortem_id));
