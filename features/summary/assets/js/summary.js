@@ -40,7 +40,13 @@ function make_summary_editable(text) {
 
 function update_summary_for_event() {
     var url = "/events/" + get_current_event_id();
-    $.ajax({url: url, data: {summary: $("#summary").val()}, type: "PUT"});
+    $.ajax({
+            url: url,
+            data: {
+                   summary: $("#summary").val()
+                  },
+            type: "PUT"
+          });
 }
 
 /**
@@ -48,7 +54,6 @@ function update_summary_for_event() {
  * save the markdown summary and render as HTML
  */
 function summary_edit_save_button() {
-    console.log("HERE");
     var button = $("#summaryeditbutton");
     var in_edit = (button.html() == "Save");
     if (in_edit) {

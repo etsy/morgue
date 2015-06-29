@@ -16,7 +16,7 @@
 </div>
 
 <!-- Info Saved Notice -->
-<div class="alert alert-success" style="opacity:0" id="saved_feedback">
+<div class="alert alert-success" style="opacity:0;" id="saved_feedback">
 Filler, to keep the same size
 </div>
 
