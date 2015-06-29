@@ -44,8 +44,7 @@ function showFacilitator()
                         alert("An error occured.");
                     }).done(
                     function(data) {
-                        console.log(data);
-                        alert("Facilitators are being summoned!");
+                        $('#facilitator-link').replaceWith("Requested!");
                     });
         });
 
