@@ -17,6 +17,8 @@ CREATE TABLE `postmortems` (
   `severity` int(1) UNSIGNED NOT NULL,
   `gcal` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin,
   `contact` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT "",
+  `facilitator` varchar(255) NOT NULL DEFAULT '';
+  `facilitator_email` varchar(255) NOT NULL DEFAULT '';
   `deleted` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
