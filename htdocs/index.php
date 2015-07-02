@@ -245,6 +245,8 @@ $app->get('/events/:id', function($id) use ($app) {
     $resolvetime = getTimeString($endtime - $detect_time);
     $undetecttime = getTimeString($detect_time - $starttime);
 
+    $edit_status = Postmortem::get_event_edit_status($event);
+
     $content = 'content/edit';
 
     $curl_client = new CurlClient();

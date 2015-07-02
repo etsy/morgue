@@ -59,6 +59,10 @@ class Persistence {
                     $sql.= ",statustime=:statustime";
                     array_push($values,"statustime");
                 }
+                if ( isset( $postmortem['created'] ) ){
+                    $sql.= ",created=:created";
+                    array_push($values, "created");
+                }
                 $sql.=" WHERE id=:id LIMIT 1";
 
 
@@ -95,8 +99,9 @@ class Persistence {
         $conn = $conn ?: Persistence::get_database_object();
 
         try {
-            $sql = "SELECT id,title,summary,why_surprised,starttime,endtime,statustime,
-                detecttime,severity, contact, gcal, deleted FROM postmortems WHERE id = :id LIMIT 1";
+            $sql = "SELECT id, title, summary, why_surprised, starttime, endtime, statustime,
+                    detecttime,severity, contact, gcal, created, modified, modifier, deleted 
+                    FROM postmortems WHERE id = :id LIMIT 1";
             $stmt = $conn->prepare($sql);
             $stmt->execute(array('id' => $postmortem_id));
             $postmortem = $stmt->fetch(PDO::FETCH_ASSOC);

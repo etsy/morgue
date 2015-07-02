@@ -13,6 +13,9 @@ class Postmortem {
 
     const ACTION_ADD = 'add';
     const ACTION_EDIT = 'edit';
+    const EDIT_UNLOCKED = 0;
+    const EDIT_LOCKED = 1;
+    const EDIT_CLOSED = 2;
 
     /**
      * Save an event to the database. If an id is given, the existing event is
@@ -39,6 +42,12 @@ class Postmortem {
             return array("id" => null, "error" => "Couldn't get connection object.");
         }
         $action = (isset($event["id"])) ?  self::ACTION_EDIT : self::ACTION_ADD;
+
+        if ($action == self::ACTION_ADD) {
+            $now = new DateTime(null, new DateTimeZone('UTC'));
+            $event["created"] = $now->getTimestamp();
+        }
+
         $event = Persistence::save_event($event, $conn);
         if (is_null($event["id"])) {
             return $event;
@@ -117,6 +126,63 @@ class Postmortem {
         return Persistence::flag_as_undeleted('postmortems', 'id', $event_id, $conn);
     }
 
+    /**
+     * Determine if event is editable
+     * @param $event - event object returned from get_event
+     * @returns EDIT_UNLOCKED if editable, EDIT_LOCKED if a user is currently editing, 
+     *  or EDIT_CLOSED if no longer editable
+     */
+    static function get_event_edit_status($event) {
+        $config = Configuration::get_configuration();
+        $config = $config["locking"];
+
+        $lock_date = new DateTime();
+        $lock_date->setTimestamp($event['created']);
+        $lock_date->add(new DateInterval('P'. $config['editable_days'] .'D'));
+        $now = new DateTime();
+
+        // the number of days allowed to edit this event has expired
+        if ($now > $lock_date) {
+            return self::EDIT_CLOSED;
+        }
+
+        $user = MorgueAuth::get_auth_data();
+
+        // the lock for another user's edits hasn't expired yet
+        if (strcmp($user['username'], $event['modifier']) != 0) {                  
+            $now = $now->getTimestamp();
+            if ($now < $event['modified'] + $config['lock_time']) {
+                return self::EDIT_LOCKED;
+            }
+        }
+        return self::EDIT_UNLOCKED;
+    }
+
+    /** 
+     * Sets the given event as being modified by the current user
+     */
+    static function set_event_edit_status($id, $conn = null) {
+        if (!$conn) {
+            return null;
+        }
+
+        $user = MorgueAuth::get_auth_dat();
+        $modifier = $user['username'];
+
+        $modified = new DateTime();
+        $modified = $modified->getTimestamp();
+
+        $sql = "UPDATE postmortems SET modifier = '" . $modifier . "', modified = " . $modifi/ed;
+        $sql = $sql . " WHERE id = " . $id;
+
+        try {
+            $stmt = $conn->prepare($sql);
+            $success = $stmt->execute();
+            return null;
+        } catch (PDOException $e) {
+            return $e->getMessage();
+        }
+    }
 
     /**
      * Get all postmortems from the database

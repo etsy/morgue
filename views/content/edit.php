@@ -9,6 +9,21 @@
     </div>
 <?php endif; ?>
 
+<!-- Edit Status -->
+<!--
+<div class="row-fluid">
+    <?php if ($edit_status == Postmortem::EDIT_UNLOCKED): ?>
+        <a href="#"><div class="alert alert-info" role="alert">Click here to make changes</div></a>
+    <?php endif; ?>
+    <?php if ($edit_status == Postmortem::EDIT_LOCKED): ?>
+        <div class="alert alert-danger" role="alert"><strong><?php echo $event["modifier"] ?></strong> is currently editing this page.</div>
+    <?php endif; ?>
+    <?php if ($edit_status == Postmortem::EDIT_CLOSED): ?>
+        <div class="alert alert-warning" role="alert"><strong>Heads up!</strong> The edit period for this event has expired.</div>
+    <?php endif; ?>
+</div>
+-->
+
 <!-- Title -->
 <div class="row-fluid">
     <input class="input-headline" id="eventtitle" type="text"
@@ -16,7 +31,7 @@
 </div>
 
 <!-- Info Saved Notice -->
-<div class="alert alert-success" style="opacity:0;" id="saved_feedback">
+<div class="alert alert-success" style="opacity:0; display:none;" id="saved_feedback">
 Filler, to keep the same size
 </div>
 

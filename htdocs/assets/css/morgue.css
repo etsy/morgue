@@ -9,6 +9,12 @@ input.input-headline {
   height: 40px;
 }
 
+input:disabled {
+  border: none;
+  background: transparent;
+  box-shadow: none;
+}
+
 #saved_feedback {
     margin-bottom: 0;
     height: 9px;
