@@ -288,6 +288,21 @@ $app->get('/events/:id/summary', function($id) use ($app) {
 
 });
 
+$app->get('/events/:id/lock', function($id) use ($app) {
+    header("Content-Type: application/json");
+    $event = Postmortem::get_event($id);
+    
+    $status = Postmortem::get_event_edit_status($event);
+    
+    if($status === Postmortem::EDIT_UNLOCKED) {
+        Postmortem::set_event_edit_status($id);
+    } 
+
+    $return = ["status" => $status, "modifier" => $event["modifier"]];
+
+    echo json_encode($return);
+});
+
 $app->put('/events/:id', function ($id) use ($app) {
     // get the base event data
     $event = Postmortem::get_event($id);
@@ -394,11 +409,24 @@ $app->put('/events/:id', function ($id) use ($app) {
     }
     $event = Postmortem::save_event($event);
     if (is_null($event["id"])) {
+        var_dump($event);
         $app->response->status(500);
         return;
     }
 
     $app->redirect('/events/'.$event["id"], 201);
+});
+
+$app->post('/events/:id/history', function($id) use ($app) {
+    header("Content-Type: application/json");
+    $action = $app->request->post('action');
+    
+    // store history
+    $env = $app->environment;
+    $admin = $env['admin']['username'];
+    $result = Postmortem::add_history($id, $admin, $action);
+    
+    echo json_encode($result);
 });
 
 $app->post('/events/:id/tags', function($id) use ($app) {

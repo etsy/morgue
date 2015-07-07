@@ -15,6 +15,12 @@ input:disabled {
   box-shadow: none;
 }
 
+.editable{
+}
+
+.editable_hidden {
+}
+
 #saved_feedback {
     margin-bottom: 0;
     height: 9px;
@@ -60,6 +66,10 @@ a.jira_default {}
   cursor:help;
 }
 
+#contact_anchor {
+  margin-top: 10px;
+}
+
 #jira-link {
   float: right;
   font-size: 16px;
@@ -71,6 +81,10 @@ a.jira_default {}
 }
 
 #summary {
+  width: 100%;
+}
+
+#why_surprised {
   width: 100%;
 }
 
@@ -108,4 +122,18 @@ a.jira_default {}
 position: absolute;
 top: 0px;
 right: 0;
+}
+
+#edit_status {
+  text-align: center;
+  left: 0;
+  right: 0;
+}
+
+.sticky {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
 }

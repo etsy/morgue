@@ -6,7 +6,7 @@
 function make_summary_editable(text) {
     var $summary = $("#summary");
 
-    if (typeof text === "undefined") {
+    if (typeof text !== "string") {
         text = '';
     } else {
         text = "\n"+text;
@@ -27,11 +27,12 @@ function make_summary_editable(text) {
                           .attr({
                                   "id": "summary",
                                   "name": "summary",
-                                  "class": "input-xxlarge",
+                                  "class": "input-xxlarge editable",
                                   "rows": "10"
                               })
                           .val(data.summary + text);
                       $summary.replaceWith(textarea);
+                      $("#summary").on("save", summary_save);
                   },
                   'json' // forces return to be json decoded
                   );
@@ -53,49 +54,31 @@ function update_summary_for_event() {
  * Depending on the current state either show the editable summary form or
  * save the markdown summary and render as HTML
  */
-function summary_edit_save_button() {
-    var button = $("#summaryeditbutton");
-    var in_edit = (button.html() == "Save");
-    if (in_edit) {
-        update_summary_for_event();
-        var html = $("<div></div>");
-        html.attr("id", "summary");
-        html.attr("name", "summary");
-        html.attr("class", "input-xxlarge");
-        html.attr("rows", "10");
-        html.html(markdown.toHTML($("#summary").val()));
-        $("#summary").remove();
-        $("#summarywrapper").append(html);
-        button.html("Edit");
-        $("#summarycancelbutton").hide();
-
-    } else {
-        make_summary_editable();
-        button.html("Save");
-        $("#summarycancelbutton").show();
-    }
+function summary_save() {
+    update_summary_for_event();
+    var html = $("<div></div>");
+    html.attr("id", "summary");
+    html.attr("name", "summary");
+    html.attr("class", "input-xxlarge editable");
+    html.attr("rows", "10");
+    html.html(markdown.toHTML($("#summary").val()));
+    $("#summary").remove();
+    $("#summarywrapper").append(html);
+    $("#summaryundobutton").hide();
+    $("#summary").on("edit", make_summary_editable);
 }
 
 /**
  * just abort editing and display the stored data as rendered HTML
  */
-function summary_cancel_button() {
+function summary_undo_button() {
     $.getJSON("/events/"+get_current_event_id()+"/summary", function(data) {
-            var html = $("<div></div>");
-            html.attr("id", "summary");
-            html.attr("name", "summary");
-            html.attr("class", "input-xxlarge");
-            html.attr("rows", "10");
-            html.html(markdown.toHTML(data.summary));
-            $("#summary").remove();
-            $("#summarywrapper").append(html);
-            $("#summaryeditbutton").html("Edit");
-            $("#summarycancelbutton").hide();
+            $('#summary').val(data.summary);
         });
 }
 
-$("#summaryeditbutton").on("click", summary_edit_save_button);
-$("#summarycancelbutton").on("click", summary_cancel_button);
+$("#summary").on("edit", make_summary_editable);
+$("#summaryundobutton").on("click", summary_undo_button);
 $.getJSON("/events/"+get_current_event_id()+"/summary", function(data) {
     $("#summary").html(markdown.toHTML(data.summary));
 });

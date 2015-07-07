@@ -52,11 +52,13 @@ class Postmortem {
         if (is_null($event["id"])) {
             return $event;
         }
-        // store history
-        $app = \Slim\Slim::getInstance();
-        $env = $app->environment;
-        $admin = $env['admin']['username'];
-        self::add_history($event["id"], $admin, $action);
+
+        if ($action == self::ACTION_ADD) {
+            $app = \Slim\Slim::getInstance();
+            $env = $app->environment;
+            $admin = $env['admin']['username'];
+            $result = Postmortem::add_history($event["id"], $admin, $action);
+        }
 
         // close connection and return
         $conn = null;
@@ -162,17 +164,18 @@ class Postmortem {
      * Sets the given event as being modified by the current user
      */
     static function set_event_edit_status($id, $conn = null) {
+        $conn = $conn ?: Persistence::get_database_object();
         if (!$conn) {
             return null;
         }
 
-        $user = MorgueAuth::get_auth_dat();
+        $user = MorgueAuth::get_auth_data();
         $modifier = $user['username'];
 
         $modified = new DateTime();
         $modified = $modified->getTimestamp();
 
-        $sql = "UPDATE postmortems SET modifier = '" . $modifier . "', modified = " . $modifi/ed;
+        $sql = "UPDATE postmortems SET modifier = '" . $modifier . "', modified = " . $modified;
         $sql = $sql . " WHERE id = " . $id;
 
         try {

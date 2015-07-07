@@ -13,7 +13,15 @@
                 echo "<input type=\"hidden\" name=\"contact_lookup_url\" value=\"$contact_lookup_url\" />";
             }
          ?>
-         <input type="text" placeholder="Enter LDAP username" id="contact" name="contact" class="input-xxlarge" value="" />
+         <input type="text" placeholder="Enter LDAP username" id="contact" name="contact" class="input-xxlarge editable_hidden" value="" style="display:none;"/>
+
+         <?php
+                if (isset($contact) && $contact !="") {
+                    $contact_html = Contact::get_html_for_user($contact);
+                    echo "<div id=\"contact_anchor\">$contact_html</div>";
+                }
+            ?>
+
       </div>
     </div>
     </div>
@@ -21,20 +29,3 @@
 
 </div>
 
-<!-- display it -->
-<div class="row-fluid">
-  <form class="form-horizontal">
-  <div class="span6">
-        <div class="controls controls-row" id="the_contact">
-            <?php
-                if (isset($contact) && $contact !="") {
-                    $contact_html = Contact::get_html_for_user($contact);
-                    echo "<span id=\"contact_anchor\">$contact_html</span>";
-                }
-            ?>
-        </div>
-    </div>
-</form>
-</div>
-<!-- end -->
-<div class="row-fluid"><br/></div>

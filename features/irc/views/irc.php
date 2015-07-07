@@ -10,11 +10,13 @@
 ?>
 <div class="row-fluid">
   <legend for="timeline">IRC Channel(s)</legend>
+  <div id="irc_select_div" class="editable_hidden" style="display:none;">
   <select id="irc_channels_select" name="irc_channels[]" data-placeholder="Select IRC channels" multiple="multiple" class="chzn-select input-xxlarge">
     <?php foreach ($irc_channels as $value => $display) : ?>
     <option value="<?php echo $value ?>"><?php echo $display ?></option>
     <?php endforeach; ?>
   </select>
+  </div>
 
   <?php if (empty($irc_channels)) { ?>
   <div class="alert alert-block">
@@ -26,7 +28,7 @@
   <table id="ircchannels" class="table table-striped">
     <thead>
       <tr>
-        <th>Channel</th>
+     <th>Channel</th>
       </tr>
     </thead>
     <tbody id="channel_table_body">
@@ -34,7 +36,7 @@
         foreach ($channels as $channel) {
             echo "<tr class=\"channel-row\">";
             echo "<td><a role=\"button\" class=\"btn ircshow\" >$channel[channel]</a></td>";
-            echo "<td><span id=\"channel-$channel[id]\" class=\"close\">&times;</span></td>";
+            echo "<td><span id=\"channel-$channel[id]\" class=\"close editable_hidden\" style=\"display:none;\">&times;</span></td>";
             echo "</tr>";
         }
       ?>
@@ -50,7 +52,7 @@
     </div>
     <div id="irc-modal-body" class="modal-body"></div>
     <div class="modal-footer">
-      <button class="btn irc_paste" data-dismiss="modal" aria-hidden="true">Paste to What Happened</button>
+      <button class="btn irc_paste editable_hidden" data-dismiss="modal" aria-hidden="true" style="display:none;">Paste to What Happened</button>
       <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
     </div>
   </div>

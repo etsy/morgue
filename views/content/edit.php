@@ -1,5 +1,3 @@
-<div class="row-fluid">
-<div class="offset1 span10">
 
 <?php if ($event['deleted']): ?>
     <div class="row-fluid">
@@ -9,30 +7,27 @@
     </div>
 <?php endif; ?>
 
+
 <!-- Edit Status -->
-<!--
 <div class="row-fluid">
-    <?php if ($edit_status == Postmortem::EDIT_UNLOCKED): ?>
-        <a href="#"><div class="alert alert-info" role="alert">Click here to make changes</div></a>
+    <?php if ($edit_status === Postmortem::EDIT_UNLOCKED): ?>
+        <a id="edit_status" href="javascript:void(0)"><div id="edit_div" class="alert alert-info" role="alert">Click here to make changes</div></a>
     <?php endif; ?>
-    <?php if ($edit_status == Postmortem::EDIT_LOCKED): ?>
-        <div class="alert alert-danger" role="alert"><strong><?php echo $event["modifier"] ?></strong> is currently editing this page.</div>
+    <?php if ($edit_status === Postmortem::EDIT_LOCKED): ?>
+        <div id="edit_status" class="alert alert-danger" role="alert"><strong><?php echo $event["modifier"] ?></strong> is currently editing this page.</div>
     <?php endif; ?>
-    <?php if ($edit_status == Postmortem::EDIT_CLOSED): ?>
-        <div class="alert alert-warning" role="alert"><strong>Heads up!</strong> The edit period for this event has expired.</div>
+    <?php if ($edit_status === Postmortem::EDIT_CLOSED): ?>
+        <div id="edit_status" class="alert alert-warning" role="alert"><strong>Heads up!</strong> The edit period for this event has expired.</div>
     <?php endif; ?>
 </div>
--->
+
+<div class="row-fluid">
+<div class="offset1 span10">
 
 <!-- Title -->
 <div class="row-fluid">
-    <input class="input-headline" id="eventtitle" type="text"
-      value="<?php echo $event["title"] ?>" required>
-</div>
-
-<!-- Info Saved Notice -->
-<div class="alert alert-success" style="opacity:0; display:none;" id="saved_feedback">
-Filler, to keep the same size
+    <input class="input-headline editable" id="eventtitle" type="text"
+      value="<?php echo $event["title"] ?>" required disabled>
 </div>
 
 <!-- Small Print -->
@@ -52,11 +47,11 @@ Filler, to keep the same size
       <label class="control-label" id="event-start-time">Start time: </label>
       <div class="controls controls-row">
         <input id="event-start-input-date" name="event-start-input-date"
-               class="input-small datepicker" type="text"
-               value="<?php echo $start_datetime->format('m/d/Y'); ?>" >
+               class="input-small datepicker editable" type="text"
+               value="<?php echo $start_datetime->format('m/d/Y'); ?>" disabled>
         <input id="event-start-input-time" name="event-start-input-time"
-                class="input-mini timeentry" type="text"
-                value="<?php echo $start_datetime->format('g:iA'); ?>" >
+                class="input-mini timeentry editable" type="text"
+                value="<?php echo $start_datetime->format('g:iA'); ?>"disabled >
       </div>
     </div>
 
@@ -64,11 +59,11 @@ Filler, to keep the same size
       <label class="control-label" id="event-end-time">End time: </label>
       <div class="controls controls-row">
         <input id="event-end-input-date" name="event-end-input-date"
-               class="input-small datepicker" type="text"
-               value="<?php echo $end_datetime->format('m/d/Y'); ?>" >
+               class="input-small datepicker editable" type="text"
+               value="<?php echo $end_datetime->format('m/d/Y'); ?>" disabled>
         <input id="event-end-input-time" name="event-end-input-time"
-               class="input-mini timeentry" type="text"
-               value="<?php echo $end_datetime->format('g:iA'); ?>" >
+               class="input-mini timeentry editable" type="text"
+               value="<?php echo $end_datetime->format('g:iA'); ?>" disabled>
       </div>
     </div>
 
@@ -76,18 +71,18 @@ Filler, to keep the same size
       <label class="control-label" id="event-detect-time">Detect time: </label>
       <div class="controls controls-row">
         <input id="event-detect-input-date" name="event-detect-input-date"
-               class="input-small datepicker" type="text"
-               value="<?php echo $detect_datetime->format('m/d/Y'); ?>" >
+               class="input-small datepicker editable" type="text"
+               value="<?php echo $detect_datetime->format('m/d/Y'); ?>" disabled>
         <input id="event-detect-input-time" name="event-detect-input-time"
-               class="input-mini timeentry" type="text"
-               value="<?php echo $detect_datetime->format('g:iA'); ?>" >
+               class="input-mini timeentry editable" type="text"
+               value="<?php echo $detect_datetime->format('g:iA'); ?>" disabled>
       </div>
     </div>
 
    <div class="control-group">
      <label class="control-label severity_levels" id="event-severity">Severity: </label>
        <div class="controls controls-row">
-        <select id="severity-select" name="severity" class="input" title="
+        <select id="severity-select" name="severity" class="input editable" title="
         <?php
            $config = Configuration::get_configuration();
            if (isset($config['severity']) && isset($config['severity']['tooltip_title'])) {
@@ -96,7 +91,7 @@ Filler, to keep the same size
                 echo "Severity Levels";
             }
         ?>
-        ">
+        " disabled>
 
         <?php
         $severity_levels = Postmortem::get_severity_levels();
@@ -121,7 +116,7 @@ Filler, to keep the same size
       <div class="controls controls-row">
         <input class="input-medium" id="impacttime" type="text"
           value="<?php echo $impacttime; ?>"
-          readonly=true/>
+          disabled/>
       </div>
     </div>
 
@@ -130,7 +125,7 @@ Filler, to keep the same size
       <div class="controls controls-row">
         <input class="input-medium" id="undetecttime" type="text"
           value="<?php echo $undetecttime; ?>"
-          readonly=true/>
+          disabled/>
       </div>
    </div>
 
@@ -139,7 +134,7 @@ Filler, to keep the same size
     <div class="controls controls-row">
       <input class="input-medium" id="resolvetime" type="text"
         value="<?php echo $resolvetime; ?>"
-          readonly=true/>
+          disabled/>
     </div>
    </div>
   </div>
@@ -169,7 +164,7 @@ Filler, to keep the same size
 <div class="row-fluid"><br/></div>
 
 <!-- Delete -->
-<div class="row-fluid">
+<div class="row-fluid editable_hidden" style="display:none;">
   <?php if ($event['deleted']): ?>
     <legend>Restore</legend>
     <div id="undelete_button_container">

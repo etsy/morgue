@@ -21,6 +21,12 @@
             "Anything worth mentioning not in the above levels"
         ]
     },
+
+    "locking" :
+    { "editable_days": 30,
+      "lock_time": 120
+    },    
+
     "edit_page_features" : [
       "status_time",
       "contact",

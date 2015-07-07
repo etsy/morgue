@@ -18,17 +18,11 @@ function get_current_event_id() {
  */
 function show_save_status(event_type, success) {
     success = typeof success !== 'undefined' ? success : false;
-    $saved = $("#saved_feedback");
     if (success) {
-        $saved.html(event_type + " has been saved");
-        $saved.removeClass("alert-error").addClass("alert-success"); 
+        console.log(event_type + " has been saved");
     } else {
-        $saved.html(event_type + " failed to save");
-        $saved.removeClass("alert-success").addClass("alert-error"); 
+        console.log(event_type + " failed to save");
     }
-    $saved.animate({opacity: "100.0"}, 1000, "linear", function () {
-            $saved.animate({opacity: "0"}, 1000, "linear"); 
-    });
 }
 
 function update_title_for_event() {
@@ -264,7 +258,7 @@ function update_severity_for_event() {
   $("select#severity-select option:selected").each(function () {
     $.ajax({
         url: url,
-        data: {severity: $.trim($(this).text())}, 
+        data: {severity: $.trim($(this).val())}, 
         type: "PUT",
         success: function () { show_save_status("Severity", true);},
         error: function () { show_save_status("Severity", false);}
@@ -305,10 +299,15 @@ function update_detecttime_for_event() {
 
 function update_statusdatetime_for_event() {
   var url = "/events/" + get_current_event_id();
+  var status =  $("input#event-status-input-date").val() + ' ' + $("input#event-status-input-time").val();
+  if(status === ' ') {
+      return;
+  }
+
   $.ajax({
         url: url, 
         data: {
-               status_datetime: $("input#event-status-input-date").val() + ' ' + $("input#event-status-input-time").val(),
+               status_datetime: status,
                timezone: $('#current_tz').text()
                }, 
         type: "PUT",
@@ -419,6 +418,16 @@ function update_resolve_time() {
   $('#resolvetime').val(getTimeString(enddate - startdate));
 }
 
+function update_history() {
+    var url = "/events/"+ get_current_event_id() +"/history";
+    $.ajax({
+            url: url,
+            data: { action: 'edit'},
+            type: 'POST',
+            success: function () { show_save_status("History", true);},
+            error: function () { show_save_status("History", false);}
+        });
+}
 
 /**
  * Displays a confirmation message inserted after the 'insert' point. Pass in the context that is

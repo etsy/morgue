@@ -11,9 +11,12 @@
     $jira_keys = array_keys($jira_tickets);
 ?>
 <div class="row-fluid">
-<legend>Remediation</legend> <div id="jira-link"><a href="<?php echo $jira_client->getJiraBaseUrl(); ?>/secure/CreateIssue!default.jspa" target="_new">Create New Issue</a></div>
-
+<legend>Remediation</legend> 
+  
+  <div class="editable_hidden" style="display:none;">
+  <div id="jira-link"><a href="<?php echo $jira_client->getJiraBaseUrl(); ?>/secure/CreateIssue!default.jspa" target="_new">Create New Issue</a></div>
   <input type="text" placeholder="Enter JIRA key(s), separated by commas (i.e. CORE-2024, OPS-1453)" id="jira_key_input" name="jira_key_input" class="input-xxlarge" onblur="addTicket()">
+  </div>
 
   <table class="table table-striped">
     <thead>
