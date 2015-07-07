@@ -17,7 +17,7 @@ class ContactTest extends PHPUnit_Framework_TestCase {
 
     public function test_getHtmlForUser_lookupDefined() {
         $config = array('lookup_url' => 'http://foo/%s/bar');
-        $expected = '<a href="http://foo/username/bar" target="_new">username</a>';
+        $expected = '<a href="http://foo/username/bar" target="_new" style="text-decoration:none;">username</a>';
         $this->assertEquals($expected, Contact::get_html_for_user('username', $config));
     }
 
