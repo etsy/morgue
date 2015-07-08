@@ -43,7 +43,7 @@
         foreach ($jira_client->getAdditionalIssueFields() as $k => $v) {
             echo "<td>$ticket_attributes[$k]</td>";
         }
-        echo "<td><span id=\"jira-$ticket_attributes[id]\" class='close'>&times;</span></td>";
+        echo "<td><span id=\"jira-$ticket_attributes[id]\" class='close editable_hidden' style='display:none;'>&times;</span></td>";
         echo "</tr>";
       }
       ?>
