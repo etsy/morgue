@@ -21,6 +21,8 @@ You can also join `#morgue` on Freenode IRC if you have questions.
 ### Live edit page
 ![Editing a Post Mortem](htdocs/assets/img/screenshots/morgue_edit.png)
 
+![Scheduling a Post Mortem](htdocs/assets/img/screenshots/morgue_calendar.png)
+
 ![Timeline of events](htdocs/assets/img/screenshots/morgue_timeline.png)
 
 ![Remediations items](htdocs/assets/img/screenshots/morgue_remediation.png)
