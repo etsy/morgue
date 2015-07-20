@@ -67,11 +67,11 @@ class Persistence {
 
 
             } else {
-                array_push($values,"statustime");
+                array_push($values,"statustime","created");
 
                 $sql = "INSERT INTO postmortems (title,summary,why_surprised,starttime,endtime,
-                    statustime,detecttime,severity) VALUES (:title, :summary,:why_surprised,:starttime,
-                    :endtime,:statustime,:detecttime,:severity)";
+                    statustime,detecttime,severity,created) VALUES (:title, :summary,:why_surprised,:starttime,
+                    :endtime,:statustime,:detecttime,:severity,:created)";
             }
             $stmt = $conn->prepare($sql);
             $stmt->execute(array_intersect_key($postmortem, array_flip($values)));
