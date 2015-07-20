@@ -51,6 +51,15 @@ cp config/example.json config/development.json
 development.json as those only exist as examples to show you how to add
 custom features to your Morgue installation.
 
+### Composer
+Morgue relies on the [Slim Framework](http://www.slimframework.com/), a dependency that can be easily managed by Composer.
+Directions to install composer can be found on [here](https://getcomposer.org/doc/00-intro.md#installation-linux-unix-osx).
+Once installed, run :
+
+```
+php composer.phar update
+```
+
 ### Apache
 This is a basic example for an Apache vhost. The `MORGUE_ENVIRONMENT` variable
 is used to determine which config file to use (see above step).
