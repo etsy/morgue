@@ -42,6 +42,13 @@
       "upload"
     ],
     "feature": [
+    {   "name": "anniversary",
+        "enabled": "on",
+        "navbar": "on",
+        "mailto": "me@example.com",
+        "mailfrom": "morgue@example.com",
+        "custom_js_assets": ["anniversary.js"]
+    },
 
     {   "name": "status_time",
         "enabled": "on"
@@ -98,6 +105,11 @@
         "enabled": "on"
     },
 
+    {   "name": "report",
+        "enabled": "on",
+        "navbar": "on"
+    },
+
     {   "name": "upload",
         "enabled": "on",
         "custom_js_assets": ["dropzone.min.js", "upload.js"],
@@ -109,6 +121,11 @@
             "proxy": false 
         },
         "upload_driver": "webdav"
+    },
+
+    {   "name": "why_surprised",
+        "enabled": "on",
+        "custom_js_assets": ["why_surprised.js"]
     }
 
     ],
