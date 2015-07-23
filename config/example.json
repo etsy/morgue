@@ -32,13 +32,14 @@
       "contact",
       "calendar",
       "summary",
+      "why_surprised",
       "images",
       "irc",
       "jira",
       "links",
       "tags",
       "history",
-      "custom_feature"
+      "upload"
     ],
     "feature": [
 
@@ -63,7 +64,8 @@
     },
 
     {   "name": "summary",
-        "enabled": "on"
+        "enabled": "on",
+        "custom_js_assets": ["summary.js"]
     },
 
     {   "name": "images",
@@ -96,10 +98,19 @@
         "enabled": "on"
     },
 
-    {   "name": "custom_feature",
+    {   "name": "upload",
         "enabled": "on",
-        "custom_js_assets": "on"
+        "custom_js_assets": ["dropzone.min.js", "upload.js"],
+        "custom_css_assets": ["dropzone.min.css"],
+        "upload_driver_options": {
+            "url": "http://my.server.home/",
+            "username": "webdav",
+            "password": "webdav",
+            "proxy": false 
+        },
+        "upload_driver": "webdav"
     }
 
-    ]
+    ],
+    "upload_dir": "/tmp/morgue"
 }
