@@ -305,11 +305,13 @@ $app->get('/events/:id/lock', function($id) use ($app) {
 
 $app->put('/events/:id', function ($id) use ($app) {
     // get the base event data
-    $event = Postmortem::get_event($id);
-    if (is_null($event["id"])) {
+    $old_event = Postmortem::get_event($id);
+    if (is_null($old_event["id"])) {
         $app->response->status(500);
         return;
     }
+
+    $event = ["title" => $old_event["title"], "id" => $id];
 
     $params = $app->request->params();
     foreach ($params as $key => $value) {
@@ -330,7 +332,7 @@ $app->put('/events/:id', function ($id) use ($app) {
                 return;
             }
             $timezone = new DateTimeZone($params["timezone"]);
-            $starttime = $event["starttime"];
+            $starttime = $old_event["starttime"];
             $edate = new DateTime("@$starttime");
             $edate->setTimezone($timezone);
             $new_date = date_parse($value);
@@ -348,7 +350,7 @@ $app->put('/events/:id', function ($id) use ($app) {
                 return;
             }
             $timezone = new DateTimeZone($params["timezone"]);
-            $endtime = $event["endtime"];
+            $endtime = $old_event["endtime"];
             $edate = new DateTime("@$endtime");
             $edate->setTimezone($timezone);
             $new_date = date_parse($value);
@@ -366,7 +368,7 @@ $app->put('/events/:id', function ($id) use ($app) {
                 return;
             }
             $timezone = new DateTimeZone($params["timezone"]);
-            $detecttime = $event["detecttime"];
+            $detecttime = $old_event["detecttime"];
             $edate = new DateTime("@$detecttime");
             $edate->setTimezone($timezone);
             $new_date = date_parse($value);
@@ -388,7 +390,7 @@ $app->put('/events/:id', function ($id) use ($app) {
                 return;
             }
             $timezone = new DateTimeZone($params["timezone"]);
-            $statustime = $event["statustime"];
+            $statustime = $old_event["statustime"];
             $edate = new DateTime("@$statustime");
             $edate->setTimezone($timezone);
             $new_date = date_parse($value);

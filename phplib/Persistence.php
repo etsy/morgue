@@ -37,16 +37,37 @@ class Persistence {
      * form ( "id" => null, "error" => "an error message" ) on failure
      */
     static function save_event($postmortem, $conn = null) {
-        $values = array("title", "summary", "why_surprised", "starttime", "endtime",
-                        "detecttime","severity");
+        $values = array("title");
 
         try {
             if (isset($postmortem["id"])) {
                 array_push($values, "id");
-                $sql = "UPDATE postmortems SET title=:title,summary=:summary,why_surprised=:why_surprised,
-                    starttime=:starttime,endtime=:endtime,
-                    detecttime=:detecttime, severity=:severity";
+                $sql = "UPDATE postmortems SET title=:title";
 
+                if( isset($postmortem['summary']) ) {
+                    $sql.= ",summary=:summary";
+                    array_push($values,"summary");
+                }
+                if( isset($postmortem['why_surprised']) ) {
+                    $sql.= ",why_surprised=:why_surprised";
+                    array_push($values,"why_surprised");
+                }
+                if( isset($postmortem['starttime']) ) {
+                    $sql.= ",starttime=:starttime";
+                    array_push($values,"starttime");
+                }
+                if( isset($postmortem['endtime']) ) {
+                    $sql.= ",endtime=:endtime";
+                    array_push($values,"endtime");
+                }
+                if( isset($postmortem['detecttime']) ) {
+                    $sql.= ",detecttime=:detecttime";
+                    array_push($values,"detecttime");
+                }
+                if( isset($postmortem['severity']) ) {
+                    $sql.= ",severity=:severity";
+                    array_push($values,"severity");
+                }
                 if( isset($postmortem['gcal']) ) {
                     $sql.= ",gcal=:gcal";
                     array_push($values,"gcal");
