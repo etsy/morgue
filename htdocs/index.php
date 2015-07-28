@@ -177,8 +177,6 @@ $app->post('/events', function () use ($app) {
     $status_time = $app->request->post('status_time');
     $timezone = $app->request->post('timezone');
     $severity = $app->request->post('severity');
-    $contact = $app->request->post('contact');
-    $gcal = $app->request->post('gcal');
     $startdate = new DateTime($start_date." ".$start_time, new DateTimeZone($timezone));
     $enddate = new DateTime($end_date." ".$end_time, new DateTimeZone($timezone));
     $detectdate = new DateTime($detect_date." ".$detect_time, new DateTimeZone($timezone));
@@ -195,11 +193,9 @@ $app->post('/events', function () use ($app) {
         "why_surprised" => "",
         "starttime" => $startdate->getTimeStamp(),
         "endtime" => $enddate->getTimeStamp(),
-        "detecttime" => $detectdate->getTimeStamp(),
         "statustime" => $statusdate->getTimeStamp(),
-        "severity" => $severity,
-        "contact" => $contact,
-        "gcal" => $gcal,
+        "detecttime" => $detectdate->getTimeStamp(),
+        "severity" => $severity
     );
 
     $event = Postmortem::save_event($event);

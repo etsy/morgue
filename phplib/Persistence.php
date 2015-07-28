@@ -88,7 +88,7 @@ class Persistence {
 
 
             } else {
-                array_push($values,"statustime","created");
+                array_push($values, "summary", "why_surprised", "starttime", "endtime", "statustime", "detecttime", "severity", "created");
 
                 $sql = "INSERT INTO postmortems (title,summary,why_surprised,starttime,endtime,
                     statustime,detecttime,severity,created) VALUES (:title, :summary,:why_surprised,:starttime,
