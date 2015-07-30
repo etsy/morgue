@@ -67,7 +67,9 @@
         "clientId" : "CLIENTID",
         "apiKey" : "APIKEY",
         "scopes" : ["https://www.googleapis.com/auth/calendar"],
-        "id" : "CALENDARID"
+        "id" : "CALENDARID",
+        "facilitator": true,
+        "facilitators_email": ["facilitators@example.com"]
     },
 
     {   "name": "summary",
