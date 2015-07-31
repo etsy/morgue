@@ -129,6 +129,10 @@ MORGUE_ENVIRONMENT=development php -d include_path=".:$(dirname `pwd`):$(dirname
 
 Open http://localhost:8000 to view Morgue
 
+To run the unittests you need to have phpunit installed and then run
+
+    make unittests
+
 ## Configuration
 
 
