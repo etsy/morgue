@@ -96,7 +96,7 @@ class Persistence {
             }
             $stmt = $conn->prepare($sql);
             $stmt->execute(array_intersect_key($postmortem, array_flip($values)));
-            if (!array_key_exists("id", $postmortem)) {
+           if (!array_key_exists("id", $postmortem)) {
                 $postmortem["id"] = $conn->lastInsertId();
             }
             return $postmortem;

@@ -28,8 +28,13 @@
 			}
 ?></li>
 <?php } ?>
+
+          <div id="search_div" class="input-group">
+              <input id="search_field" type="text" placeholder="Search">
+          </div>  
+          <script type="text/javascript" src="/features/search/js/search.js"></script>
       </ul>
-        </div>
+      </div>
     </div>
   </div>
 </div>

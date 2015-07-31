@@ -133,3 +133,9 @@ right: 0;
   right: 0;
   z-index: 100;
 }
+
+#search_div {
+  position: fixed;
+  top: 5px;
+  right: 20px;
+}
