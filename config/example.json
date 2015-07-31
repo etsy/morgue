@@ -113,6 +113,10 @@
         "navbar": "on"
     },
 
+    { "name": "search",
+      "enabled" : "on"
+    },
+
     {   "name": "upload",
         "enabled": "on",
         "custom_js_assets": ["dropzone.min.js", "upload.js"],
@@ -130,7 +134,6 @@
         "enabled": "on",
         "custom_js_assets": ["why_surprised.js"]
     }
-
     ],
     "upload_dir": "/tmp/morgue"
 }
