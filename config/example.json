@@ -91,6 +91,7 @@
         "baseurl": "https://jira.foo.com",
         "username": "jira_morgue",
         "password": "jira_morgue_password",
+        "proxy": "http://myproxy:8080",
         "additional_fields" : {
         }
     },
