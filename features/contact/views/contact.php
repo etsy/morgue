@@ -13,7 +13,7 @@
                 echo "<input type=\"hidden\" name=\"contact_lookup_url\" value=\"$contact_lookup_url\" />";
             }
          ?>
-         <input type="text" placeholder="Enter LDAP username" id="contact" name="contact" class="input-xxlarge editable_hidden" value="" style="display:none;"/>
+         <input type="text" placeholder="Enter contact username" id="contact" name="contact" class="input-xxlarge editable editable_hidden" value="" style="display:none;"/>
 
          <?php
                 if (isset($contact) && $contact !="") {

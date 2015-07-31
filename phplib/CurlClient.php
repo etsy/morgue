@@ -17,6 +17,10 @@ class CurlClient {
         }
         curl_setopt_array($ch, $options);
         $result = trim(curl_exec($ch));
+        $status_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        if ($status_code != 200) {
+            error_log("Got unexpected HTTP status code $status_code from $url");
+        }
         curl_close($ch);
         return $result;
     }
