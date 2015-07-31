@@ -182,7 +182,9 @@ class JiraClient {
         $this->jira_base_url = $config['baseurl'];
         $this->username = $config['username'];
         $this->password = $config['password'];
-        $this->proxy = $config['proxy'];
+        if (isset($config['proxy'])) {
+            $this->proxy = $config['proxy'];
+        }
         $this->additional_fields = array();
         if (isset($config['additional_fields'])) {
             $this->additional_fields = $config['additional_fields'];
