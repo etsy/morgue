@@ -13,7 +13,9 @@ class CurlClient {
             CURLOPT_RETURNTRANSFER => 1
         );
         if ($user_pass) {
-            $options[CURLOPT_USERPWD] = $user_pass; 
+            if ($user_pass != ":") {
+                $options[CURLOPT_USERPWD] = $user_pass;
+            }
         }
         curl_setopt_array($ch, $options);
         $result = trim(curl_exec($ch));
