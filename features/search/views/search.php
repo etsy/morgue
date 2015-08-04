@@ -1,6 +1,5 @@
 <div class="row-fluid">
      <legend>Search Results</legend>
-     <div class="span12">
       <?php
      if(count($results) == 0) {
          echo '<h3>No Results</h3>';
@@ -13,8 +12,7 @@
              echo "<td>$result[created]</td>";
              echo "</tr>";
          }
+         echo '</table>';
      }
       ?>
-      </table>
-  </div>
 </div>
