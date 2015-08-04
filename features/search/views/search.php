@@ -1,5 +1,5 @@
 <div class="row-fluid">
-     <legend>Search Results</legend>
+     <legend>Search Results <small> for <?php echo '"' . $q . '"'; ?></small></legend>
       <?php
      if(count($results) == 0) {
          echo '<h3>No Results</h3>';
