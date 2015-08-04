@@ -1,5 +1,5 @@
 <div class="row-fluid">
-  <a class="btn btn-large btn-block btn-primary" data-toggle="modal" href="#create" data-target="#create">
+  <a class="btn btn-large btn-block btn-primary btn-success" data-toggle="modal" href="#create" data-target="#create">
     <i class="icon-plus icon-white"></i> Create
   </a>
 </div>

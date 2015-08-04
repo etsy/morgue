@@ -1,3 +1,37 @@
+
+#ascii_logo{
+  margin-right: 10px;
+  float: left;
+}
+#ascii_logo a{
+  font-size: 12px;
+  line-height: 12px;
+  
+  display: block;
+  white-space: pre;
+  font-family: 'Courier New', Courier, 'Lucida Sans Typewriter', 'Lucida Typewriter', monospace;
+  color: #fff;
+}
+#ascii_logo a:hover {
+  text-decoration: none;
+  color: #333;
+}
+
+#header {
+  background: #272822; 
+}
+
+div > .nav li > .nav_link {
+    margin-top: 40px;
+    color: #fff;
+    text-shadow: none;
+    font-size: 16px;
+}
+
+div > .nav li > .nav_link:hover {
+    color: #555;
+}
+
 .bigModal{
   width:940px;
   margin-left:-470px;
@@ -116,7 +150,7 @@ a.jira_default {}
 }
 .nav li .badge {
 position: absolute;
-top: 0px;
+top: 40px;
 right: 0;
 }
 
@@ -135,7 +169,21 @@ right: 0;
 }
 
 #search_div {
-  position: fixed;
-  top: 5px;
-  right: 20px;
+  
+  margin-top: 40px;
+  margin-right: 15px;
+  width: 22%;
+  float: right;
+  min-width: 100px;
+}
+
+#search_field {
+    width: 100%;
+    background-color: #272822; 
+    color: #fff;
+}
+
+.btn, .btn-large {
+    box-shadow: none;
+    background-image: none;
 }
