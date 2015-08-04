@@ -1,5 +1,5 @@
 <div class="row-fluid">
-     <h1><?php echo $event["title"]; ?><small><?php echo $edited; ?></small></h1>
+     <h2><?php echo $event["title"]; ?><small><?php echo $edited; ?></small></h2>
      <div class="span12">
      <h3>What Happened?</h3>
      <?php 
