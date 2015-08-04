@@ -419,10 +419,16 @@ $app->post('/events/:id/history', function($id) use ($app) {
     header("Content-Type: application/json");
     $action = $app->request->post('action');
     
+    $event = array(
+        "id" => $id,
+        "summary" => $app->request->post('summary'),
+        "why_surprised" => $app->request->post('why_surprised')
+        );
+
     // store history
     $env = $app->environment;
     $admin = $env['admin']['username'];
-    $result = Postmortem::add_history($id, $admin, $action);
+    $result = Postmortem::add_history($event, $admin, $action);
     
     echo json_encode($result);
 });

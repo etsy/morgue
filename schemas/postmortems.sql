@@ -51,6 +51,8 @@ CREATE TABLE `postmortem_history` (
   `postmortem_id` bigint(20) NOT NULL,
   `auth_username` varchar(128) NOT NULL,
   `action` VARCHAR(32) NOT NULL,
+  `summary` longtext,
+  `why_surprised` longtext,
   `create_date` int(11) UNSIGNED NOT NULL,
   PRIMARY KEY (`id`),
   KEY `postmortem_id` (`postmortem_id`)

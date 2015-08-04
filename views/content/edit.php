@@ -194,6 +194,7 @@
 <script type="text/javascript" src="/assets/js/chosen.jquery.min.js"></script>
 <script type="text/javascript" src="/assets/js/jquery.timeentry.min.js"></script>
 <script type="text/javascript" src="/assets/js/api.js"></script>
+<script type="text/javascript" src="/assets/js/diff_match_patch.js"></script>
 <script type="text/javascript" src="/assets/js/images.js"></script>
 <script type="text/javascript" src="/assets/js/jira.js"></script>
 <script type="text/javascript" src="/assets/js/tags.js"></script>

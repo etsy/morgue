@@ -25,20 +25,12 @@ function show_save_status(event_type, success) {
     }
 }
 
-function update_title_for_event() {
+function update_title_for_event(e, event, history) {
   if (!$("#eventtitle").val()) {
       show_save_status("Title", false);
       return;
   }
-
-  var url = "/events/" + get_current_event_id();
-  $.ajax({
-        url: url,
-        data: { title: $("#eventtitle").val() },
-        type: "PUT",
-        success: function () { show_save_status("Title", true);},
-        error: function () { show_save_status("Title", false);}
-  });
+  event.title = $("#eventtitle").val();
 }
 
 /**
@@ -253,129 +245,59 @@ function update_contact_div(contact) {
   $("#contact").val('');
 }
 
-function update_severity_for_event() {
-  var url = "/events/" + get_current_event_id();
+function update_severity_for_event(e, event, history) {
   $("select#severity-select option:selected").each(function () {
-    $.ajax({
-        url: url,
-        data: {severity: $.trim($(this).val())}, 
-        type: "PUT",
-        success: function () { show_save_status("Severity", true);},
-        error: function () { show_save_status("Severity", false);}
-    });
+      event.severity = $.trim($(this).val()); 
   });
 }
 
-function update_detectdate_for_event() {
-  var url = "/events/" + get_current_event_id();
-  $.ajax({
-        url: url, 
-        data: {
-               detect_date: $("input#event-detect-input-date").val(),
-               timezone: $('#current_tz').text()
-               }, 
-        type: "PUT",
-        success: function () { show_save_status("Detect date", true);},
-        error: function () { show_save_status("Detect date", false);}
-  });
-  update_undetected_time();
-  update_resolve_time();
-}
-function update_detecttime_for_event() {
-  var url = "/events/" + get_current_event_id();
-  $.ajax({
-        url: url, 
-        data: {
-               detect_time: $("input#event-detect-input-time").val(),
-               timezone: $('#current_tz').text()
-               }, 
-        type: "PUT",
-        success: function () { show_save_status("Detect time", true);},
-        error: function () { show_save_status("Detect time", false);}
-  });
-  update_undetected_time();
-  update_resolve_time();
+function update_detectdate_for_event(e, event, history) {
+    event.detect_date = $("input#event-detect-input-date").val();
+    event.timezone = $('#current_tz').text();
 }
 
-function update_statusdatetime_for_event() {
-  var url = "/events/" + get_current_event_id();
-  var status =  $("input#event-status-input-date").val() + ' ' + $("input#event-status-input-time").val();
-  if(status === ' ') {
-      return;
-  }
+function update_detecttime_for_event(e, event, history) {
+    event.detect_time = $("input#event-detect-input-time").val();
+    event.timezone = $('#current_tz').text();
 
-  $.ajax({
-        url: url, 
-        data: {
-               status_datetime: status,
-               timezone: $('#current_tz').text()
-               }, 
-        type: "PUT",
-        success: function () { show_save_status("Status time", true);},
-        error: function () { show_save_status("Status time", false);}
-  });
+    update_undetected_time();
+    update_resolve_time();
 }
 
-function update_enddate_for_event() {
-  var url = "/events/" + get_current_event_id();
-  $.ajax({
-        url: url, 
-        data: {
-               end_date: $("input#event-end-input-date").val(),
-               timezone: $('#current_tz').text()
-               }, 
-        type: "PUT",
-        success: function () { show_save_status("End date", true);},
-        error: function () { show_save_status("End date", false);}
-  });
-  update_impact_time();
-  update_resolve_time();
-}
-function update_endtime_for_event() {
-  var url = "/events/" + get_current_event_id();
-  $.ajax({
-        url: url, 
-        data: {
-               end_time: $("input#event-end-input-time").val(),
-               timezone: $('#current_tz').text()
-               }, 
-        type: "PUT",
-        success: function () { show_save_status("End time", true);},
-        error: function () { show_save_status("End time", false);}
-  });
-  update_impact_time();
-  update_resolve_time();
+function update_statusdatetime_for_event(e, event, history) {
+
+    var status =  $("input#event-status-input-date").val() + ' ' + $("input#event-status-input-time").val();
+    if(status === ' ') {
+        return;
+    }
+    event.status_datetime = status;
+    event.timezone = $('#current_tz').text();
 }
 
-function update_startdate_for_event() {
-  var url = "/events/" + get_current_event_id();
-  $.ajax({
-        url: url, 
-        data: {
-               start_date: $("input#event-start-input-date").val(),
-               timezone: $('#current_tz').text()
-               }, 
-        type: "PUT",
-        success: function () { show_save_status("Start date", true);},
-        error: function () { show_save_status("Start date", false);}
-  });
-  update_impact_time();
-  update_undetected_time();
+function update_enddate_for_event(e, event, history) {
+    event.end_date = $("input#event-end-input-date").val();
+    event.timezone = $('#current_tz').text();
 }
-function update_starttime_for_event() {
-  var url = "/events/" + get_current_event_id();
-  $.ajax({
-        url: url, 
-        data: {
-               start_time: $("input#event-start-input-time").val(),
-               timezone: $('#current_tz').text()
-               }, 
-        type: "PUT",
-        success: function () { show_save_status("Start time", true);},
-        error: function () { show_save_status("Start time", false);}
-  });
-  update_impact_time();
-  update_undetected_time();
+
+function update_endtime_for_event(e, event, history) {
+    event.end_time = $("input#event-end-input-time").val();
+    event.timezone = $('#current_tz').text();
+
+    update_impact_time();
+    update_resolve_time();
+}
+
+function update_startdate_for_event(e, event, history) {
+    event.start_date =  $("input#event-start-input-date").val();
+    event.timezone =  $('#current_tz').text();
+}
+
+function update_starttime_for_event(e, event, history) {
+    event.start_time =  $("input#event-start-input-time").val();
+    event.timezone = $('#current_tz').text();
+
+    update_impact_time();
+    update_undetected_time();
 }
 
 function update_impact_time() {
@@ -418,14 +340,25 @@ function update_resolve_time() {
   $('#resolvetime').val(getTimeString(enddate - startdate));
 }
 
-function update_history() {
+function update_history(history) {
     var url = "/events/"+ get_current_event_id() +"/history";
     $.ajax({
             url: url,
-            data: { action: 'edit'},
+            data: history,
             type: 'POST',
             success: function () { show_save_status("History", true);},
             error: function () { show_save_status("History", false);}
+        });
+}
+
+function update_event(event) {
+    var url = "/events/"+ get_current_event_id();
+    $.ajax({
+            url: url,
+            data: event,
+            type: 'PUT',
+            success: function () { show_save_status("Event", true);},
+            error: function () { show_save_status("Event", false);}
         });
 }
 

@@ -57,7 +57,7 @@ class Postmortem {
             $app = \Slim\Slim::getInstance();
             $env = $app->environment;
             $admin = $env['admin']['username'];
-            $result = Postmortem::add_history($event["id"], $admin, $action);
+            $result = Postmortem::add_history($event, $admin, $action);
         }
 
         // close connection and return
@@ -541,7 +541,7 @@ class Postmortem {
      * @returns ( "status" => self::OK ) on success
      * or ( "status" => self::ERROR, "error" => "an error message" ) on failure
      */
-    static function add_history($event_id, $admin, $action, $conn = null) {
+    static function add_history($event, $admin, $action, $conn = null) {
         // validate action
         if (!in_array($action, array(self::ACTION_ADD, self::ACTION_EDIT))) {
             return array(
@@ -558,15 +558,17 @@ class Postmortem {
         }
         $now = new DateTime(null, new DateTimeZone('UTC'));
         $sql = "INSERT INTO postmortem_history
-                   (postmortem_id, auth_username, action, create_date)
-                   VALUES (:pid, :admin, :action, :date)";
+                   (postmortem_id, auth_username, action, create_date, summary, why_surprised)
+                   VALUES (:pid, :admin, :action, :date, :summary, :why_surprised)";
         try {
             $stmt = $conn->prepare($sql);
             $stmt->execute(array(
-                "pid" => $event_id,
+                "pid" => $event["id"],
                 "admin" => $admin,
                 "action" => $action,
-                "date" => $now->getTimestamp()
+                "date" => $now->getTimestamp(),
+                "summary" => $event['summary'],
+                "why_surprised" => $event['why_surprised']
             ));
         } catch (PDOException $e) {
             return array("status" => Postmortem::ERROR, "error" => $e->getMessage());
@@ -592,11 +594,38 @@ class Postmortem {
                 "error" => "Couldn't get connection object."
             );
         }
-        $sql = "SELECT * FROM postmortem_history WHERE postmortem_id=:pid";
+        $sql = "SELECT id, postmortem_id, auth_username, action, create_date FROM postmortem_history WHERE postmortem_id=:pid";
         $stmt = $conn->prepare($sql);
         $stmt->execute(array("pid" => $event_id));
 
         return $stmt->fetchAll();
+    }
+
+    /**
+     * function to get all data from specific history event
+     * @param $id - ID of the postmortem_history row
+     * @param $conn - PDO connection object
+     *
+     * @returns array - Array containing all data for specificed history record
+     */
+    static function get_history_event($id, $conn = null) {
+        $conn = $conn ?: Persistence::get_database_object();
+        if (is_null($conn)) {
+            return array(
+                "status" => self::ERROR,
+                "error" => "Couldn't get connection object."
+            );
+        }
+        try {
+            $sql = "SELECT * FROM postmortem_history WHERE id=:id";
+            $stmt = $conn->prepare($sql);
+            $stmt->execute(array("id" => $id));
+            $history = $stmt->fetch(PDO::FETCH_ASSOC);
+            $history["status"] = self::OK;
+            return $history;
+        } catch(PDOException $e) {
+            return array("status" => self::ERROR, "error" => $e->getMessage()); 
+        }
     }
 
     /**
@@ -613,9 +642,9 @@ class Postmortem {
         $when = $dt->format('H:i:s T, m/d/Y');
         switch ($history['action']) {
             case self::ACTION_ADD:
-                return 'Created by ' . $who_html . ' @ ' . $when;
+                return '<a href="/history/' . $history['postmortem_id'] . '/' . $history['id'] . '">Created</a> by ' . $who_html . ' @ ' . $when;
             case self::ACTION_EDIT:
-                return 'Edited by ' . $who_html . ' @ ' . $when;
+                return '<a href="/history/' . $history['postmortem_id'] . '/' . $history['id'] . '">Edited</a> by ' . $who_html . ' @ ' . $when;
         }
     }
 

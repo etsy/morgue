@@ -104,13 +104,18 @@ function make_editable() {
 
 function save_page() {
     clearInterval(edit_lock);
+    event = {};
+    hist = {};
+    hist.action = 'edit';
 
-    $(".editable").trigger("save");
+    $(".editable").trigger("save", [event, hist]);
+
     $(".editable_hidden").hide();
     $("input.editable").prop("disabled", true);
     $("select.editable").prop("disabled", true);
 
-    update_history();
+    update_history(hist);
+    update_event(event);
 
     var edit_div = $("<div></div>");
     edit_div.attr({

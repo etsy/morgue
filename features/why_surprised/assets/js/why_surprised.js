@@ -1,3 +1,5 @@
+var old_surprised = null;
+
 /**
  * get the raw markdown summary and display it in a textedit area instead of
  * the rendered HTML
@@ -33,23 +35,21 @@ function make_why_surprised_editable() {
     }
 }
 
-function update_why_surprised_for_event() {
-    var url = "/events/" + get_current_event_id();
-    $.ajax({
-            url: url,
-            data: {
-                   why_surprised: $("#why_surprised").val()
-                  },
-            type: "PUT"
-          });
-}
 
 /**
  * Depending on the current state either show the editable summary form or
  * save the markdown summary and render as HTML
  */
-function why_surprised_save() {
-    update_why_surprised_for_event();
+function why_surprised_save(e, event, history) {
+    var new_surprised = $("#why_surprised").val();
+
+    var Diff = new diff_match_patch();
+    var diff = Diff.diff_main(old_surprised, new_surprised);
+    Diff.diff_cleanupSemantic(diff);
+    diff = Diff.diff_prettyHtml(diff);
+    history.why_surprised = diff;
+    event.why_surprised = new_surprised;
+
     var html = $("<div></div>");
     html.attr("id", "why_surprised");
     html.attr("name", "why_surprised");
@@ -74,6 +74,7 @@ function why_surprised_undo_button() {
 $("#why_surprised").on("edit", make_why_surprised_editable);
 $("#why_surprised_undobutton").on("click", why_surprised_undo_button);
 $.getJSON("/events/"+get_current_event_id()+"/why_surprised", function(data) {
+        old_surprised = data.why_surprised;
     $("#why_surprised").html(markdown.toHTML(data.why_surprised));
 });
 

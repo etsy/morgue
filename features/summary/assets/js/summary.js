@@ -1,3 +1,5 @@
+var old_summary = null;
+
 /**
  * get the raw markdown summary and display it in a textedit area instead of
  * the rendered HTML
@@ -39,23 +41,20 @@ function make_summary_editable(text) {
     }
 }
 
-function update_summary_for_event() {
-    var url = "/events/" + get_current_event_id();
-    $.ajax({
-            url: url,
-            data: {
-                   summary: $("#summary").val()
-                  },
-            type: "PUT"
-          });
-}
-
 /**
  * Depending on the current state either show the editable summary form or
  * save the markdown summary and render as HTML
  */
-function summary_save() {
-    update_summary_for_event();
+function summary_save(e, event, history) {
+    var new_summary = $("#summary").val();
+
+    var Diff = new diff_match_patch();
+    var diff = Diff.diff_main(old_summary, new_summary);
+    Diff.diff_cleanupSemantic(diff);
+    diff = Diff.diff_prettyHtml(diff);
+    history.summary = diff;
+    event.summary = new_summary;
+
     var html = $("<div></div>");
     html.attr("id", "summary");
     html.attr("name", "summary");
@@ -80,6 +79,7 @@ function summary_undo_button() {
 $("#summary").on("edit", make_summary_editable);
 $("#summaryundobutton").on("click", summary_undo_button);
 $.getJSON("/events/"+get_current_event_id()+"/summary", function(data) {
+    old_summary = data.summary;
     $("#summary").html(markdown.toHTML(data.summary));
 });
 
