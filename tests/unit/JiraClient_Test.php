@@ -8,6 +8,7 @@ class JiraClientTest extends PHPUnit_Framework_TestCase {
     const JIRA_BASE_URL = "https://jira.foo.com";
     const JIRA_USERNAME = 'jira';
     const JIRA_PASSWORD = 'credentials';
+    const JIRA_PROXY    = '';
 
     public function setUp() {
         // create a mock curl client
@@ -16,7 +17,8 @@ class JiraClientTest extends PHPUnit_Framework_TestCase {
             $this->curl_client, array(
                 "baseurl" => self::JIRA_BASE_URL,
                 "username" => self::JIRA_USERNAME,
-                "password" => self::JIRA_PASSWORD
+		"password" => self::JIRA_PASSWORD,
+		"proxy" => self::JIRA_PROXY
             )
         );
     }

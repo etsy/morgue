@@ -182,6 +182,9 @@ class JiraClient {
         $this->jira_base_url = $config['baseurl'];
         $this->username = $config['username'];
         $this->password = $config['password'];
+        if (isset($config['proxy'])) {
+            $this->proxy = $config['proxy'];
+        }
         $this->additional_fields = array();
         if (isset($config['additional_fields'])) {
             $this->additional_fields = $config['additional_fields'];
@@ -220,7 +223,7 @@ class JiraClient {
             'fields' => implode($fields, ',')
         );
 
-        $response = $this->curl_client->get($this->getJiraBaseUrl() . '/rest/api/2/search' , $params, $this->username . ':' . $this->password);
+        $response = $this->curl_client->get($this->getJiraBaseUrl() . '/rest/api/2/search' , $params, $this->username . ':' . $this->password, $this->proxy);
         $jira_api_response = json_decode($response, true);
 
         return $jira_api_response;
