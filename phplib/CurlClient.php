@@ -13,7 +13,9 @@ class CurlClient {
             CURLOPT_RETURNTRANSFER => 1
         );
         if ($user_pass) {
-            $options[CURLOPT_USERPWD] = $user_pass; 
+            if ($user_pass != ":") {
+                $options[CURLOPT_USERPWD] = $user_pass;
+            }
         }
         if ($proxy) {
             $options[CURLOPT_PROXY] = $proxy;
