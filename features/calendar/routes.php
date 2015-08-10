@@ -59,6 +59,7 @@ $app->get("/calendar/facilitators/request/:id", function($id) use ($app) {
         $domain = (isset($_SERVER['HTTP_HOST'])) ? $_SERVER['HTTP_HOST'] : $_SERVER['SERVER_NAME'];
 
         $to = implode(", ", $config["facilitators_email"]);
+        $to .= ', ' . Contact::get_email_for_user($user['username']);
         $from = "Morgue <morgue@etsy.com>";
         $subject = "Facilitator needed [PM-{$id}]";
         $message = '
