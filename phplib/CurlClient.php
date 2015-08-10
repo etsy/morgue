@@ -2,7 +2,7 @@
 
 class CurlClient {
 
-    function get($url, array $params = null, $user_pass = null) {
+    function get($url, array $params = null, $user_pass = null, $proxy = null) {
         $query_string = empty($params)
             ? ''
             : '?' . http_build_query($params);
@@ -13,7 +13,12 @@ class CurlClient {
             CURLOPT_RETURNTRANSFER => 1
         );
         if ($user_pass) {
-            $options[CURLOPT_USERPWD] = $user_pass; 
+            if ($user_pass != ":") {
+                $options[CURLOPT_USERPWD] = $user_pass;
+            }
+        }
+        if ($proxy) {
+            $options[CURLOPT_PROXY] = $proxy;
         }
         curl_setopt_array($ch, $options);
         $result = trim(curl_exec($ch));
