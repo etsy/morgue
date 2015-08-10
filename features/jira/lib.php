@@ -184,6 +184,8 @@ class JiraClient {
         $this->password = $config['password'];
         if (isset($config['proxy'])) {
             $this->proxy = $config['proxy'];
+        } else {
+            $this->proxy = null;
         }
         $this->additional_fields = array();
         if (isset($config['additional_fields'])) {
