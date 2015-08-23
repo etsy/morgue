@@ -328,7 +328,7 @@ $app->put('/events/:id', function ($id) use ($app) {
                 return;
             }
             $timezone = new DateTimeZone($params["timezone"]);
-            $starttime = $old_event["starttime"];
+            $starttime = isset($event["starttime"]) ? $event["starttime"] : $old_event["starttime"];
             $edate = new DateTime("@$starttime");
             $edate->setTimezone($timezone);
             $new_date = date_parse($value);
@@ -346,7 +346,7 @@ $app->put('/events/:id', function ($id) use ($app) {
                 return;
             }
             $timezone = new DateTimeZone($params["timezone"]);
-            $endtime = $old_event["endtime"];
+            $endtime = isset($event["endtime"]) ? $event["endtime"] : $old_event["endtime"];
             $edate = new DateTime("@$endtime");
             $edate->setTimezone($timezone);
             $new_date = date_parse($value);
@@ -364,7 +364,7 @@ $app->put('/events/:id', function ($id) use ($app) {
                 return;
             }
             $timezone = new DateTimeZone($params["timezone"]);
-            $detecttime = $old_event["detecttime"];
+            $detecttime = isset($event["detecttime"]) ? $event["detecttime"] : $old_event["detecttime"];
             $edate = new DateTime("@$detecttime");
             $edate->setTimezone($timezone);
             $new_date = date_parse($value);
@@ -386,7 +386,7 @@ $app->put('/events/:id', function ($id) use ($app) {
                 return;
             }
             $timezone = new DateTimeZone($params["timezone"]);
-            $statustime = $old_event["statustime"];
+            $statustime = isset($event["statustime"]) ? $event["statustime"] : $old_event["statustime"];
             $edate = new DateTime("@$statustime");
             $edate->setTimezone($timezone);
             $new_date = date_parse($value);
