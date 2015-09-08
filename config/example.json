@@ -57,7 +57,7 @@
     {   "name": "contact",
         "enabled": "on",
         "lookup_url": "https://directory.example.com/user/%s",
-        "email_domain": "example.com
+        "email_domain": "example.com"
     },
 
     {   "name": "calendar",
