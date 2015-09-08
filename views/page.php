@@ -33,7 +33,7 @@
 ?>
         </div>
         <div class="span3">
-          <?php if($show_sidebar == true) {
+          <?php if (!empty($show_sidebar)) {
               include __DIR__.'/sidebar.php';
           } ?>
           <?php include __DIR__.'/timezone.php' ?>
