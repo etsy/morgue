@@ -40,12 +40,12 @@ You can also join `#morgue` on Freenode IRC if you have questions.
 
 ### Create a morgue configuration file
 
-In the cloned repo, use the **example.json** file as a template to create your 
+In the cloned repo, use the **example.json** file as a template to create your
 own configuration file.
 
 ```
 cp config/example.json config/development.json
-``` 
+```
 
 **NOTES**: You may need to remove references to "custom_feature" from your
 development.json as those only exist as examples to show you how to add
@@ -110,7 +110,7 @@ mysql -p -u morgue -h localhost morgue < schemas/irc.sql
 
 ### Start a development server
 
-Using PHP built-in webserver it is possible to start quickly view what morgue does with the following command run from the document root.
+Using PHP built-in webserver it is possible to start quickly viewing what morgue does with the following command run from the document root.
 
 **NOTE**: You may need to do some PHP setup before doing this. Follow the
 installation instructions [here][2] to install composer, then from your
@@ -129,7 +129,7 @@ Open http://localhost:8000 to view Morgue
 
 ### Features
 
-The configuration of individual features is maintained in an 
+The configuration of individual features is maintained in an
 array of objects -- the 'feature' key on the configuration array.  
 Minimally a feature is the name of the feature and if it is "on" or not.
 
@@ -143,7 +143,7 @@ Minimally a feature is the name of the feature and if it is "on" or not.
 You can add keys and values as needed for your feature. For example:
 
 ```
-    {   "name": "my_awesome_feauture",
+    {   "name": "my_awesome_feature",
         "enabled": "on",
         "extra_awesome_value": 11,
         "lost_numbers": [4,8,15,16,23,42]
@@ -154,23 +154,23 @@ You can then access these nearly anywhere in the app.
 
 ```php
 <?php
-$feauture_options = Configuration::get_configuration('my_awesome_feature');
+$feature_options = Configuration::get_configuration('my_awesome_feature');
 $lost_numbers = $feature_options['lost_numbers'];
 ```
 
 A few conventions exist for features to do certain things:
-- ```"nabar": "on|off"```  Adds a link to the feature in the main navbar.
-- ```"custom_js_assets": ["my.js", "other.js", "http://cdn.com/external.js"]``` Try to load javascripts 
-- ```"custom_css_assets": ["my.css", "other.css", "http://cdn.com/external.css"]``` Try to load stylesheets 
+- ```"navbar": "on|off"```  Adds a link to the feature in the main navbar.
+- ```"custom_js_assets": ["my.js", "other.js", "http://cdn.com/external.js"]``` Try to load javascripts
+- ```"custom_css_assets": ["my.css", "other.css", "http://cdn.com/external.css"]``` Try to load stylesheets
 
 ### Edit Page Features
 
-If your feature involves the edit page, you'll need to list it in the 
+If your feature involves the edit page, you'll need to list it in the
 ```edit_page_features``` array.  The ordering of this array influences
 the ordering of the edit page features from first (top) to last (bottom).
 ```
-   "edit_page_features": [ 
-        "status_time", "contact", "calendar", "summary", "images" 
+   "edit_page_features": [
+        "status_time", "contact", "calendar", "summary", "images"
    ]
 ```
 
@@ -179,7 +179,7 @@ the ordering of the edit page features from first (top) to last (bottom).
 **baseurl** the base URL to your jira installation (**use https** if you are using a secured JIRA installation)
 **username** username for a user with viewing credentials
 **password** password for a user with viewing credentials
-**additional_fields** mapping of fields to display in morgue (other than key, summay, assignee, status)
+**additional_fields** mapping of fields to display in morgue (other than key, summary, assignee, status)
 
 ```
     {   "name": "jira",
@@ -196,8 +196,8 @@ the ordering of the edit page features from first (top) to last (bottom).
 
 ### IRC Feature
 
-When enabled, the irc features allow the reporting of the IRC channels 
-discussions were happening during the event. The postmortem tools tries to 
+When enabled, the irc features allow the reporting of the IRC channels
+discussions were happening during the event. The postmortem tools tries to
 retrieve the list of channels in 2 ways:
  - calling the **'morgue_get_irc_channels_list'** if it exits (this function is
  expected to return an array of strings)
@@ -212,7 +212,7 @@ You can do so by:
 
 1. Create a new feature:  (see below for more detail on creating a new feature)
 ```
-make feaure NAME=irclogs
+make feature NAME=irclogs
 ```
 
 2. Add the new feature to your config file (in the features array)
@@ -227,12 +227,12 @@ make feaure NAME=irclogs
 
 3. Implement the irclogs route
 
-The irclogs route receives parameters in a get request. Morgue will query the 
+The irclogs route receives parameters in a get request. Morgue will query the
 irclogs endpoint with an increasing offset of **20** until it receives no data.
-Regardless of how you implement that endpoint, you need to return an empty 
+Regardless of how you implement that endpoint, you need to return an empty
 response when you no longer have data to feed.
 
-The expected response from the *irclogs* endpoint is a JSon array with the 3 
+The expected response from the *irclogs* endpoint is a JSON array with the 3
 elements: nick, time and message.
 ```
 [
@@ -247,7 +247,7 @@ elements: nick, time and message.
 ```php
 <?php
 
-/** irclog enpoint - return IRC logs paginated by 20 entries */
+/** irclog endpoint - return IRC logs paginated by 20 entries */
 $app->get('/irclogs', function () use ($app) {
     header("Content-Type: application/json");
     $start_date = $app->request->get('start_date');
@@ -305,7 +305,7 @@ make unittests
 
 ### When I visit a detail event page, I just see a "loooool"
 
-You may have created your schemas before some features that required schema changes were added. 
+You may have created your schemas before some features that required schema changes were added.
 Simply run the migration(s) commands to update your schemas:
 
 ```
@@ -313,7 +313,7 @@ Simply run the migration(s) commands to update your schemas:
     alter table postmortems add column why_surprised text NOT NULL;
 ```
 
-Or simply : 
+Or simply :
 
 ```
     mysql -p -u morgue -h localhost morgue < schemas/migrations/rename_statustime_column.sql
