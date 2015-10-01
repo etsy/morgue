@@ -238,7 +238,11 @@ $app->get('/events/:id', function($id) use ($app) {
     $detect_datetime = new DateTime("@$detect_time");
     $detect_datetime->setTimezone($tz);
     $impacttime = getTimeString($endtime - $starttime);
-    $resolvetime = getTimeString($endtime - $detect_time);
+    if ($endtime >= $detect_time) {
+        $resolvetime = getTimeString($endtime - $detect_time);
+    } else {
+        $resolvetime = $impacttime;
+    }
     $undetecttime = getTimeString($detect_time - $starttime);
 
     $edit_status = Postmortem::get_event_edit_status($event);
