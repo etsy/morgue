@@ -2,7 +2,8 @@
 
 class CurlClient {
 
-    function get($url, array $params = null, $user_pass = null, $proxy = null) {
+    function get($url, array $params = null, $user_pass = null, $proxy = null,
+                 $timeout = 10) {
         $query_string = empty($params)
             ? ''
             : '?' . http_build_query($params);
@@ -10,7 +11,8 @@ class CurlClient {
         $options = array(
             CURLOPT_HTTPGET => true,
             CURLOPT_FOLLOWLOCATION => 1,
-            CURLOPT_RETURNTRANSFER => 1
+            CURLOPT_RETURNTRANSFER => 1,
+            CURLOPT_TIMEOUT => $timeout,
         );
         if ($user_pass) {
             if ($user_pass != ":") {
