@@ -16,6 +16,11 @@ function generateEvent() {
     event.end.dateTime = end.toISOString();
     event.end.timeZone = cal.timezone;
 
+    event.attendees = [];
+    for (var i = 0, len = cal.attendees.length; i < len; i++) {
+        event.attendees.push({'email': cal.attendees[i]});
+    }
+
     return event;
 }
 
@@ -221,7 +226,8 @@ function createEvent()
     gapi.client.load('calendar', 'v3', function() {
         var request = gapi.client.calendar.events.insert({
             'calendarId' : cal.id,
-            'resource' : event
+            'resource' : event,
+            'sendNotifications': true
         });
         request.execute(function(event) {
                     if (event.hasOwnProperty('error')) {

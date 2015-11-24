@@ -17,7 +17,12 @@
          $cal = new Calendar;
          $timeZone = getUserTimezone();
          $cal_scopes = implode(",", $cal->scopes);
-         echo "cal.clientId='{$cal->clientId}'; cal.apiKey='{$cal->apiKey}'; cal.scopes='{$cal_scopes}'; cal.id='{$cal->id}'; cal.timeZone='{$timeZone}'; cal.facilitatorFeature={$cal->facilitator}";
+         echo "cal.clientId='{$cal->clientId}'; cal.apiKey='{$cal->apiKey}'; cal.scopes='{$cal_scopes}'; cal.id='{$cal->id}'; cal.timeZone='{$timeZone}'; cal.facilitatorFeature={$cal->facilitator};";
+         echo "cal.attendees=[";
+         foreach ($cal->attendees as $attendee_email) {
+             echo "'{$attendee_email}',";
+         }
+         echo "];"
          ?>
         
          cal.scopes = cal.scopes.split(",");

@@ -10,6 +10,14 @@ class Calendar extends Persistence{
         $this->scopes = $config['scopes'];
         $this->id = $config['id'];
         $this->facilitator = $config['facilitator'];
+        if (isset($config['attendees_email'])) {
+            if (!is_array($config['attendees_email'])) {
+                $config['attendees_email'] = array($config['attendees_email']);
+            }
+            $this->attendees = $config['attendees_email'];
+        } else {
+            $this->attendees = [];
+        }
     }
 
     public static function get_facilitator($id, $conn = null) {
@@ -38,7 +46,7 @@ class Calendar extends Persistence{
 
         $sql = "UPDATE postmortems SET facilitator = '" . $facilitator['name'] . "', facilitator_email = '" . $facilitator['email'];
         $sql = $sql . "' WHERE id = " . $id;
-        
+
         try {
             $stmt = $conn->prepare($sql);
             $success = $stmt->execute();

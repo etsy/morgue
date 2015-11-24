@@ -70,7 +70,8 @@
         "scopes" : ["https://www.googleapis.com/auth/calendar"],
         "id" : "CALENDARID",
         "facilitator": true,
-        "facilitators_email": ["facilitators@example.com"]
+        "facilitators_email": ["facilitators@example.com"],
+        "attendees_email": ["attendees@example.com"]
     },
 
     {   "name": "summary",
