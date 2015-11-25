@@ -3,3 +3,4 @@ config/development.json
 *.swp
 composer.lock
 composer.phar
+results.xml
