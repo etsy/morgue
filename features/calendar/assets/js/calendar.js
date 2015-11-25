@@ -20,6 +20,7 @@ function generateEvent() {
     for (var i = 0, len = cal.attendees.length; i < len; i++) {
         event.attendees.push({'email': cal.attendees[i]});
     }
+    event.status = 'confirmed';
 
     return event;
 }
@@ -209,26 +210,39 @@ function checkEventExists()
                     showCalendar(null);
                 } else {
                     cal.event = event;
-                    showEventLink(true);
-                    showCalendar(event.start.dateTime);
-                    showEvent();
-                    showFacilitator();
+                    if (event.status == 'cancelled') {
+                        showEventLink(false);
+                        showCalendar(null);
+                    } else {
+                        cal.event = event;
+                        showEventLink(true);
+                        showCalendar(event.start.dateTime);
+                        showEvent();
+                        showFacilitator();
+                    }
                 }
             });
     });
 }
 
 
-function createEvent() 
+function createEvent()
 {
     var event = generateEvent();
+    var params = {
+        'calendarId' : cal.id,
+        'resource' : event,
+        'sendNotifications': true
+    };
+    var request;
+    if (cal.event == null) {
+        request = gapi.client.calendar.events.insert(params);
+    } else {
+        params['eventId'] = event.id;
+        request = gapi.client.calendar.events.update(params);
+    }
 
     gapi.client.load('calendar', 'v3', function() {
-        var request = gapi.client.calendar.events.insert({
-            'calendarId' : cal.id,
-            'resource' : event,
-            'sendNotifications': true
-        });
         request.execute(function(event) {
                     if (event.hasOwnProperty('error')) {
                         console.log(event);
@@ -240,10 +254,10 @@ function createEvent()
 }
 
 
-function calendarLinkHandler() 
+function calendarLinkHandler()
 {
     if (cal.authorized) {
-        if(cal.event === null) {
+        if(cal.event === null || cal.event.status == 'cancelled') {
             createEvent();
         } else {
             window.open(cal.event.htmlLink);
