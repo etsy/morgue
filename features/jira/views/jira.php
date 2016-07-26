@@ -14,7 +14,11 @@
 <legend>Remediation</legend> 
   
   <div class="editable_hidden" style="display:none;">
-  <div id="jira-link"><a href="<?php echo $jira_client->getJiraBaseUrl(); ?>/secure/CreateIssue!default.jspa" target="_new">Create New Issue</a></div>
+  <input type="text" id="jira_project_name" name="jira_project_name" class="input-xxlarge" placeholder="Project Name">
+  <input type="text" id="jira_summary" name="jira_summary" class="input-xxlarge" placeholder="Summary">
+  <input type="text" id="jira_description" name="jira_description" class="input-xxlarge" placeholder="Description">
+  <input type="text" id="jira_issuetype" name="jira_issuetype" class="input-xxlarge" placeholder="Issue Type">
+  <button onclick="createTicket()"> Create Ticket </button>
   <input type="text" placeholder="Enter JIRA key(s), separated by commas (i.e. CORE-2024, OPS-1453)" id="jira_key_input" name="jira_key_input" class="input-xxlarge" onblur="addTicket()">
   </div>
 

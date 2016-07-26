@@ -1,3 +1,44 @@
+function createTicket() {
+    var jira_project_name = $("#jira_project_name").attr("value");
+    var jira_summary = $("#jira_summary").attr("value");
+    var jira_description = $("#jira_description").attr("value");
+    var jira_issuetype = $("#jira_issuetype").attr("value");
+
+    var jira_pn = $("jira_project_name");
+    create_ticket_for_event(get_current_event_id(), jira_project_name,
+                            jira_summary, jira_description, jira_issuetype,
+                            function(data) {
+                                data = JSON.parse(data);
+                                var ticket_num = data["key"];
+                                store_ticket_for_event(get_current_event_id(), ticket_num, function(data) {
+                                    data = JSON.parse(data);
+                                    var keys = $.map(ticket_num.split(","), function(n,i){return ($.trim(n)).toUpperCase();});
+                                    for (var i in data) {
+                                        // add entries
+                                        if ($.inArray(i, keys) !== -1) {
+                                            var style = "jira_" +  data[i].status.toLowerCase().replace(" ", "_");
+
+                                            var entry = "<tr class=\"jira-row\">";
+                                            entry += "<td><a href=\""+data[i].ticket_url+"\" class=\""+ style + "\">"+i+"</a></td>";
+                                            entry += "<td>"+data[i].summary+"</td>";
+                                            entry += "<td>"+data[i].assignee+"</td>";
+                                            $('th.jira_addition_field').each(function(index, value){
+                                                field = $(value).text();
+                                                entry += "<td>"+(data[i][field] || "" )+"</td>";
+                                            });
+                                            entry += "<td><span id=\"jira-"+data[i].id+"\" class='close'>&times;</span></td>";
+                                            entry += "</tr>";
+
+                                            $('#jira_table_body').append(entry);
+                                            addTooltip($("tr[class=jira-row] a[class="+style+"]"));
+                                        }
+                                    }
+                                });
+
+                            }
+                           )
+}
+
 function addTicket() {
     var jira_input = $("#jira_key_input");
     var jira_keys = (jira_input.attr("value"));
@@ -6,11 +47,11 @@ function addTicket() {
             data = JSON.parse(data);
             var keys = $.map(jira_keys.split(","), function(n,i){return ($.trim(n)).toUpperCase();});
             for (var i in data) {
-              // add entries
-              if ($.inArray(i, keys) !== -1) {
-                var style = "jira_" +  data[i].status.toLowerCase().replace(" ", "_");
+                // add entries
+                if ($.inArray(i, keys) !== -1) {
+                    var style = "jira_" +  data[i].status.toLowerCase().replace(" ", "_");
 
-                var entry = "<tr class=\"jira-row\">";
+                    var entry = "<tr class=\"jira-row\">";
                     entry += "<td><a href=\""+data[i].ticket_url+"\" class=\""+ style + "\">"+i+"</a></td>";
                     entry += "<td>"+data[i].summary+"</td>";
                     entry += "<td>"+data[i].assignee+"</td>";
@@ -20,10 +61,10 @@ function addTicket() {
                     });
                     entry += "<td><span id=\"jira-"+data[i].id+"\" class='close'>&times;</span></td>";
                     entry += "</tr>";
-                
-                $('#jira_table_body').append(entry);
-                addTooltip($("tr[class=jira-row] a[class="+style+"]"));
-              }
+
+                    $('#jira_table_body').append(entry);
+                    addTooltip($("tr[class=jira-row] a[class="+style+"]"));
+                }
             }
             jira_input.attr("value", "");
         });
@@ -61,4 +102,3 @@ function addTooltip(entry) {
 $("tr[class=jira-row] a[class^=jira_]").each(function () {
     addTooltip($(this));
 });
-
