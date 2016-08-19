@@ -439,8 +439,17 @@ class Persistence {
         $adb  = $config['database']['database'];
         $user = $config['database']['username'];
         $pass = $config['database']['password'];
+
+        $options = array();
+        if(array_key_exists('client_key', $config['database']) 
+           && array_key_exists('client_cert', $config['database']) 
+           && array_key_exists('ca_cert', $config['database'])) {
+            $options[PDO::MYSQL_ATTR_SSL_KEY] = $config['database']['client_key'];
+            $options[PDO::MYSQL_ATTR_SSL_CERT] = $config['database']['client_cert'];
+            $options[PDO::MYSQL_ATTR_SSL_CA] = $config['database']['ca_cert'];
+        }
         try {
-            $conn = new PDO('mysql:host='.$host.';port='.$port.';dbname='.$adb, $user, $pass);
+            $conn = new PDO('mysql:host='.$host.';port='.$port.';dbname='.$adb, $user, $pass, $options);
             $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             return $conn;
         } catch(PDOException $e) {
@@ -449,4 +458,3 @@ class Persistence {
     }
 
 }
-
