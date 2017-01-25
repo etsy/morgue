@@ -232,7 +232,7 @@ function createEvent()
     var params = {
         'calendarId' : cal.id,
         'resource' : event,
-        'sendNotifications': true
+        'sendNotifications': false
     };
     var request;
     if (cal.event == null) {
@@ -247,10 +247,35 @@ function createEvent()
                     if (event.hasOwnProperty('error')) {
                         console.log(event);
                     } else {
-                        location.reload();
+                        window.open(cal.event.htmlLink, '_blank');
+                        reloadOnReturn();
                     }
             });
         });
+}
+
+function reloadOnReturn() {
+    var isVisible = (function(){
+        var stateKey, eventKey, keys = {
+            hidden: "visibilitychange",
+            webkitHidden: "webkitvisibilitychange",
+            mozHidden: "mozvisibilitychange",
+            msHidden: "msvisibilitychange"
+        };
+        for (stateKey in keys) {
+            if (stateKey in document) {
+                eventKey = keys[stateKey];
+                break;
+            }
+        }
+        return function(c) {
+            if (c) document.addEventListener(eventKey, c);
+                return !document[stateKey];
+        }
+    })();
+    isVisible(function() {
+        isVisible() ? location.reload() : null;
+    });
 }
 
 
