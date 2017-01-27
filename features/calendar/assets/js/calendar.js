@@ -5,15 +5,19 @@ function generateEvent() {
         'summary' : $('#eventtitle').val(),
         'description' : 'PM for ' + window.location.href
     };
+    var date = new Date();
+    // Start off with the date a week in the future.
+    // This is because the event gets created immediately.
+    // We'd like you to have time to modify it before it spams everyones calendar.
+    date.setDate(date.getDate()+7);
     event.start = {};
-    event.start.dateTime = new Date().toISOString();
+    event.start.dateTime = date.toISOString();
     event.start.timeZone = cal.timezone;
     event.id = cal.eventId;
 
     event.end = {};
-    var end = new Date();
-    end.setHours(end.getHours()+1);
-    event.end.dateTime = end.toISOString();
+    date.setHours(date.getHours()+1);
+    event.end.dateTime = date.toISOString();
     event.end.timeZone = cal.timezone;
 
     event.attendees = [];
@@ -247,7 +251,7 @@ function createEvent()
                     if (event.hasOwnProperty('error')) {
                         console.log(event);
                     } else {
-                        window.open(cal.event.htmlLink, '_blank');
+                        window.open(event.htmlLink, '_blank');
                         reloadOnReturn();
                     }
             });
