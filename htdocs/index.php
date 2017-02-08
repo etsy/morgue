@@ -386,7 +386,7 @@ $app->put('/events/:id', function ($id) use ($app) {
                 return;
             }
             $timezone = new DateTimeZone($params["timezone"]);
-            $statustime = $old_event["statustime"];
+            $statustime = isset($event["statustime"]) ? $event["statustime"] : $old_event["statustime"];
             $edate = new DateTime("@$statustime");
             $edate->setTimezone($timezone);
             $new_date = date_parse($value);
