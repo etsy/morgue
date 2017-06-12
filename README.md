@@ -54,7 +54,7 @@ custom features to your Morgue installation.
 
 ### Composer
 Morgue relies on the [Slim Framework](http://www.slimframework.com/), a dependency that can be easily managed by Composer.
-Directions to install composer can be found on [here](https://getcomposer.org/doc/00-intro.md#installation-linux-unix-osx).
+Directions to install composer can be found on [here][2]).
 Once installed, run :
 
 ```
@@ -325,4 +325,4 @@ Or simply :
 
 ```
 [1]: http://vimeo.com/77206751
-[2]: https://getcomposer.org/doc/00-intro.md#installation-linux-unix-osx
+[2]: https://getcomposer.org/doc/00-intro.md
