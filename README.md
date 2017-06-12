@@ -34,10 +34,14 @@ You can also join `#morgue` on Freenode IRC if you have questions.
 
 ### Requirements
 - PHP 5.3 or higher
+ - xml
+ - mbstring
+ - pdo
+ - mysqlnd
 - MySQL 5.5 or higher
 - PHP MySQL driver
 - Apache
-- mod_rewrite
+ - mod_rewrite
 
 ### Create a morgue configuration file
 
@@ -73,6 +77,7 @@ is used to determine which config file to use (see above step).
 
       <Directory /var/www/morgue/htdocs>
         AllowOverride All
+        Require all granted    # This is Apache 2.4 syntax
       </Directory>
 
       SetEnv MORGUE_ENVIRONMENT development
@@ -124,6 +129,10 @@ MORGUE_ENVIRONMENT=development php -d include_path=".:$(dirname `pwd`):$(dirname
 ```
 
 Open http://localhost:8000 to view Morgue
+
+To run the unittests you need to have phpunit installed and then run
+
+    make unittests
 
 ## Configuration
 
