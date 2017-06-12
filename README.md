@@ -325,4 +325,4 @@ Or simply :
 
 ```
 [1]: http://vimeo.com/77206751
-[2]: http://composer.org
+[2]: https://getcomposer.org/doc/00-intro.md#installation-linux-unix-osx
