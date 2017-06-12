@@ -12,6 +12,29 @@ $app->get('/events/:id/tickets', function($id) use ($app) {
     }
 
 });
+
+$app->post('/events/:id/tickets/create', function ($id) use ($app) {
+    header("Content-Type: application/json");
+    $curl = new CurlClient();
+    $jira = new JiraClient($curl);
+    $project = $app->request()->post('project');
+    $summary = $app->request()->post('summary');
+    $description = $app->request()->post('description');
+    $issuetype = $app->request()->post('issuetype');
+    $res = $jira->createJiraTicket($project, $summary, $description, $issuetype);
+    if ($res["status"] == Jira::ERROR) {
+        $app->response->status(400);
+    } else {
+        $app->response->status(201);
+        if ($tickets["status"] == Jira::ERROR) {
+            $app->response->status(404);
+            return;
+        } else {
+            echo json_encode($res);
+        }
+    }
+
+});
 $app->post('/events/:id/tickets', function($id) use ($app) {
     header("Content-Type: application/json");
     $curl = new CurlClient();

@@ -68,6 +68,22 @@ function store_ticket_for_event(id, ticket, callback) {
   $.post(url, data, callback);
 }
 /**
+ * function to create a ticket.
+ * @param id - event ID
+ * @param project - name of the project that the ticket will belong to
+ * @param summary - summary of the ticket
+ * @param description - description of the ticket
+ * @param issuetype - the type of the ticket that will be created
+ * @param callback - callback function
+ */
+function create_ticket_for_event(id, project, summary, description, issuetype, callback) {
+  console.log("creating ticket!");
+  var url = "/events/" + id + "/tickets/create";
+  var data = {"project": project, "summary": summary, "description": description, "issuetype": issuetype};
+  $.post(url, data, callback);
+}
+
+/**
  * function to store an IRC channel for an event via the REST API
  *
  * @param id - event ID

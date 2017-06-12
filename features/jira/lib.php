@@ -303,5 +303,36 @@ class JiraClient {
 
         return $ticket;
     }
+
+    /**
+     * Given project, summary, description and issuetype, this
+     * function creates a jira ticket using that information.
+     *
+     * @param $project -> project name
+     * @param $summary -> summary of the ticket to be created
+     * @param $description -> description of the ticket to be created
+     * @param $issuetype -> the type of issue
+     *
+     * @return $jira_api_response, an array of json-decoded issues as returned by JIRA
+     */
+
+    public function createJiraTicket($project, $summary, $description, $issuetype) {
+        $params = array(
+            'fields' => array(
+                'project' => array(
+                    'key' => $project
+                ),
+                'summary' => $summary,
+                'description' => $description,
+                'issuetype' => array(
+                    'name' => $issuetype
+                )
+            )
+        );
+        $response = $this->curl_client->post($this->getJiraBaseUrl(). '/rest/api/2/issue', $params, $this->username . ':' . $this->password, $this->proxy);
+        $jira_api_response = json_decode($response, true);
+
+        return $jira_api_response;
+    }
 }
 ?>
