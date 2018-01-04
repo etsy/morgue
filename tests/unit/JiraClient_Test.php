@@ -4,7 +4,7 @@ require_once("features/jira/lib.php");
 require_once("phplib/CurlClient.php");
 require_once("phplib/Configuration.php");
 
-class JiraClientTest extends PHPUnit_Framework_TestCase {
+class JiraClientTest extends \PHPUnit\Framework\TestCase {
     const JIRA_BASE_URL = "https://jira.foo.com";
     const JIRA_USERNAME = 'jira';
     const JIRA_PASSWORD = 'credentials';
@@ -12,7 +12,7 @@ class JiraClientTest extends PHPUnit_Framework_TestCase {
 
     public function setUp() {
         // create a mock curl client
-        $this->curl_client = $this->getMock('CurlClient', array('get'));
+        $this->curl_client = $this->createMock('CurlClient', array('get'));
         $this->jira_client = new JiraClient(
             $this->curl_client, array(
                 "baseurl" => self::JIRA_BASE_URL,

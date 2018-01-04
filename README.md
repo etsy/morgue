@@ -33,7 +33,7 @@ You can also join `#morgue` on Freenode IRC if you have questions.
 ## Setup
 
 ### Requirements
-- PHP 5.3 or higher
+- PHP 7.0 or higher
 - MySQL 5.5 or higher
 - PHP MySQL driver
 - Apache
