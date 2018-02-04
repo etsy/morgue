@@ -21,7 +21,12 @@ if (!$config) {
 	include '../views/page.php';
 	die();
 }
-$app = new \Slim\Slim();
+$app = new \Slim\Slim(array(
+    'cookies.encrypt' => true,
+    'cookies.secret_key' => 'PMS_R_US',
+    'cookies.cipher' => MCRYPT_RIJNDAEL_256,
+    'cookies.cipher_mode' => MCRYPT_MODE_CBC,
+));
 $app->config('debug', true);
 
 $app->log->setEnabled(true);
@@ -95,9 +100,6 @@ $app->add(
             'secure' => false,
             'httponly' => false,
             'name' => 'postmortem',
-            'secret' => 'PMS_R_US',
-            'cipher' => MCRYPT_RIJNDAEL_256,
-            'cipher_mode' => MCRYPT_MODE_CBC
         )
     )
 );
