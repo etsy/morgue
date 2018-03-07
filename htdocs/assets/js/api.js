@@ -327,17 +327,25 @@ function update_undetected_time() {
   $('#undetecttime').val(getTimeString(enddate - startdate));
 }
 function update_resolve_time() {
-  var startdate = new Date($("input#event-detect-input-date").val());
-  var starttime = timeToDate($("input#event-detect-input-time").val());
+  var startdate = new Date($("input#event-start-input-date").val());
+  var starttime = timeToDate($("input#event-start-input-time").val());
+  var detectdate = new Date($("input#event-detect-input-date").val());
+  var detecttime = timeToDate($("input#event-detect-input-time").val());
   var enddate = new Date($("input#event-end-input-date").val());
   var endtime = timeToDate($("input#event-end-input-time").val());
 
   startdate.setHours(starttime.getHours());
   startdate.setMinutes(starttime.getMinutes());
+  detectdate.setHours(detecttime.getHours());
+  detectdate.setMinutes(detecttime.getMinutes());
   enddate.setHours(endtime.getHours());
   enddate.setMinutes(endtime.getMinutes());
 
-  $('#resolvetime').val(getTimeString(enddate - startdate));
+  if (enddate >= detectdate) {
+    $('#resolvetime').val(getTimeString(enddate - detectdate));
+  } else {
+    $('#resolvetime').val(getTimeString(enddate - startdate));
+  }
 }
 
 function update_history(history) {
