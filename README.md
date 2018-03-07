@@ -1,4 +1,5 @@
-# morgue [![Build Status](https://travis-ci.org/etsy/morgue.png?branch=master)](https://travis-ci.org/etsy/morgue) [![Code Climate](https://codeclimate.com/github/etsy/morgue.png)](https://codeclimate.com/github/etsy/morgue)
+# morgue
+[![Build Status](https://travis-ci.org/etsy/morgue.png?branch=master)](https://travis-ci.org/etsy/morgue) [![Code Climate](https://codeclimate.com/github/etsy/morgue.png)](https://codeclimate.com/github/etsy/morgue)
 ## a safe place for all your postmortem data
 
 
