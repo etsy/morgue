@@ -1,0 +1,13 @@
+# exclude copypasta libraries and packages
+exclude_patterns:
+- "htdocs/assets/js/bootstrap*"
+- "htdocs/assets/js/jquery*"
+- "htdocs/assets/js/*.min.js"
+- "htdocs/assets/js/diff_match_patch.js"
+# setup codesniffer for php errors
+plugins:
+  phpcodesniffer:
+    enabled: true
+    config:
+      ignore_warnings: true
+      file_extensions: "php"
