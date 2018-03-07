@@ -233,6 +233,13 @@ function checkEventExists()
 function createEvent()
 {
     var event = generateEvent();
+
+    var is_confirmed = confirm("About to create an event and invite all postmortem email subscribers. Proceed?");
+
+    if (!is_confirmed) {
+	return;
+    }
+
     var params = {
         'calendarId' : cal.id,
         'resource' : event,

@@ -2,7 +2,7 @@
 
 require_once("features/contact/lib.php");
 
-class ContactTest extends PHPUnit_Framework_TestCase {
+class ContactTest extends \PHPUnit\Framework\TestCase {
 
     public function test_getUrlForUser_lookupDefined() {
         $config = array('lookup_url' => 'http://foo/%s/bar');
