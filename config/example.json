@@ -14,9 +14,9 @@
     "severity" :
     { "tooltip_title" : "Severity Levels",
       "levels" : [
-            "Complete outage or degradation so severe that core functionality is unusable",
-            "Functional degradation for a subset of members or loss of some core functionality for all members",
-            "Noticeable degradation or loss of minor functionality",
+            "This is an Large Scale Event (LSE) and means that there is a severe disruption to primary business operations. There is (or there is a high risk of) customer-facing impact",
+            "A critical system or product failed or is unavailable causing impact to critical business operations",
+            "Low priority issues, classification depends on every team",
             "No member-visible impact; loss of redundancy or capacity",
             "Anything worth mentioning not in the above levels"
         ]
@@ -31,6 +31,8 @@
       "status_time",
       "contact",
       "calendar",
+      "meeting_notes_link",
+      "tldr",
       "summary",
       "why_surprised",
       "images",
@@ -135,7 +137,18 @@
     {   "name": "why_surprised",
         "enabled": "on",
         "custom_js_assets": ["why_surprised.js"]
+    },
+    {   "name": "tldr",
+        "enabled": "on",
+        "custom_js_assets": ["tldr.js"]
+    },
+    {   "name": "meeting_notes_link",
+        "enabled": "on",
+        "custom_js_assets" : ["meeting_notes_link.js"]
     }
     ],
-    "upload_dir": "/tmp/morgue"
+    "upload_dir": "/tmp/morgue",
+    "problem_type" : {"title": "Type of problem", "types":["Internal", "Vendor"]},
+    "impact_type" : {"title": "Type of impact", "types":["Scalability", "Availability", "Response Time", "Application degradation"]},
+    "incident_cause": {"title": "How did incident begin", "causes":["Infrastructure rollout", "Product launch"]}
 }

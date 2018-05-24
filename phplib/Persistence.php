@@ -21,11 +21,18 @@ class Persistence {
      *                    - title => the title of the event
      *                    - summary => the summary of the post mortem
      *                    - why_surprised => why were we surprised
+     *                    - tldr => description for too long didn't read
+     *                    - meeting_notes_link => link for meeting note
      *                    - starttime => start time as unix timestamp
      *                    - endtime   => end time as unix timestamp
      *                    - statustime => status time as unix timestamp
      *                    - detecttime  => detect time as unix timestamp
      *                    - severity  => severity level
+     *                    - problem_type  => problem type
+     *                    - subsystem  => subsystem
+     *                    - owner_team  => owner team
+     *                    - impact_type  => impact type
+     *                    - incident_cause  => incident cause
      *                    - channels => array of ircchannel names
      *                    - tickets => array of jira ticket numbers
      *                    - images => array of image URLs
@@ -51,6 +58,14 @@ class Persistence {
                 if( isset($postmortem['why_surprised']) ) {
                     $sql.= ",why_surprised=:why_surprised";
                     array_push($values,"why_surprised");
+                }
+                if( isset($postmortem['tldr']) ) {
+                    $sql.= ",tldr=:tldr";
+                    array_push($values,"tldr");
+                }
+                if ( isset( $postmortem['meeting_notes_link'] ) ){
+                    $sql.= ",meeting_notes_link=:meeting_notes_link";
+                    array_push($values, "meeting_notes_link");
                 }
                 if( isset($postmortem['starttime']) ) {
                     $sql.= ",starttime=:starttime";
@@ -84,15 +99,34 @@ class Persistence {
                     $sql.= ",created=:created";
                     array_push($values, "created");
                 }
+                if ( isset( $postmortem['problem_type'] ) ){
+                    $sql.= ",problem_type=:problem_type";
+                    array_push($values, "problem_type");
+                }
+                if ( isset( $postmortem['subsystem'] ) ){
+                    $sql.= ",subsystem=:subsystem";
+                    array_push($values, "subsystem");
+                }
+                if ( isset( $postmortem['owner_team'] ) ){
+                    $sql.= ",owner_team=:owner_team";
+                    array_push($values, "owner_team");
+                }
+                if ( isset( $postmortem['impact_type'] ) ){
+                    $sql.= ",impact_type=:impact_type";
+                    array_push($values, "impact_type");
+                }
+                if ( isset( $postmortem['incident_cause'] ) ){
+                    $sql.= ",incident_cause=:incident_cause";
+                    array_push($values, "incident_cause");
+                }
                 $sql.=" WHERE id=:id LIMIT 1";
 
 
             } else {
-                array_push($values, "summary", "why_surprised", "starttime", "endtime", "statustime", "detecttime", "severity", "created");
+                array_push($values, "summary", "why_surprised", "tldr", "meeting_notes_link", "starttime", "endtime", "statustime", "detecttime", "severity", "problem_type", "subsystem", "owner_team", "impact_type", "incident_cause", "created");
 
-                $sql = "INSERT INTO postmortems (title,summary,why_surprised,starttime,endtime,
-                    statustime,detecttime,severity,created) VALUES (:title, :summary,:why_surprised,:starttime,
-                    :endtime,:statustime,:detecttime,:severity,:created)";
+                $sql = "INSERT INTO postmortems (title,summary,why_surprised,tldr,meeting_notes_link,starttime,endtime,
+                    statustime,detecttime,severity,problem_type,subsystem,owner_team,impact_type,incident_cause,created) VALUES (:title,:summary,:why_surprised,:tldr,:meeting_notes_link,:starttime,:endtime,:statustime,:detecttime,:severity,:problem_type,:subsystem,:owner_team,:impact_type,:incident_cause,:created)";
             }
             $stmt = $conn->prepare($sql);
             $stmt->execute(array_intersect_key($postmortem, array_flip($values)));
@@ -120,8 +154,8 @@ class Persistence {
         $conn = $conn ?: Persistence::get_database_object();
 
         try {
-            $sql = "SELECT id, title, summary, why_surprised, starttime, endtime, statustime,
-                    detecttime,severity, contact, gcal, created, modified, modifier, deleted 
+            $sql = "SELECT id, title, summary, why_surprised, tldr,meeting_notes_link, starttime, endtime, statustime,
+                    detecttime,severity,problem_type,subsystem,owner_team,impact_type,incident_cause, contact, gcal, created, modified, modifier, deleted 
                     FROM postmortems WHERE id = :id LIMIT 1";
             $stmt = $conn->prepare($sql);
             $stmt->execute(array('id' => $postmortem_id));

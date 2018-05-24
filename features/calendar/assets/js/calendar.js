@@ -40,6 +40,7 @@ function showEventLink(event)
         link.addClass('eventLink');
     } else {
         link.text('Schedule a Post Mortem for this event!');
+        $('#pm-slots-description').css('display', 'block');
     }
 }
 
@@ -159,7 +160,8 @@ function handleClientLoad(inEvent)
     cal.inEvent = inEvent;
 
     $("#calendar-link").click(function() {
-            calendarLinkHandler();
+        window.open('http://go/pm-slots');
+        //     calendarLinkHandler();
     });
 
     gapi.client.setApiKey(cal.apiKey);

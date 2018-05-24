@@ -39,6 +39,14 @@
      <div id="calendar-div">
          <a name="calendar"></a>
          <a href="#calendar" id="calendar-link" >Login to your Google Account to view/create Post Mortems!</a>
+         <div id="pm-slots-description" class="eventDiv" style="display:none;">
+             To claim a slot, please
+             <ul>
+                 <li>Create an entry in go/morgue</li>
+                 <li>Fill in the yellow columns on the sheet on a row that works for you</li>
+                 <li>Reach out to the facilitator to share context and double-confirm availability</li>
+                 <li>Send out a calendar invite to participants and postmortems@etsy.com (manually fill in the room in location because it is reserved in another event)</li>
+         </div>
          <div id="event-div" class="eventDiv" style="display: none;">
              <h6 id="event-title"></h6>
              <p>

@@ -1,4 +1,5 @@
 <?php
+
 require_once 'phplib/CurlClient.php';
 require_once 'phplib/Postmortem.php';
 require_once 'phplib/Configuration.php';
@@ -179,6 +180,11 @@ $app->post('/events', function () use ($app) {
     $status_time = $app->request->post('status_time');
     $timezone = $app->request->post('timezone');
     $severity = $app->request->post('severity');
+    $problem_type = $app->request->post('problem_type');
+    $impact_type = $app->request->post('impact_type');
+    $incident_cause = $app->request->post('incident_cause');
+    $subsystem = $app->request->post('subsystem');
+    $owner_team = $app->request->post('owner_team');
     $startdate = new DateTime($start_date." ".$start_time, new DateTimeZone($timezone));
     $enddate = new DateTime($end_date." ".$end_time, new DateTimeZone($timezone));
     $detectdate = new DateTime($detect_date." ".$detect_time, new DateTimeZone($timezone));
@@ -188,16 +194,22 @@ $app->post('/events', function () use ($app) {
         $statusdate = new DateTime("$status_date $status_time", new DateTimeZone($timezone));
     }
 
-
     $event = array(
         "title" => $title,
         "summary" => "",
         "why_surprised" => "",
+        "tldr" => "",
+        "meeting_notes_link" => "",
         "starttime" => $startdate->getTimeStamp(),
         "endtime" => $enddate->getTimeStamp(),
         "statustime" => $statusdate->getTimeStamp(),
         "detecttime" => $detectdate->getTimeStamp(),
-        "severity" => $severity
+        "severity" => $severity,
+        "problem_type" => $problem_type,
+        "impact_type" => $impact_type,
+        "incident_cause" => $incident_cause,
+        "subsystem" => $subsystem,
+        "owner_team" => $owner_team
     );
 
     $event = Postmortem::save_event($event);
@@ -221,10 +233,17 @@ $app->get('/events/:id', function($id) use ($app) {
     $status_time = $event["statustime"];
     $timezone = getUserTimezone();
     $severity = $event["severity"];
+    $problem_type = $event["problem_type"];
+    $subsystem = $event["subsystem"];
+    $owner_team = $event["owner_team"];
+    $impact_type = $event["impact_type"];
+    $incident_cause = $event["incident_cause"];
     $gcal = $event["gcal"];
     $contact = $event["contact"];
     $summary = $event["summary"];
     $why_surprised = $event["why_surprised"];
+    $tldr = $event["tldr"];
+    $meeting_notes_link = $event["meeting_notes_link"];
 
     $tz = new DateTimeZone($timezone);
     $start_datetime = new DateTime("@$starttime");
@@ -327,6 +346,12 @@ $app->put('/events/:id', function ($id) use ($app) {
         case "why_surprised":
             $event["why_surprised"] = $value;
             break;
+        case "tldr":
+            $event["tldr"] = $value;
+            break;
+        case "meeting_notes_link":
+            $event["meeting_notes_link"] = $value;
+            break;
         case "start_date":
         case "start_time":
             if (!isset($params["timezone"])) {
@@ -408,6 +433,21 @@ $app->put('/events/:id', function ($id) use ($app) {
             break;
         case "gcal":
             $event["gcal"] = $value;
+            break;
+        case "problem_type":
+            $event["problem_type"] = $value;
+            break;
+        case "impact_type":
+            $event["impact_type"] = $value;
+            break;
+        case "incident_cause":
+            $event["incident_cause"] = $value;
+            break;
+        case "subsystem":
+            $event["subsystem"] = $value;
+            break;
+        case "owner_team":
+            $event["owner_team"] = $value;
             break;
         }
     }

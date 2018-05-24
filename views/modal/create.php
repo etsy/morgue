@@ -78,8 +78,88 @@
           </select>
         </div>
       </div>
+        <?php
+        $problemTypeConfig = $config['problem_type'];
+        if (isset($problemTypeConfig) ) {
+            $problemTypeTitle   = $problemTypeConfig['title'];
+            $problemTypeList    = $problemTypeConfig['types'];
+            ?>
+            <div class="control-group">
+                <label class="control-label" for="problem_type"><?php echo $problemTypeTitle;?></label>
+                <div class="controls">
+                    <select id="problem_type" name="problem_type" class="input-large">
+                        <?php
+                        foreach ($problemTypeList as $problemType) {
+                            ?>
+                            <option value="<?php echo $problemType; ?>"><?php echo $problemType; ?></option>
+                            <?php
+                        }
+                        ?>
+                    </select>
+                </div>
+            </div>
+            <?php
+        }
+        ?>
+        <div class="control-group">
+            <label class="control-label" for="subsystem">Subsystem</label>
+            <div class="controls">
+                <input type="text" placeholder="Subsystem" id="subsystem" name="subsystem" class="input-xlarge">
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="owner_team">Owner team</label>
+            <div class="controls">
+                <input type="text" placeholder="Owner Team" id="owner_team" name="owner_team" class="input-xlarge">
+            </div>
+        </div>
+        <?php
 
-    <span id="titleinfo"> Title has to contain at least 3 characters </span>
+        $impactTypeConfig = $config['impact_type'];
+        if (isset($impactTypeConfig) ) {
+            $impactTypeTitle= $impactTypeConfig['title'];
+            $impactTypeList = $impactTypeConfig['types'];
+            ?>
+            <div class="control-group">
+                <label class="control-label" for="impact_type"><?php echo $impactTypeTitle;?></label>
+                <div class="controls">
+                    <select id="impact_type" name="impact_type" class="input-large">
+                        <?php
+                        foreach ($impactTypeList as $impactType) {
+                            ?>
+                            <option value="<?php echo $impactType; ?>"><?php echo $impactType; ?></option>
+                            <?php
+                        }
+                        ?>
+                    </select>
+                </div>
+            </div>
+            <?php
+        }
+
+        $incidentCauseConfig = $config['incident_cause'];
+        if (isset($incidentCauseConfig) ) {
+            $incidentCauseTitle = $incidentCauseConfig['title'];
+            $incidentCauseList  = $incidentCauseConfig['causes'];
+            ?>
+            <div class="control-group">
+                <label class="control-label" for="incident_cause"><?php echo $incidentCauseTitle;?></label>
+                <div class="controls">
+                    <select id="incident_cause" name="incident_cause" class="input-large">
+                        <?php
+                        foreach ($incidentCauseList as $incidentCause) {
+                            ?>
+                            <option value="<?php echo $incidentCause; ?>"><?php echo $incidentCause; ?></option>
+                            <?php
+                        }
+                        ?>
+                    </select>
+                </div>
+            </div>
+            <?php
+        }
+        ?>
+        <span id="titleinfo"> Title has to contain at least 3 characters </span>
   </div>
   <div class="modal-footer">
     <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>

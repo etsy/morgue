@@ -245,9 +245,35 @@ function update_contact_div(contact) {
   $("#contact").val('');
 }
 
+function update_problem_type_for_event(e, event, history) {
+    $("select#problem_type option:selected").each(function () {
+        event.problem_type = $.trim($(this).val());
+    });
+}
+
+function update_impact_type_for_event(e, event, history) {
+    $("select#impact_type option:selected").each(function () {
+        event.impact_type = $.trim($(this).val());
+    });
+}
+
+function update_incident_cause_for_event(e, event, history) {
+    $("select#incident_cause option:selected").each(function () {
+        event.incident_cause = $.trim($(this).val());
+    });
+}
+
+function update_subsystem_for_event(e, event, history) {
+    event.subsystem = $("input#subsystem").val();
+}
+
+function update_owner_team_for_event(e, event, history) {
+    event.owner_team = $("input#owner_team").val();
+}
+
 function update_severity_for_event(e, event, history) {
   $("select#severity-select option:selected").each(function () {
-      event.severity = $.trim($(this).val()); 
+      event.severity = $.trim($(this).val());
   });
 }
 
