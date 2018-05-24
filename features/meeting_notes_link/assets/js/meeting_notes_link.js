@@ -1,8 +1,3 @@
-/**
- * get the raw markdown summary and display it in a textedit area instead of
- * the rendered HTML
- * param: optional text to append to the textedit area
- */
 function make_meeting_notes_link_editable() {
 
     var $meeting_notes_link = $("#meeting_notes_link");

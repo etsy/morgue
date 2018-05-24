@@ -234,6 +234,7 @@ $app->get('/events/:id', function($id) use ($app) {
     $timezone = getUserTimezone();
     $severity = $event["severity"];
     $problem_type = $event["problem_type"];
+    $facilitator = $event["facilitator"];
     $subsystem = $event["subsystem"];
     $owner_team = $event["owner_team"];
     $impact_type = $event["impact_type"];
@@ -430,6 +431,9 @@ $app->put('/events/:id', function ($id) use ($app) {
             break;
         case "contact":
             $event["contact"] = $value;
+            break;
+        case "facilitator":
+            $event["facilitator"] = $value;
             break;
         case "gcal":
             $event["gcal"] = $value;

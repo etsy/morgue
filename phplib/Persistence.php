@@ -28,6 +28,7 @@ class Persistence {
      *                    - statustime => status time as unix timestamp
      *                    - detecttime  => detect time as unix timestamp
      *                    - severity  => severity level
+     *                    - facilitator  => facilitator
      *                    - problem_type  => problem type
      *                    - subsystem  => subsystem
      *                    - owner_team  => owner team
@@ -99,6 +100,10 @@ class Persistence {
                     $sql.= ",created=:created";
                     array_push($values, "created");
                 }
+                if ( isset( $postmortem['facilitator'] ) ){
+                    $sql.= ",facilitator=:facilitator";
+                    array_push($values, "facilitator");
+                }
                 if ( isset( $postmortem['problem_type'] ) ){
                     $sql.= ",problem_type=:problem_type";
                     array_push($values, "problem_type");
@@ -123,10 +128,10 @@ class Persistence {
 
 
             } else {
-                array_push($values, "summary", "why_surprised", "tldr", "meeting_notes_link", "starttime", "endtime", "statustime", "detecttime", "severity", "problem_type", "subsystem", "owner_team", "impact_type", "incident_cause", "created");
+                array_push($values, "summary", "why_surprised", "tldr", "meeting_notes_link", "starttime", "endtime", "statustime", "detecttime", "severity", "facilitator", "problem_type", "subsystem", "owner_team", "impact_type", "incident_cause", "created");
 
                 $sql = "INSERT INTO postmortems (title,summary,why_surprised,tldr,meeting_notes_link,starttime,endtime,
-                    statustime,detecttime,severity,problem_type,subsystem,owner_team,impact_type,incident_cause,created) VALUES (:title,:summary,:why_surprised,:tldr,:meeting_notes_link,:starttime,:endtime,:statustime,:detecttime,:severity,:problem_type,:subsystem,:owner_team,:impact_type,:incident_cause,:created)";
+                    statustime,detecttime,severity,facilitator,problem_type,subsystem,owner_team,impact_type,incident_cause,created) VALUES (:title,:summary,:why_surprised,:tldr,:meeting_notes_link,:starttime,:endtime,:statustime,:detecttime,:severity,:facilitator,:problem_type,:subsystem,:owner_team,:impact_type,:incident_cause,:created)";
             }
             $stmt = $conn->prepare($sql);
             $stmt->execute(array_intersect_key($postmortem, array_flip($values)));
@@ -155,7 +160,7 @@ class Persistence {
 
         try {
             $sql = "SELECT id, title, summary, why_surprised, tldr,meeting_notes_link, starttime, endtime, statustime,
-                    detecttime,severity,problem_type,subsystem,owner_team,impact_type,incident_cause, contact, gcal, created, modified, modifier, deleted 
+                    detecttime,severity,facilitator,problem_type,subsystem,owner_team,impact_type,incident_cause, contact, gcal, created, modified, modifier, deleted 
                     FROM postmortems WHERE id = :id LIMIT 1";
             $stmt = $conn->prepare($sql);
             $stmt->execute(array('id' => $postmortem_id));

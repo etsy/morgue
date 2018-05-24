@@ -19,13 +19,4 @@
      ?>
      </div>
 
-    <h3>tl;dr</h3>
-    <?php
-    if($history["tldr"] === null){
-        echo "<hr><h4>No Data Found</h4>";
-    } else {
-        echo '<pre>' . $history["tldr"] . '</pre>';
-    }
-    ?>
-</div>
 </div>

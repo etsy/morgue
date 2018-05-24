@@ -30,6 +30,7 @@
     "edit_page_features" : [
       "status_time",
       "contact",
+      "facilitator",
       "calendar",
       "meeting_notes_link",
       "tldr",
@@ -60,6 +61,11 @@
         "enabled": "on",
         "lookup_url": "https://directory.example.com/user/%s",
         "email_domain": "example.com"
+    },
+
+    {   "name": "facilitator",
+        "enabled": "on",
+        "custom_js_assets": ["facilitator.js"]
     },
 
     {   "name": "calendar",
