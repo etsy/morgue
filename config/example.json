@@ -79,7 +79,10 @@
         "id" : "CALENDARID",
         "facilitator": true,
         "facilitators_email": ["facilitators@example.com"],
-        "attendees_email": ["attendees@example.com"]
+        "attendees_email": ["attendees@example.com"],
+        "override_calendar_link": false,
+        "override_calendar_link_href": "http://example.com",
+        "override_calendar_link_description": ""
     },
 
     {   "name": "summary",

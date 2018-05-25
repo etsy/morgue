@@ -79,8 +79,8 @@
         </div>
       </div>
         <?php
-        $problemTypeConfig = $config['problem_type'];
-        if (isset($problemTypeConfig) ) {
+        if (array_key_exists('problem_type', $config)) {
+            $problemTypeConfig  = $config['problem_type'];
             $problemTypeTitle   = $problemTypeConfig['title'];
             $problemTypeList    = $problemTypeConfig['types'];
             ?>
@@ -115,8 +115,8 @@
         </div>
         <?php
 
-        $impactTypeConfig = $config['impact_type'];
-        if (isset($impactTypeConfig) ) {
+        if (array_key_exists('impact_type', $config)) {
+            $impactTypeConfig= $config['impact_type'];
             $impactTypeTitle= $impactTypeConfig['title'];
             $impactTypeList = $impactTypeConfig['types'];
             ?>
@@ -137,8 +137,8 @@
             <?php
         }
 
-        $incidentCauseConfig = $config['incident_cause'];
-        if (isset($incidentCauseConfig) ) {
+        if (array_key_exists('incident_cause', $config)) {
+            $incidentCauseConfig= $config['incident_cause'];
             $incidentCauseTitle = $incidentCauseConfig['title'];
             $incidentCauseList  = $incidentCauseConfig['causes'];
             ?>
