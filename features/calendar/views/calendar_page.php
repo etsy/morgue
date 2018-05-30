@@ -14,7 +14,10 @@
              foreach ($cal->attendees as $attendee_email) {
                  echo "'{$attendee_email}',";
              }
-             echo "];"
+             echo "];";
+             echo "cal.override_calendar_link = '{$cal->override_calendar_link}';";
+             echo "cal.override_calendar_link_href = '{$cal->override_calendar_link_href}';";
+             echo "cal.override_calendar_link_description = '{$cal->override_calendar_link_description}';";
          ?>
         
          cal.scopes = cal.scopes.split(",");

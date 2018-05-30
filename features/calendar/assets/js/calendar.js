@@ -40,6 +40,10 @@ function showEventLink(event)
         link.addClass('eventLink');
     } else {
         link.text('Schedule a Post Mortem for this event!');
+        if(cal.override_calendar_link) {
+            $('#override_calendar_link_description').html(cal.override_calendar_link_description);
+            $('#override_calendar_link_description').css('display', 'block');
+        }
     }
 }
 
@@ -159,7 +163,11 @@ function handleClientLoad(inEvent)
     cal.inEvent = inEvent;
 
     $("#calendar-link").click(function() {
+        if(cal.override_calendar_link) {
+            window.open(cal.override_calendar_link_href);
+        }else{
             calendarLinkHandler();
+        }
     });
 
     gapi.client.setApiKey(cal.apiKey);

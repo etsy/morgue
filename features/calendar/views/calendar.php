@@ -22,9 +22,11 @@
          foreach ($cal->attendees as $attendee_email) {
              echo "'{$attendee_email}',";
          }
-         echo "];"
+         echo "];";
+         echo "cal.override_calendar_link = '{$cal->override_calendar_link}';";
+         echo "cal.override_calendar_link_href = '{$cal->override_calendar_link_href}';";
+         echo "cal.override_calendar_link_description = '{$cal->override_calendar_link_description}';";
          ?>
-        
          cal.scopes = cal.scopes.split(",");
          cal.src = 'https://www.google.com/calendar/embed?src=';
          cal.authorized = false;
@@ -39,6 +41,7 @@
      <div id="calendar-div">
          <a name="calendar"></a>
          <a href="#calendar" id="calendar-link" >Login to your Google Account to view/create Post Mortems!</a>
+         <div id="override_calendar_link_description" class="eventDiv" style="display:none;"></div>
          <div id="event-div" class="eventDiv" style="display: none;">
              <h6 id="event-title"></h6>
              <p>
