@@ -200,6 +200,7 @@ $app->post('/events', function () use ($app) {
         "why_surprised" => "",
         "tldr" => "",
         "meeting_notes_link" => "",
+        "facilitator" => "",
         "starttime" => $startdate->getTimeStamp(),
         "endtime" => $enddate->getTimeStamp(),
         "statustime" => $statusdate->getTimeStamp(),
@@ -213,6 +214,9 @@ $app->post('/events', function () use ($app) {
     );
 
     $event = Postmortem::save_event($event);
+    if(isset($event['error'])) {
+        error_log(print_r($event,true));
+    }
     $app->redirect('/events/'.$event["id"]);
 });
 
