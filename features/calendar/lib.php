@@ -9,9 +9,9 @@ class Calendar extends Persistence{
         $this->apiKey = $config['apiKey'];
         $this->scopes = $config['scopes'];
         $this->id = $config['id'];
-        $this->override_calendar_link = $config['override_calendar_link'];
-        $this->override_calendar_link_href = $config['override_calendar_link_href'];
-        $this->override_calendar_link_description = $config['override_calendar_link_description'];
+        $this->override_calendar_link = array_key_exists('override_calendar_link', $config) ? $config['override_calendar_link']: '';
+        $this->override_calendar_link_href = array_key_exists('override_calendar_link_href', $config) ? $config['override_calendar_link_href']: '';
+        $this->override_calendar_link_description = array_key_exists('override_calendar_link_description', $config) ? $config['override_calendar_link_description'] : '';
         $this->facilitator = $config['facilitator'];
         if (isset($config['attendees_email'])) {
             if (!is_array($config['attendees_email'])) {
