@@ -52,6 +52,7 @@
         <input id="event-start-input-time" name="event-start-input-time"
                 class="input-mini timeentry editable" type="text"
                 value="<?php echo $start_datetime->format('g:iA'); ?>"disabled >
+        <input type="hidden" id="start-date-time" name="start-date-time" value="<?php echo $starttime;?>" />
       </div>
     </div>
 
@@ -64,6 +65,7 @@
         <input id="event-end-input-time" name="event-end-input-time"
                class="input-mini timeentry editable" type="text"
                value="<?php echo $end_datetime->format('g:iA'); ?>" disabled>
+        <input type="hidden" id="end-date-time" name="end-date-time" value="<?php echo $endtime;?>" />
       </div>
     </div>
 
