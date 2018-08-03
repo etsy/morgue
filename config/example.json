@@ -37,7 +37,7 @@
       "summary",
       "why_surprised",
       "images",
-      "irc",
+      "slack",
       "jira",
       "links",
       "tags",
@@ -94,9 +94,11 @@
         "enabled": "on"
     },
 
-    {   "name": "irc",
+    {   "name": "slack",
         "enabled": "on",
-        "channels": ["#ops"]
+        "custom_js_assets": ["slack.js"],
+        "custom_css_assets": ["slack.css"],
+        "oAuth_token": "xxxx-xxxxxxxxx-xxxx"
     },
 
     {   "name": "jira",
