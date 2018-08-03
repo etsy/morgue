@@ -6,9 +6,10 @@ class DateTimeUtil {
      * @return string
      */
     static function convertDateTimeToUtcTimezoneTimestamp(string $dateTime): string {
-        $date = new DateTime("@$dateTime", new DateTimeZone(getUserTimezone()));
-        $date->setTimezone(new DateTimeZone('UTC'));
-        return $date->getTimestamp();
+        $date = new DateTime($dateTime, new DateTimeZone(getUserTimezone()));
+        $date->format('Y-m-d H:i:sP');
+        return $date->format('U');
+
     }
 
     /**

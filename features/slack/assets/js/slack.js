@@ -6,7 +6,7 @@ $('#slackchannels').on('click', 'span.close', function () {
     newRow = $(newRow).insertAfter(row);
     var placeholder = newRow.find("#slack_placeholder");
 
-    confirm_delete("Are you sure you want to delete this Slack channel?", placeholder, this, function() {
+    confirm_delete("Are you sure you want to remove slack channel logs from the morgue entry?", placeholder, this, function() {
         var self = $(this);
         var id = $(this).attr("id").split("-")[1];
         delete_slack_channel_for_event(get_current_event_id(), id, function(data) {
@@ -15,23 +15,11 @@ $('#slackchannels').on('click', 'span.close', function () {
     }, function() {
         $(this).fadeIn(100);
         newRow.remove();
+        fetch_slack_conversation();
     });
 
 });
 
-function get_channel_data(url, params, channels, success_callback, error_callback) {
-    $.getJSON(url, params, function(data) {
-        if (data.length === 0) {
-            success_callback(channels);
-        } else {
-            channels.push.apply(channels, data);
-            // API fetches 20 at a time
-            params.offset += 20;
-            get_channel_data(url, params, channels, success_callback, error_callback);
-        }
-    })
-        .fail(error_callback);
-}
 
 $("#slack_channels_select").chosen().change(function() {
     $("select#slack_channels_select option:selected").each(function () {
@@ -56,32 +44,6 @@ $("#slack_channels_select").chosen().change(function() {
     });
 });
 
-$('#slackchannels').on('click', 'a.slackshow', function() {
-    var channel = ($(this)).html();
-    var startdate = $("#event-start-input-date").attr("value");
-    var enddate = $("#event-end-input-date").attr("value");
-    var starttime = $("#event-start-input-time").attr("value");
-    var endtime = $("#event-end-input-time").attr("value");
-    var topic = channel + " - ";
-    topic += " from " + startdate + " " + starttime;
-    topic += " to " +enddate + " " + endtime;
-    var url = "/slacklogs";
-    var params = {
-        start_date: startdate,
-        start_time: starttime,
-        end_date: enddate,
-        end_time: endtime,
-        channel: channel.replace("#",""),
-        timezone: $('#current_tz').text(),
-        offset: 0
-    };
-    $('#slack-modal-headline').html(topic);
-    $('#slack-modal-body').empty();
-    $('#slack-loader').show();
-    $('#slackmodal').modal('toggle');
-
-    get_channel_data(url, params, [], display_slack_channels_data, display_slack_not_implemented);
-});
 
 function display_slack_channels_data(channels) {
     var html="";
@@ -107,15 +69,7 @@ function display_slack_not_implemented(jqXHR, textStatus, errorThrown) {
 
 
 $('#pull-channel-conversations').on('click', function (){
-    var startDateTime = $("#start-date-time").attr("value");
-    var endDateTime = $("#end-date-time").attr("value");
-
-    var url = "/events/" + get_current_event_id() + "/slack-channels-messages/" + startDateTime + "/" + endDateTime;
-    $("#channel_messages").html('Fetching data...');
-    $.get(url, function (d) {
-        // console.log(d);
-        $("#channel_messages").html(d);
-    });
+    fetch_slack_conversation();
 });
 
 
@@ -162,4 +116,22 @@ function store_slack_channel_info_for_event(id, channel_id, channel_name, callba
 function delete_slack_channel_for_event(event_id, channel_id, callback) {
     var url = "/events/" + event_id + "/slack-channels/"+channel_id;
     $.ajax_delete(url, callback);
+}
+
+
+function fetch_slack_conversation() {
+    var startDate = $("#event-start-input-date").attr("value").replace(/\//g, '-');
+    var startTime = $("#event-start-input-time").attr("value");
+
+    var endDate = $("#event-end-input-date").attr("value").replace(/\//g, '-');
+    var endTime = $("#event-end-input-time").attr("value");
+
+    var startDateTime = startDate + " "+startTime;
+    var endDateTime   = endDate + " "+endTime;
+
+    var url = "/events/" + get_current_event_id() + "/slack-channels-messages/" + startDateTime + "/" + endDateTime;
+    $("#channel_messages").html('Fetching data...');
+    $.get(url, function (d) {
+        $("#channel_messages").html(d);
+    });
 }

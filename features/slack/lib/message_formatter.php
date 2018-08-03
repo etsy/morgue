@@ -33,7 +33,7 @@ class SlackMessageFormatter {
         $this->message = preg_replace_callback('#<@(.*?)>#s',
             function ($matches) {
                 $userId = $matches[1];
-                return '<span class="annotated-user">@'.$this->userList[$userId]->real_name.'</span>';
+                return '<span class="annotated-user">@'.$this->userList[$userId]->name.'</span>';
             },
             $this->message);
         return $this;

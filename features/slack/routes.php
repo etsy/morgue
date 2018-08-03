@@ -61,6 +61,15 @@ $app->get('/events/:id/slack-channels-messages/:starttime/:endtime', function($i
         return;
     }
 
+    $starttime = str_replace("-","/", $starttime);
+    $newStartDateTimeArr = date_parse($starttime);
+    $newStartDateTime = $newStartDateTimeArr['year']."-".$newStartDateTimeArr['month']."-".$newStartDateTimeArr['day']." ".$newStartDateTimeArr['hour'].":".$newStartDateTimeArr['minute'];
+
+    $endtime = str_replace("-","/", $endtime);
+    $newEndDateTimeArr = date_parse($endtime);
+    $newEndDateTime = $newEndDateTimeArr['year']."-".$newEndDateTimeArr['month']."-".$newEndDateTimeArr['day']." ".$newEndDateTimeArr['hour'].":".$newEndDateTimeArr['minute'];
+
+
     $curlClient = new CurlClient();
     $slack = new Slack($curlClient);
 
@@ -72,7 +81,7 @@ $app->get('/events/:id/slack-channels-messages/:starttime/:endtime', function($i
 
         $message = '';
         $message.='<h4>Conversation from #'.$channel_name.'</h4><div class="messages" id="'.$channel_id.'-message-div">';
-        $message.=$slack->get_channel_messages_for_datetime_range($starttime, $endtime, $channel_id);
+        $message.=$slack->get_channel_messages_for_datetime_range($newStartDateTime, $newEndDateTime, $channel_id);
         $message.='<div>';
 
         $messageUpdate = Slack::update_slack_channel_message($channel_id, $message);

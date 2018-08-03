@@ -8,11 +8,13 @@ class Slack {
     /** constants mapped from Persistence class */
     const OK = Persistence::OK;
     const ERROR = Persistence::ERROR;
+    const MAX_FETCH_LIMIT = 20;
 
     private static $user_list;
 
     private $oAuthToken;
     private $curlClient;
+
 
     function __construct(CurlClient $curlClient) {
         $this->curlClient = $curlClient;
@@ -108,7 +110,15 @@ class Slack {
 
         // Fetch while we get all result
         $fetch = true;
+        $fetchCounter = 1;
         while($fetch) {
+
+            // If fetch counter limit exceds max fetch limit, terminate loop
+            if($fetchCounter > self::MAX_FETCH_LIMIT) {
+                $fetch = false;
+            }
+            $fetchCounter++;
+
             $apiResult = $this->curlClient->get('https://etsy.slack.com/api/conversations.history', $queryParam);
             $data = json_decode($apiResult);
 
