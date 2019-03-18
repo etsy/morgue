@@ -16,7 +16,16 @@ class Configuration {
         $enviroment = getenv('MORGUE_ENVIRONMENT') ?: 'development';
         $configfile = dirname(__FILE__).'/../config/'.$enviroment.'.json';
         $config = json_decode(file_get_contents($configfile), true);
-        if (is_null($name)) {
+
+        if (!$config["database"]) {
+            $config["database"]["mysqlhost"] = getenv('MORGUE_DB_HOST') ?: 'localhost';
+            $config["database"]["mysqlport"] = getenv('MORGUE_DB_PORT') ?: 3306;
+            $config["database"]["database"] = getenv('MORGUE_DB_NAME');
+            $config["database"]["username"] = getenv('MORGUE_DB_USER');
+            $config["database"]["password"] = getenv('MORGUE_DB_PASS');
+        }
+
+        if (empty($name)) {
             return $config;
         } else {
             foreach($config["feature"] as $feature) {

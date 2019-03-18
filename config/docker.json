@@ -1,0 +1,132 @@
+{
+    "environment": "development",
+    "timezone": "Australia/Sydney",
+
+    "severity" :
+    { "tooltip_title" : "Severity Levels",
+      "levels" : [
+            "Complete outage or degradation so severe that core functionality is unusable",
+            "Functional degradation for a subset of members or loss of some core functionality for all members",
+            "Noticeable degradation or loss of minor functionality",
+            "No member-visible impact; loss of redundancy or capacity",
+            "Anything worth mentioning not in the above levels"
+        ]
+    },
+
+    "locking" :
+    { "editable_days": 30,
+      "lock_time": 120
+    },
+
+    "edit_page_features" : [
+      "status_time",
+      "contact",
+      "calendar",
+      "summary",
+      "why_surprised",
+      "images",
+      "slack",
+      "jira",
+      "links",
+      "tags",
+      "history",
+      "upload"
+    ],
+    "feature": [
+    {   "name": "anniversary",
+        "enabled": "off",
+        "navbar": "on",
+        "mailto": "me@example.com",
+        "mailfrom": "morgue@example.com",
+        "custom_js_assets": ["anniversary.js"]
+    },
+
+    {   "name": "status_time",
+        "enabled": "on"
+    },
+
+    {   "name": "contact",
+        "enabled": "on",
+        "lookup_url": "https://directory.example.com/user/%s",
+        "email_domain": "example.com"
+    },
+
+    {   "name": "calendar",
+        "enabled": "off",
+        "navbar" : "on",
+        "custom_css_assets" : ["calendar.css"],
+        "custom_js_assets" : ["calendar.js", "https://apis.google.com/js/client.js?onload=loadCal"],
+        "clientId" : "CLIENTID",
+        "apiKey" : "APIKEY",
+        "scopes" : ["https://www.googleapis.com/auth/calendar"],
+        "id" : "CALENDARID",
+        "facilitator": true,
+        "facilitators_email": ["facilitators@example.com"],
+        "attendees_email": ["attendees@example.com"]
+    },
+
+    {   "name": "summary",
+        "enabled": "on",
+        "custom_js_assets": ["summary.js"]
+    },
+
+    {   "name": "images",
+        "enabled": "on"
+    },
+
+    {   "name": "irc",
+        "enabled": "off",
+        "channels": ["#ops"]
+    },
+
+    {   "name": "jira",
+        "enabled": "on",
+        "baseurl": "https://jira.foo.com",
+        "username": "jira_morgue",
+        "password": "jira_morgue_password",
+        "proxy": "http://myproxy:8080",
+        "additional_fields" : {
+        }
+    },
+
+    {   "name": "links",
+        "enabled": "on"
+    },
+
+    {   "name": "tags",
+        "enabled": "on"
+    },
+
+    {   "name": "history",
+        "enabled": "on"
+    },
+
+    {   "name": "report",
+        "enabled": "on",
+        "navbar": "on"
+    },
+
+    { "name": "search",
+      "enabled" : "on"
+    },
+
+    {   "name": "upload",
+        "enabled": "on",
+        "custom_js_assets": ["dropzone.min.js", "upload.js"],
+        "custom_css_assets": ["dropzone.min.css"],
+        "upload_driver_options": {
+            "url": "http://my.server.home/",
+            "username": "webdav",
+            "password": "webdav",
+            "proxy": false
+        },
+        "upload_driver": "webdav"
+    },
+
+    {   "name": "why_surprised",
+        "enabled": "on",
+        "custom_js_assets": ["why_surprised.js"]
+    }
+    ],
+    "upload_dir": "/tmp/morgue"
+}

@@ -1,0 +1,28 @@
+version: '3'
+services:
+  morgue:
+    build:
+      context: .
+    links:
+      - morguedb
+    environment:
+      MORGUE_ENVIRONMENT: docker
+      MORGUE_DB_HOST: morguedb
+      MORGUE_DB_NAME: morgue
+      MORGUE_DB_USER: morgue
+      MORGUE_DB_PASS: password
+    ports:
+      - 8080:80
+  morguedb:
+    image: mysql:5.7
+    environment:
+      MYSQL_RANDOM_ROOT_PASSWORD: 'yes'
+      MYSQL_ONETIME_PASSWORD: 'yes'
+      MYSQL_DATABASE: morgue
+      MYSQL_USER: morgue
+      MYSQL_PASSWORD: password
+    ports:
+      - 3306:3306
+    volumes:
+      - ./morgue_mysql_data:/var/lib/mysql
+      - ./schemas:/docker-entrypoint-initdb.d:ro

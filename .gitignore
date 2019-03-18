@@ -4,3 +4,6 @@ config/development.json
 composer.lock
 composer.phar
 results.xml
+
+.idea
+morgue_mysql_data/*

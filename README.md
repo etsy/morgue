@@ -39,6 +39,17 @@ You can also join `#morgue` on Freenode IRC if you have questions.
 - Apache
 - mod_rewrite
 
+
+## Docker
+
+To run morgue locally you can use docker with docker-compose. 
+
+```
+docker-compose up
+```
+
+Then after it finishes check http://localhost:8080
+
 ### Create a morgue configuration file
 
 In the cloned repo, use the **example.json** file as a template to create your
@@ -98,7 +109,7 @@ SET PASSWORD FOR 'morgue'@'localhost' = PASSWORD('morgue_password');
 
 Then add the schema to the database:
 ```
-mysql -p -u morgue -h localhost morgue < schemas/postmortems.sql
+mysql -p -u morgue -h localhost morgue < schemas/01postmortems.sql
 ```
 
 Note : add any additional schemas you may use:
