@@ -2,6 +2,21 @@
   <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
     <h3 id="model_label">Create</h3>
+    <div class="alert">
+      <?php
+      $config = Configuration::get_configuration();
+      if (array_key_exists('create_nag', $config)) {
+        echo $config['create_nag']['nag_text'];
+        if (array_key_exists('nag_link', $config['create_nag'])) {
+          $nag_link = $config['create_nag']['nag_link'];
+          $nag_link_text = $config['create_nag']['nag_link_text'];
+          ?>
+          <a href="<?php echo $nag_link;?>"><?php echo $nag_link_text;?></a>
+        <?php
+        }
+      }
+      ?>
+    </div>
   </div>
   <div class="modal-body">
     <form class="form-horizontal" method="post" action="/events">
@@ -59,7 +74,6 @@
         <div class="controls">
           <select id="severity-select" name="severity" class="input-small" title="
           <?php
-          $config = Configuration::get_configuration();
           if (isset($config['severity']) && isset($config['severity']['tooltip_title'])) {
             echo $config['severity']['tooltip_title'];
           } else {
